@@ -176,9 +176,76 @@
                 flex-direction: column;
             }
         }
+
+        .loader-wrapper {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #fdbb2d;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .page-loader-wrapper {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page-loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #fdbb2d;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        .loader-message {
+            color: white;
+            margin-top: 16px;
+            font-size: 1rem;
+            text-align: center;
+            max-width: 80%;
+        }
     </style>
 </head>
 <body>
+    <div class="page-loader-wrapper" id="pageLoaderWrapper">
+        <div class="page-loader"></div>
+        <div class="loader-message" id="pageLoaderMessage">Initialisation...</div>
+    </div>
+    <div class="loader-wrapper" id="loaderWrapper">
+        <div class="loader"></div>
+    </div>
     <div class="container">
         <div class="header">
             <h1>Dashboard Administrateur</h1>
@@ -204,10 +271,10 @@
                 <option value="all">Tous les vendeurs</option>
             </select>
             <select id="periodFilter">
-                <option value="all">Toute la période</option>
                 <option value="today">Aujourd'hui</option>
                 <option value="week">Cette semaine</option>
                 <option value="month">Ce mois</option>
+                <option value="all">Toute la période</option>
             </select>
             <input type="date" id="startDate">
             <input type="date" id="endDate">
@@ -658,11 +725,203 @@
             document.getElementById('confirmModal').style.display = 'none';
         };
 
+        function showLoader() {
+            document.getElementById('loaderWrapper').style.display = 'block';
+        }
+
+        function hideLoader() {
+            document.getElementById('loaderWrapper').style.display = 'none';
+        }
+
+        function showPageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'flex';
+        }
+
+        function hidePageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'none';
+        }
+
+        async function processConnectedTickets() {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            try {
+                pageLoaderMessage.textContent = "Vérification des tickets connectés...";
+                const connectedTicketsRef = ref(db, 'TicketConnecté');
+                const snapshot = await get(connectedTicketsRef);
+                let connectedTickets = snapshot.val() || {};
+
+                // Supprimer les doublons et récupérer les informations complètes des tickets
+                const uniqueTickets = {};
+                for (const ticketId in connectedTickets) {
+                    const user = connectedTickets[ticketId].username;
+                    if (!uniqueTickets[user]) {
+                        uniqueTickets[user] = connectedTickets[ticketId];
+                    }
+                }
+                
+                pageLoaderMessage.textContent = "Traitement des tickets uniques...";
+                for (const user in uniqueTickets) {
+                    await processTicket(uniqueTickets[user]);
+                }
+                
+                pageLoaderMessage.textContent = "Nettoyage des tickets traités...";
+                // Nettoyer les tickets traités de TicketConnecté
+                for (const user in uniqueTickets) {
+                    const ticketId = Object.keys(connectedTickets).find(key => connectedTickets[key].username === user);
+                    if (ticketId) {
+                        await remove(ref(db, `TicketConnecté/${ticketId}`));
+                    }
+                }
+
+            } catch (error) {
+                console.error("Erreur lors du traitement des tickets connectés :", error);
+                showNotification("Erreur", "Une erreur est survenue lors du traitement des tickets.");
+            }
+        }
+
+        async function processTicket(ticket) {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            try {
+                pageLoaderMessage.textContent = `Vérification du ticket pour ${ticket.username}...`;
+
+                // Vérifier dans VendorsHistory
+                const vendorsHistoryRef = ref(db, 'VendorsHistory');
+                const vendorsHistorySnapshot = await get(vendorsHistoryRef);
+                const vendorsHistory = vendorsHistorySnapshot.val() || {};
+
+                let foundInHistory = false;
+                for (const vendorId in vendorsHistory) {
+                    const vendorHistory = vendorsHistory[vendorId];
+                    for (const saleId in vendorHistory) {
+                        if (vendorHistory[saleId].user === ticket.username) {
+                            foundInHistory = true;
+                            break;
+                        }
+                    }
+                    if (foundInHistory) break;
+                }
+
+                if (!foundInHistory) {
+                    pageLoaderMessage.textContent = `Traitement du ticket ${ticket.username}...`;
+
+                    // Vérifier dans TicketsTotal et TicketsTransit
+                    const ticketsTotalRef = ref(db, 'TicketsTotal');
+                    const ticketsTransitRef = ref(db, 'TicketsTransit');
+                    const totalSnapshot = await get(ticketsTotalRef);
+                    const transitSnapshot = await get(ticketsTransitRef);
+                    const totalTickets = totalSnapshot.val() || {};
+                    const transitTickets = transitSnapshot.val() || {};
+
+                    let foundTicket = null;
+                    let foundTicketRef = null;
+                    let foundInCategory = null;
+
+                    // Chercher dans TicketsTotal
+                    for (const category in totalTickets) {
+                        const ticketIndex = (totalTickets[category].utilisateur || []).indexOf(ticket.username);
+                        
+                        if (ticketIndex > -1) {
+                            foundTicket = {
+                                category: category,
+                                user: totalTickets[category].utilisateur[ticketIndex],
+                                password: totalTickets[category].motDePasse[ticketIndex],
+                                price: totalTickets[category].prix[ticketIndex],
+                                updatedData: {
+                                    ...totalTickets[category],
+                                    utilisateur: totalTickets[category].utilisateur.filter((_, index) => index !== ticketIndex),
+                                    motDePasse: totalTickets[category].motDePasse.filter((_, index) => index !== ticketIndex),
+                                    prix: totalTickets[category].prix.filter((_, index) => index !== ticketIndex)
+                                }
+                            };
+                            foundTicketRef = ref(db, `TicketsTotal/${category}`);
+                            foundInCategory = "TicketsTotal";
+                            break;
+                        }
+                    }
+
+                    // Si non trouvé dans TicketsTotal, chercher dans TicketsTransit
+                    if (!foundTicket) {
+                        for (const transitId in transitTickets) {
+                            if (transitTickets[transitId].user === ticket.username) {
+                                foundTicket = {
+                                    category: transitTickets[transitId].category,
+                                    user: transitTickets[transitId].user,
+                                    password: transitTickets[transitId].password,
+                                    price: transitTickets[transitId].price
+                                };
+                                foundTicketRef = ref(db, `TicketsTransit/${transitId}`);
+                                foundInCategory = "TicketsTransit";
+                                break;
+                            }
+                        }
+                    }
+
+                    if (foundTicket) {
+                        pageLoaderMessage.textContent = `Vente du ticket ${ticket.username}...`;
+                        await sellTicketAutomatically(foundTicket, foundTicketRef, foundInCategory);
+                    }
+                }
+            } catch (error) {
+                console.error("Erreur lors du traitement du ticket :", error);
+                showNotification("Erreur", `Erreur lors du traitement du ticket ${ticket.username}.`);
+            }
+        }
+
+        async function sellTicketAutomatically(ticket, ticketRef, foundInCategory) {
+            try {
+                const automaticVendorId = "Vendeur automatique";
+
+                // Enregistrement de la vente dans VendorsHistory
+                const vendorHistoryRef = ref(db, `VendorsHistory/${automaticVendorId}`);
+                await push(vendorHistoryRef, {
+                    category: ticket.category,
+                    user: ticket.user,
+                    password: ticket.password,
+                    price: ticket.price,
+                    soldAt: Date.now()
+                });
+
+                // Enregistrement de la vente dans TicketsVendus
+                const ticketsVendusRef = ref(db, 'TicketsVendus');
+                await push(ticketsVendusRef, {
+                    category: ticket.category,
+                    user: ticket.user,
+                    password: ticket.password,
+                    price: ticket.price,
+                    soldAt: Date.now(),
+                    vendorId: automaticVendorId
+                });
+
+                // Suppression du ticket de la source (TicketsTotal ou TicketsTransit)
+                if(foundInCategory === "TicketsTotal"){
+                    await set(ticketRef, ticket.updatedData);
+                } else {
+                    await remove(ticketRef);
+                }
+
+                console.log(`Ticket ${ticket.user} vendu automatiquement.`);
+            } catch (error) {
+                console.error("Erreur lors de la vente automatique du ticket :", error);
+                showNotification("Erreur", "Erreur lors de la vente automatique du ticket.");
+            }
+        }
+
         // Chargement initial
         window.addEventListener('DOMContentLoaded', async () => {
-            await loadSalesData(); // Charger les données de vente et des vendeurs
-            await loadPartners(); // Charger la liste des partenaires
-            lucide.createIcons();
+            showPageLoader();
+            await processConnectedTickets()
+                .then(async () => {
+                  await loadSalesData(); // Charger les données de vente et des vendeurs
+                  await loadPartners(); // Charger la liste des partenaires
+                  document.getElementById('periodFilter').value = 'today';
+                  applyFilters();
+                  lucide.createIcons();
+                  hidePageLoader();
+                })
+                .catch((error) => {
+                    console.error("Erreur lors du traitement des tickets :", error);
+                    hidePageLoader();
+                    showNotification("Erreur", "Une erreur est survenue lors de l'initialisation.");
+                });
         });
     </script>
 </body>
