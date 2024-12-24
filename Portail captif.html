@@ -575,7 +575,7 @@ nav {
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getDatabase, ref, get, set, push, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
+ 
         const firebaseConfig = {
   apiKey: "AIzaSyB6AUBnK_7Vy2ABWI2JMo3ebG_Sljr8XlY",
   authDomain: "cyber-campus-2706f.firebaseapp.com",
@@ -589,12 +589,46 @@ nav {
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const adminRef = ref(db, 'admin/subscription');
 
         let localTickets = {};
+
+        // Fonction pour vérifier le statut de l'abonnement
+        async function checkSubscriptionStatus() {
+            try {
+                const snapshot = await get(adminRef);
+                const subscription = snapshot.val();
+                const now = new Date();
+
+                if (subscription && subscription.status === 'active') {
+                    const endDate = new Date(subscription.endDate);
+                    if (endDate < now) {
+                        // Abonnement expiré
+                        await adminRef.update({ status: 'expired' });
+                        return false;
+                    } else {
+                        // Abonnement actif
+                        return true;
+                    }
+                } else {
+                    // Pas d'abonnement
+                    return false;
+                }
+            } catch (error) {
+                console.error("Erreur lors de la vérification de l'abonnement :", error);
+                return false;
+            }
+        }
 
         // Fonction pour synchroniser les tickets
         async function syncTickets() {
             try {
+                const isActive = await checkSubscriptionStatus();
+                if (!isActive) {
+                    document.querySelector('.rates-section .loading-message').textContent = 'Pas d\'abonnement actif';
+                    return;
+                }
+
                 const ticketsTotalRef = ref(db, 'TicketsTotal');
                 const snapshot = await get(ticketsTotalRef);
                 localTickets = snapshot.val() || {};
@@ -645,15 +679,23 @@ nav {
             console.log("Ticket de connexion stocké:", username);
         }
 
-        // Écouteur d'événement pour le formulaire de connexion
-        document.login.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.login.username.value;
-            const password = document.login.password.value;
-            storeLoginTicket(username, password);
-            this.submit();
-        });
+   // Écouteur d'événement pour le formulaire de connexion (sans chap-id) - Mise à jour
+   document.login.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.login.username.value;
+        const password = document.login.password.value;
 
+        // Si chap-id est présent, utiliser doLogin() sinon connexion standard
+        if (typeof hexMD5 === 'function') { // Vérifier si hexMD5 est défini (indique la présence de chap-id)
+            doLogin();
+            storeConnectedTicket(username); // Stocker le nom d'utilisateur dans Firebase
+        } else {
+            // Connexion standard
+            storeLoginTicket(username, password); // Stockage local
+            storeConnectedTicket(username); // Stocker le nom d'utilisateur dans Firebase
+            this.submit();
+        }
+    });
         // Fonction pour gérer le stockage des tickets en transit
         async function storeTicketEnTransit(category) {
             const ticket = await synchronizeAndReserveTicket(category);
@@ -806,30 +848,30 @@ nav {
         }
 
         async function createTicketTable() {
-    const table = document.querySelector('.rates-section table');
-    table.innerHTML = `
-        <tr>
-            <th>Catégorie</th>
-            <th>Prix (FCFA)</th>
-            <th>Action</th>
-        </tr>
-    `;
+            const table = document.querySelector('.rates-section table');
+            table.innerHTML = `
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Prix (FCFA)</th>
+                    <th>Action</th>
+                </tr>
+            `;
 
-    for (const [category, data] of Object.entries(localTickets)) {
-        const price = data.prix[0];
-        const lienPaiement = data.lienPaiement;
-        const row = table.insertRow();
-        const buttonText = category.toLowerCase().includes('ticket cadeau') ? 'Obtenir' : 'Payer';
-        
-        row.innerHTML = `
-            <td>${category}</td>
-            <td>${price}</td>
-            <td><button onclick="initPayment('${category}', ${price}, '${lienPaiement}')">${buttonText}</button></td>
-        `;
-    }
+            for (const [category, data] of Object.entries(localTickets)) {
+                const price = data.prix[0];
+                const lienPaiement = data.lienPaiement;
+                const row = table.insertRow();
+                const buttonText = category.toLowerCase().includes('ticket cadeau') ? 'Obtenir' : 'Payer';
+                
+                row.innerHTML = `
+                    <td>${category}</td>
+                    <td>${price}</td>
+                    <td><button onclick="initPayment('${category}', ${price}, '${lienPaiement}')">${buttonText}</button></td>
+                `;
+            }
 
-    showTariffsTable();
-}
+            showTariffsTable();
+        }
 
         // Fonction pour afficher la notification avec les boutons
 function showTicketNotification(ticket) {
@@ -905,12 +947,25 @@ function showTicketNotification(ticket) {
             document.getElementById('notification').style.display = 'none';
         }
 
-// Fonction pour effectuer la connexion automatique
-function autoLogin(username, password) {
-    document.login.username.value = username;
-    document.login.password.value = password;
-    document.login.submit();
-}
+    // Fonction pour stocker le ticket de connexion dans Firebase
+    async function storeConnectedTicket(username) {
+        try {
+            const ticketConnectedRef = ref(db, 'TicketConnecté');
+            const newTicketRef = push(ticketConnectedRef);
+            await set(newTicketRef, { username });
+            console.log("Nom d'utilisateur du ticket connecté enregistré dans Firebase avec la clé:", newTicketRef.key);
+        } catch (error) {
+            console.error("Erreur lors de l'enregistrement du nom d'utilisateur du ticket connecté:", error);
+        }
+    }
+
+    // Fonction pour effectuer la connexion automatique (mise à jour)
+    function autoLogin(username, password) {
+        document.login.username.value = username;
+        document.login.password.value = password;
+        storeConnectedTicket(username); // Stocker le nom d'utilisateur dans Firebase
+        document.login.submit();
+    }
 
 // Fonction pour supprimer le ticket
 function deleteTicket() {
@@ -1100,324 +1155,6 @@ function updateButtonText() {
             <iframe id="paymentIframe"></iframe>
         </div>
     </div>
-    <style>
-        /* Footer Popup Styles Améliorés */
-        .footer-popup {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translate(-50%, 200%);
-            width: 95%;
-            max-width: 600px;
-            padding: 2rem;
-            border-radius: 25px;
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            background: linear-gradient(135deg, rgba(129, 0, 0, 0.95) 0%, rgba(0, 60, 150, 0.95) 100%);
-            backdrop-filter: blur(10px);
-            color: white;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
-                        0 0 20px rgba(0, 89, 255, 0.3),
-                        inset 0 0 60px rgba(0, 89, 255, 0.1);
-            max-height: 85vh;
-            overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .footer-popup.show {
-            transform: translate(-50%, 0);
-            opacity: 1;
-            animation: popupGlow 2s infinite alternate;
-        }
-        
-        @keyframes popupGlow {
-            from { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
-                              0 0 20px rgba(255, 255, 255, 0.3); }
-            to { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3),
-                            0 0 40px rgba(253, 253, 253, 0.6); }
-        }
-        
-        .footer-popup .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-            backdrop-filter: blur(5px);
-        }
-        
-        .footer-popup .close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: rotate(90deg) scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-        
-        .footer-popup p {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        
-        .footer-popup strong {
-            color: #FFD700;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        .footer-popup a {
-            color: white;
-            text-decoration: none;
-            padding: 0.6rem 1.2rem;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            display: inline-block;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .footer-popup a:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .products-section {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .products-section h3 {
-            text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-        
-        .product-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.2rem;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            transform: translateY(20px);
-            opacity: 0;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2),
-                        0 0 15px rgba(0, 89, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-        
-        .product-card h4 {
-            color: #FFD700;
-            margin: 0 0 0.8rem 0;
-            font-size: 1.2rem;
-            letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .product-card p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-            text-align: left;
-            opacity: 0.9;
-        }
-        
-        .product-button {
-            display: inline-block;
-            background: linear-gradient(45deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.25));
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .product-button:hover {
-            background: linear-gradient(45deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.35));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
-                        0 0 10px rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Animations améliorées */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .footer-popup p,
-        .product-card {
-            animation: fadeInUp 0.8s ease forwards;
-        }
-        
-        .footer-popup p:nth-child(1) { animation-delay: 0.2s; }
-        .footer-popup p:nth-child(2) { animation-delay: 0.4s; }
-        .footer-popup p:nth-child(3) { animation-delay: 0.6s; }
-        .product-card:nth-child(1) { animation-delay: 0.8s; }
-        .product-card:nth-child(2) { animation-delay: 1s; }
-        .product-card:nth-child(3) { animation-delay: 1.2s; }
-        .product-card:nth-child(4) { animation-delay: 1.4s; }
-        
-        /* Scrollbar personnalisée */
-        .footer-popup::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .footer-popup::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-        
-        .footer-popup::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
-        
-        .footer-popup::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .footer-popup {
-                width: 92%;
-                padding: 1.5rem;
-            }
-        
-            .product-card {
-                padding: 1.2rem;
-            }
-        
-            .footer-popup p {
-                font-size: 1rem;
-            }
-        
-            .product-card h4 {
-                font-size: 1.1rem;
-            }
-        
-            .product-card p {
-                font-size: 0.9rem;
-            }
-        }
-        </style>
-        
-        <div class="footer-popup" id="footer-popup">
-            <button class="close-btn" onclick="closeFooterPopup()">×</button>
-            <p><strong>👇L'App Etudiant👇</strong></p>
-            <p>👉Eduque moi, Votre IA 100% Bénin</p> 
-            <p><strong>https://eduquemoi.netlify.app/</strong></p>
-         <!--   <p><a href="https://bit.ly/EmLite/"><strong>bit.ly/EmLite</strong></a></p>  -->                  
-        </div>
-        
-        <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Afficher la popup après 1 seconde
-    setTimeout(showFooterPopup, 1000);
 
-    // Ajouter l'écouteur d'événement sur le document entier
-    document.addEventListener('click', function(e) {
-        const popup = document.getElementById('footer-popup');
-        const isClickInside = popup.contains(e.target);
-        
-        // Si le clic est en dehors de la popup et que la popup est visible
-        if (!isClickInside && popup.classList.contains('show')) {
-            closeFooterPopup();
-        }
-    });
-
-    // Ajouter l'écouteur d'événement sur le bouton de fermeture
-    const closeButton = document.querySelector('.footer-popup .close-btn');
-    if (closeButton) {
-        closeButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeFooterPopup();
-        });
-    }
-
-    // Empêcher la propagation des clics à l'intérieur de la popup
-    const popupContent = document.querySelector('.footer-popup');
-    if (popupContent) {
-        popupContent.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
-
-// Fonction pour afficher la popup
-function showFooterPopup() {
-    const popup = document.getElementById('footer-popup');
-    popup.classList.add('show');
-
-    // Fermeture automatique après 30 secondes
-    setTimeout(() => {
-        closeFooterPopup();
-    }, 30000);
-}
-
-// Fonction pour fermer la popup
-function closeFooterPopup() {
-    const popup = document.getElementById('footer-popup');
-    if (popup) {
-        popup.classList.remove('show');
-    }
-}
-
-// Attendre que le DOM soit chargé
-document.addEventListener('DOMContentLoaded', function() {
-    // Afficher la popup après 1 seconde
-    setTimeout(showFooterPopup, 1000);
-
-    // Ajouter l'écouteur d'événement sur le bouton de fermeture
-    const closeButton = document.querySelector('.footer-popup .close-btn');
-    if (closeButton) {
-        closeButton.addEventListener('click', function(e) {
-            e.preventDefault(); // Empêcher le comportement par défaut
-            e.stopPropagation(); // Empêcher la propagation de l'événement
-            closeFooterPopup();
-        });
-    }
-
-    // Empêcher la fermeture lors du clic sur le contenu de la popup
-    const popupContent = document.querySelector('.footer-popup');
-    if (popupContent) {
-        popupContent.addEventListener('click', function(e) {
-            e.stopPropagation(); // Empêcher la propagation de l'événement
-        });
-    }
-});
-        </script>
 </body>
 </html>
