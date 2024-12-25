@@ -780,7 +780,688 @@
     </div>
 
     <script type="module">
- const _0x4683ec=_0x3fab;(function(_0x3b0a05,_0x391fdc){const _0x397594=_0x3fab,_0x2b4965=_0x3b0a05();while(!![]){try{const _0x4b5e4f=parseInt(_0x397594(0x163))/0x1*(-parseInt(_0x397594(0x164))/0x2)+-parseInt(_0x397594(0x1c6))/0x3*(-parseInt(_0x397594(0x16b))/0x4)+parseInt(_0x397594(0x175))/0x5*(-parseInt(_0x397594(0x194))/0x6)+-parseInt(_0x397594(0x142))/0x7*(parseInt(_0x397594(0x1bc))/0x8)+parseInt(_0x397594(0x185))/0x9*(parseInt(_0x397594(0x1b0))/0xa)+parseInt(_0x397594(0x135))/0xb*(parseInt(_0x397594(0x16a))/0xc)+parseInt(_0x397594(0x200))/0xd*(parseInt(_0x397594(0x197))/0xe);if(_0x4b5e4f===_0x391fdc)break;else _0x2b4965['push'](_0x2b4965['shift']());}catch(_0x4f378e){_0x2b4965['push'](_0x2b4965['shift']());}}}(_0x16e7,0x6db44));import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';import{getDatabase,ref,get,set,push,remove,onChildAdded}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';const firebaseConfig={'apiKey':_0x4683ec(0x15d),'authDomain':_0x4683ec(0x190),'databaseURL':_0x4683ec(0x152),'projectId':_0x4683ec(0x1c7),'storageBucket':_0x4683ec(0x1cb),'messagingSenderId':_0x4683ec(0x14d),'appId':_0x4683ec(0x181),'measurementId':_0x4683ec(0x13e)},app=initializeApp(firebaseConfig),db=getDatabase(app),adminRef=ref(db,_0x4683ec(0x1ee));let ticketToSell=null,localTickets={},currentReservedTicket=null,currentVendorId='',vendors={},availableUsernames=[];window[_0x4683ec(0x1f4)]=window[_0x4683ec(0x1a3)][_0x4683ec(0x1f4)];async function fetchVendors(){const _0x3ab4d2=_0x4683ec;try{const _0x3562ec=ref(db,_0x3ab4d2(0x1b3)),_0x3aacc5=await get(_0x3562ec);_0x3aacc5[_0x3ab4d2(0x154)]()?(vendors=_0x3aacc5['val'](),availableUsernames=Object[_0x3ab4d2(0x179)](vendors)):console[_0x3ab4d2(0x1ca)](_0x3ab4d2(0x15e));}catch(_0x484ace){console[_0x3ab4d2(0x1e0)](_0x3ab4d2(0x137),_0x484ace);}}const usernameInput=document['getElementById'](_0x4683ec(0x13f)),passwordInput=document[_0x4683ec(0x1c5)](_0x4683ec(0x187)),suggestionsList=document[_0x4683ec(0x1c5)](_0x4683ec(0x156));usernameInput[_0x4683ec(0x159)](_0x4683ec(0x1a9),()=>{const _0x2b9d94=_0x4683ec,_0x5eb9e3=usernameInput[_0x2b9d94(0x1ad)][_0x2b9d94(0x1d5)](),_0x1aaeba=availableUsernames[_0x2b9d94(0x144)](_0x2cf1e8=>_0x2cf1e8[_0x2b9d94(0x1d5)]()['startsWith'](_0x5eb9e3));suggestionsList[_0x2b9d94(0x141)]='';if(_0x5eb9e3[_0x2b9d94(0x1da)]===0x0||_0x1aaeba[_0x2b9d94(0x1da)]===0x0){suggestionsList[_0x2b9d94(0x1bf)][_0x2b9d94(0x131)]=_0x2b9d94(0x202);return;}_0x1aaeba[_0x2b9d94(0x1f0)](_0x114adf=>{const _0x182f24=_0x2b9d94,_0x4c8d83=document[_0x182f24(0x1e7)]('li');_0x4c8d83[_0x182f24(0x1a5)]=_0x114adf,_0x4c8d83['addEventListener'](_0x182f24(0x18d),()=>{const _0x17ed26=_0x182f24;usernameInput[_0x17ed26(0x1ad)]=_0x114adf,suggestionsList[_0x17ed26(0x141)]='',suggestionsList[_0x17ed26(0x1bf)][_0x17ed26(0x131)]=_0x17ed26(0x202);}),suggestionsList['appendChild'](_0x4c8d83);}),suggestionsList[_0x2b9d94(0x1bf)][_0x2b9d94(0x131)]=_0x2b9d94(0x1a2);}),document[_0x4683ec(0x159)](_0x4683ec(0x18d),_0x4d6785=>{const _0x46dbb5=_0x4683ec;!usernameInput['contains'](_0x4d6785[_0x46dbb5(0x1f7)])&&!suggestionsList[_0x46dbb5(0x1f8)](_0x4d6785[_0x46dbb5(0x1f7)])&&(suggestionsList['style'][_0x46dbb5(0x131)]=_0x46dbb5(0x202));});const rememberMeCheckbox=document[_0x4683ec(0x1c5)](_0x4683ec(0x1c1)),storedUsername=localStorage[_0x4683ec(0x1c8)](_0x4683ec(0x13f)),storedPassword=localStorage[_0x4683ec(0x1c8)](_0x4683ec(0x187)),storedTimestamp=localStorage[_0x4683ec(0x1c8)](_0x4683ec(0x165)),now=Date['now'](),twentyFourHours=0x18*0x3c*0x3c*0x3e8;storedUsername&&storedPassword&&storedTimestamp&&now-storedTimestamp<twentyFourHours&&(usernameInput['value']=storedUsername,passwordInput[_0x4683ec(0x1ad)]=storedPassword,rememberMeCheckbox[_0x4683ec(0x1ba)]=!![]);const loginForm=document['getElementById'](_0x4683ec(0x1f5)),loginError=document[_0x4683ec(0x1c5)](_0x4683ec(0x14f)),ratesSection=document[_0x4683ec(0x16d)]('.rates-section'),historySection=document['getElementById']('historySection'),loginSection=document[_0x4683ec(0x1c5)](_0x4683ec(0x1ea)),messagesSection=document[_0x4683ec(0x1c5)](_0x4683ec(0x17f));loginForm[_0x4683ec(0x159)](_0x4683ec(0x1db),async _0x1097d9=>{const _0x42dae9=_0x4683ec;_0x1097d9[_0x42dae9(0x193)](),showLoader();const _0x3ff7ad=usernameInput[_0x42dae9(0x1ad)],_0xa28b51=passwordInput[_0x42dae9(0x1ad)];vendors[_0x3ff7ad]&&vendors[_0x3ff7ad][_0x42dae9(0x187)]===_0xa28b51?(loginError[_0x42dae9(0x1bf)]['display']=_0x42dae9(0x202),ratesSection[_0x42dae9(0x1bf)]['display']=_0x42dae9(0x1a2),historySection[_0x42dae9(0x1bf)][_0x42dae9(0x131)]=_0x42dae9(0x202),loginSection['style'][_0x42dae9(0x131)]='none',messagesSection[_0x42dae9(0x1bf)][_0x42dae9(0x131)]=_0x42dae9(0x1a2),currentVendorId=_0x3ff7ad,rememberMeCheckbox[_0x42dae9(0x1ba)]?(localStorage[_0x42dae9(0x153)](_0x42dae9(0x13f),_0x3ff7ad),localStorage[_0x42dae9(0x153)](_0x42dae9(0x187),_0xa28b51),localStorage[_0x42dae9(0x153)](_0x42dae9(0x165),Date[_0x42dae9(0x133)]())):(localStorage[_0x42dae9(0x162)](_0x42dae9(0x13f)),localStorage['removeItem'](_0x42dae9(0x187)),localStorage[_0x42dae9(0x162)](_0x42dae9(0x165))),await syncTickets(),loadHistory(),listenForNewMessages(),lucide['createIcons'](),hideLoader()):(loginError[_0x42dae9(0x1bf)][_0x42dae9(0x131)]='block',loginError[_0x42dae9(0x1a5)]='Nom\x20d\x27utilisateur\x20ou\x20mot\x20de\x20passe\x20incorrect.',hideLoader());});async function syncTickets(){const _0x372e02=_0x4683ec;try{const _0x281db0=document['querySelector'](_0x372e02(0x19c)),_0x4c153a=document['querySelector']('.rates-section\x20table');_0x281db0[_0x372e02(0x1bf)][_0x372e02(0x131)]='block',_0x4c153a[_0x372e02(0x1bf)][_0x372e02(0x131)]=_0x372e02(0x202);const _0x33dfe5=ref(db,'TicketsTotal'),_0x542dda=await get(_0x33dfe5);_0x542dda[_0x372e02(0x154)]()?(localTickets=_0x542dda[_0x372e02(0x1c3)](),createTicketTable(),_0x281db0[_0x372e02(0x1bf)][_0x372e02(0x131)]='none',_0x4c153a[_0x372e02(0x1bf)][_0x372e02(0x131)]=_0x372e02(0x14c)):_0x281db0[_0x372e02(0x1a5)]=_0x372e02(0x1ce);}catch(_0x3279c6){console[_0x372e02(0x1e0)](_0x372e02(0x150),_0x3279c6),loadingMessage[_0x372e02(0x1a5)]=_0x372e02(0x1c2);}}async function createTicketTable(){const _0x3942c6=_0x4683ec,_0x2b0831=document['querySelector'](_0x3942c6(0x183));_0x2b0831[_0x3942c6(0x141)]=_0x3942c6(0x173);for(const [_0x41f012,_0x5b4116]of Object[_0x3942c6(0x195)](localTickets)){const _0x525675=_0x5b4116[_0x3942c6(0x1cf)]?_0x5b4116['utilisateur']['length']:0x0;if(_0x525675>0x0){const _0x185cd0=_0x5b4116['prix'][0x0],_0x3dcecf=_0x2b0831[_0x3942c6(0x1de)]();_0x3dcecf[_0x3942c6(0x141)]=_0x3942c6(0x1dd)+_0x41f012+_0x3942c6(0x1a4)+_0x185cd0+_0x3942c6(0x1a4)+_0x525675+_0x3942c6(0x1c0)+_0x41f012+_0x3942c6(0x134);}}document[_0x3942c6(0x16d)](_0x3942c6(0x19c))[_0x3942c6(0x1bf)][_0x3942c6(0x131)]=_0x3942c6(0x202),_0x2b0831[_0x3942c6(0x1bf)][_0x3942c6(0x131)]='table';}window[_0x4683ec(0x145)]=async function(_0x5c11a0){const _0xc423e5=_0x4683ec;showLoader();try{const _0x371190=ref(db,_0xc423e5(0x138)+_0x5c11a0),_0x1b2cb0=await get(_0x371190);if(_0x1b2cb0[_0xc423e5(0x154)]()){const _0x34edb5=_0x1b2cb0['val']();if(!_0x34edb5[_0xc423e5(0x1cf)]||_0x34edb5[_0xc423e5(0x1cf)][_0xc423e5(0x1da)]===0x0)throw new Error(_0xc423e5(0x17c));ticketToSell={'category':_0x5c11a0,'user':_0x34edb5[_0xc423e5(0x1cf)][0x0],'password':_0x34edb5['motDePasse'][0x0],'price':_0x34edb5[_0xc423e5(0x140)][0x0],'updatedData':{..._0x34edb5,'utilisateur':_0x34edb5[_0xc423e5(0x1cf)][_0xc423e5(0x1e1)](0x1),'motDePasse':_0x34edb5['motDePasse'][_0xc423e5(0x1e1)](0x1),'prix':_0x34edb5[_0xc423e5(0x140)][_0xc423e5(0x1e1)](0x1)}},showConfirmation(ticketToSell),hideLoader();}}catch(_0x352d02){console[_0xc423e5(0x1e0)](_0xc423e5(0x1a7),_0x352d02),showNotification('Erreur',_0xc423e5(0x18f)),hideLoader();}};function showConfirmation(_0x3e26f4){const _0x3c136c=_0x4683ec,_0x5599d3=document[_0x3c136c(0x1c5)]('notification'),_0x51d706=document[_0x3c136c(0x1c5)]('notification-message'),_0xcd5f0a=document['getElementById']('ticket-actions'),_0x126ce9=document[_0x3c136c(0x1c5)]('confirmation-buttons');document[_0x3c136c(0x1c5)](_0x3c136c(0x1be))[_0x3c136c(0x1a5)]=_0x3c136c(0x1ab),_0x51d706[_0x3c136c(0x141)]=_0x3c136c(0x189)+_0x3e26f4['category']+_0x3c136c(0x147)+_0x3e26f4[_0x3c136c(0x1e6)]+_0x3c136c(0x1e5),_0x126ce9[_0x3c136c(0x1bf)][_0x3c136c(0x131)]='flex',_0xcd5f0a[_0x3c136c(0x1bf)][_0x3c136c(0x131)]=_0x3c136c(0x202),_0x5599d3[_0x3c136c(0x1bf)][_0x3c136c(0x131)]=_0x3c136c(0x1a2);}window[_0x4683ec(0x1dc)]=async function(){const _0xf55552=_0x4683ec;showLoader();if(!ticketToSell){showNotification('Erreur',_0xf55552(0x201)),hideLoader();return;}try{const _0x2be078=ref(db,_0xf55552(0x138)+ticketToSell['category']);await set(_0x2be078,ticketToSell['updatedData']);const _0x59c086=ref(db,_0xf55552(0x176));await push(_0x59c086,{'category':ticketToSell['category'],'user':ticketToSell[_0xf55552(0x1e9)],'password':ticketToSell['password'],'price':ticketToSell['price'],'soldAt':Date[_0xf55552(0x133)](),'vendorId':currentVendorId});const _0x1985e8=ref(db,'VendorsHistory/'+currentVendorId);await push(_0x1985e8,{'category':ticketToSell['category'],'user':ticketToSell[_0xf55552(0x1e9)],'password':ticketToSell[_0xf55552(0x187)],'price':ticketToSell[_0xf55552(0x1e6)],'soldAt':Date[_0xf55552(0x133)]()}),showTicketDetails(ticketToSell),await syncTickets(),hideLoader();}catch(_0x76e0aa){console[_0xf55552(0x1e0)]('Erreur\x20lors\x20de\x20la\x20vente:',_0x76e0aa),showNotification(_0xf55552(0x19e),_0xf55552(0x180)),hideLoader();}ticketToSell=null;};function showTicketDetails(_0x118c4b){const _0x552082=_0x4683ec,_0x426bc1=document['getElementById'](_0x552082(0x178)),_0x478fe5=document[_0x552082(0x1c5)]('notification-message'),_0x3819b6=document[_0x552082(0x1c5)]('ticket-actions'),_0x4f7c60=document['getElementById']('confirmation-buttons');document[_0x552082(0x1c5)](_0x552082(0x1be))['textContent']=_0x552082(0x12f),_0x478fe5[_0x552082(0x141)]=_0x552082(0x19b)+_0x118c4b[_0x552082(0x192)]+_0x552082(0x196)+_0x118c4b[_0x552082(0x1e9)]+_0x552082(0x16c)+_0x118c4b[_0x552082(0x187)]+_0x552082(0x147)+_0x118c4b[_0x552082(0x1e6)]+'\x20FCFA</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x4f7c60['style'][_0x552082(0x131)]='none',_0x3819b6[_0x552082(0x1bf)]['display']='flex',_0x426bc1[_0x552082(0x1bf)][_0x552082(0x131)]=_0x552082(0x1a2),lucide['createIcons']();}function showSaleConfirmation(_0x43fc5e){const _0xe0c96a=_0x4683ec,_0x40c848=document[_0xe0c96a(0x1c5)](_0xe0c96a(0x178)),_0xba866=document['getElementById'](_0xe0c96a(0x1c4)),_0x487187=document[_0xe0c96a(0x1c5)]('notification-buttons');_0xba866[_0xe0c96a(0x141)]=_0xe0c96a(0x19b)+_0x43fc5e[_0xe0c96a(0x192)]+_0xe0c96a(0x196)+_0x43fc5e[_0xe0c96a(0x1e9)]+_0xe0c96a(0x16c)+_0x43fc5e['password']+_0xe0c96a(0x147)+_0x43fc5e[_0xe0c96a(0x1e6)]+_0xe0c96a(0x1e5),_0x487187[_0xe0c96a(0x141)]=_0xe0c96a(0x1b5),_0x40c848[_0xe0c96a(0x1bf)][_0xe0c96a(0x131)]=_0xe0c96a(0x1a2),lucide[_0xe0c96a(0x1bb)]();}window['confirmSale']=async function(){const _0x3df3ab=_0x4683ec;showLoader();if(!currentReservedTicket){showNotification(_0x3df3ab(0x19e),_0x3df3ab(0x18b)),hideLoader();return;}try{const _0xeada23=ref(db,_0x3df3ab(0x176));await push(_0xeada23,{...currentReservedTicket,'soldAt':Date[_0x3df3ab(0x133)](),'vendorId':currentVendorId});const _0xf2b39e=ref(db,_0x3df3ab(0x1d6)+currentVendorId);await push(_0xf2b39e,{...currentReservedTicket,'soldAt':Date[_0x3df3ab(0x133)]()}),showNotification(_0x3df3ab(0x155),_0x3df3ab(0x17a)),currentReservedTicket=null,hideNotification(),await syncTickets(),hideLoader();}catch(_0xc5cf86){console['error']('Erreur\x20de\x20confirmation:',_0xc5cf86),showNotification('Erreur','Erreur\x20lors\x20de\x20la\x20confirmation\x20de\x20la\x20vente'),hideLoader();}},window[_0x4683ec(0x1e8)]=function(){currentReservedTicket=null,hideNotification();};function showNotification(_0x2c1ae5,_0x3dd91b){const _0x37291f=_0x4683ec,_0x3a6bb0=document[_0x37291f(0x1c5)](_0x37291f(0x178)),_0x1f4f1e=document[_0x37291f(0x1c5)](_0x37291f(0x1be)),_0x89b8b6=document[_0x37291f(0x1c5)]('notification-message'),_0x4942e7=document[_0x37291f(0x1c5)](_0x37291f(0x1d4)),_0x50c2ea=document[_0x37291f(0x1c5)](_0x37291f(0x177));_0x1f4f1e['textContent']=_0x2c1ae5,_0x89b8b6[_0x37291f(0x141)]=_0x3dd91b,_0x2c1ae5===_0x37291f(0x155)||_0x2c1ae5===_0x37291f(0x19e)?(_0x4942e7['style'][_0x37291f(0x131)]=_0x37291f(0x202),_0x50c2ea['style'][_0x37291f(0x131)]=_0x37291f(0x202)):(_0x4942e7[_0x37291f(0x1bf)][_0x37291f(0x131)]=_0x37291f(0x1a6),_0x50c2ea[_0x37291f(0x1bf)][_0x37291f(0x131)]=_0x37291f(0x202)),_0x3a6bb0['style']['display']=_0x37291f(0x1a2);}window[_0x4683ec(0x172)]=function(){const _0x284897=_0x4683ec;document['getElementById']('notification')['style'][_0x284897(0x131)]=_0x284897(0x202);};async function loadHistory(){const _0x4ca672=_0x4683ec;showLoader();try{const _0x3b40c6=ref(db,_0x4ca672(0x1d6)+currentVendorId),_0x74ec81=await get(_0x3b40c6);let _0x3e6796=[];_0x74ec81[_0x4ca672(0x154)]()&&(_0x3e6796=Object['entries'](_0x74ec81[_0x4ca672(0x1c3)]())[_0x4ca672(0x130)](([_0xf5d0cb,_0x37352b])=>({'id':_0xf5d0cb,..._0x37352b}))),filterHistory(_0x3e6796),hideLoader();}catch(_0x4cf02e){console[_0x4ca672(0x1e0)](_0x4ca672(0x19a),_0x4cf02e),showNotification(_0x4ca672(0x19e),_0x4ca672(0x203)),hideLoader();}}function filterHistory(_0x4009b2){const _0x30fa89=_0x4683ec,_0x561c08=document[_0x30fa89(0x1c5)](_0x30fa89(0x1d8))[_0x30fa89(0x1ad)],_0x4c6941=new Date(),_0x2e5bcc={'today':new Date(_0x4c6941[_0x30fa89(0x1d3)](0x0,0x0,0x0,0x0)),'week':new Date(_0x4c6941[_0x30fa89(0x1fd)](_0x4c6941['getDate']()-_0x4c6941[_0x30fa89(0x1fa)]())),'month':new Date(_0x4c6941['setDate'](0x1)),'all':new Date(0x0)},_0x1499b9=_0x4009b2[_0x30fa89(0x144)](_0x571e4b=>new Date(_0x571e4b[_0x30fa89(0x1fe)])>=_0x2e5bcc[_0x561c08]);updateStats(_0x1499b9),updateHistoryTable(_0x1499b9);}function updateStats(_0x18306e){const _0xd699e8=_0x4683ec,_0x31b9f=_0x18306e[_0xd699e8(0x1da)],_0x2ac7ee=_0x18306e['reduce']((_0x4b23c2,_0x764a31)=>_0x4b23c2+parseFloat(_0x764a31[_0xd699e8(0x1e6)]),0x0),_0x51bb2a=_0x18306e['reduce']((_0x470152,_0x39b16d)=>{const _0x5e1546=_0xd699e8;return _0x470152[_0x39b16d[_0x5e1546(0x192)]]=(_0x470152[_0x39b16d[_0x5e1546(0x192)]]||0x0)+0x1,_0x470152;},{}),_0x53d3fb=Object[_0xd699e8(0x195)](_0x51bb2a)[_0xd699e8(0x12e)]((_0x5a73ce,_0x2e1de5)=>_0x2e1de5[0x1]-_0x5a73ce[0x1])[0x0]?.[0x0]||'-',_0x34f8d0=_0x18306e[_0xd699e8(0x1da)]>0x0?Math[_0xd699e8(0x136)](0x1,Math[_0xd699e8(0x1cc)]((Date[_0xd699e8(0x133)]()-Math['min'](..._0x18306e['map'](_0x4315f7=>_0x4315f7['soldAt'])))/(0x3e8*0x3c*0x3c*0x18))):0x1,_0x377253=(_0x31b9f/_0x34f8d0)[_0xd699e8(0x1ae)](0x1);document[_0xd699e8(0x1c5)](_0xd699e8(0x18c))[_0xd699e8(0x1a5)]=_0x31b9f,document[_0xd699e8(0x1c5)](_0xd699e8(0x18a))[_0xd699e8(0x1a5)]=_0x2ac7ee[_0xd699e8(0x1aa)]()+_0xd699e8(0x15b),document[_0xd699e8(0x1c5)](_0xd699e8(0x14b))[_0xd699e8(0x1a5)]=_0x53d3fb,document[_0xd699e8(0x1c5)]('avgDaily')[_0xd699e8(0x1a5)]=_0x377253;}function updateHistoryTable(_0x11daf9){const _0x46cdef=_0x4683ec,_0x303351=document['getElementById'](_0x46cdef(0x17e));_0x303351['innerHTML']=_0x11daf9[_0x46cdef(0x12e)]((_0x2cd502,_0x513f67)=>_0x513f67['soldAt']-_0x2cd502[_0x46cdef(0x1fe)])['map'](_0x3d2960=>_0x46cdef(0x1af)+_0x3d2960['id']+'\x27)\x22\x20style=\x22cursor:\x20pointer;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+new Date(_0x3d2960['soldAt'])[_0x46cdef(0x1aa)]()+_0x46cdef(0x1a4)+_0x3d2960[_0x46cdef(0x192)]+_0x46cdef(0x1a4)+_0x3d2960['user']+_0x46cdef(0x1a4)+_0x3d2960[_0x46cdef(0x1e6)]+_0x46cdef(0x1ec))['join']('');}window[_0x4683ec(0x186)]=async function(_0xa94490){const _0x131d3f=_0x4683ec;showLoader();try{const _0x399be7=ref(db,_0x131d3f(0x1d6)+currentVendorId+'/'+_0xa94490),_0x29550c=await get(_0x399be7);if(_0x29550c['exists']()){const _0x3a38a4=_0x29550c[_0x131d3f(0x1c3)]();window[_0x131d3f(0x160)](),showTicketDetails(_0x3a38a4),hideLoader();}else showNotification(_0x131d3f(0x19e),_0x131d3f(0x13d)),hideLoader();}catch(_0xde2d5){console[_0x131d3f(0x1e0)]('Erreur\x20lors\x20de\x20la\x20récupération\x20du\x20ticket:',_0xde2d5),showNotification(_0x131d3f(0x19e),_0x131d3f(0x139)),hideLoader();}},window[_0x4683ec(0x18e)]=function(){const _0x25df15=_0x4683ec,_0x2b6b2f=document[_0x25df15(0x1c5)](_0x25df15(0x1a0)),_0x36b62a=_0x2b6b2f['style'][_0x25df15(0x131)]===_0x25df15(0x1a2);_0x2b6b2f['style'][_0x25df15(0x131)]=_0x36b62a?_0x25df15(0x202):_0x25df15(0x1a2),!_0x36b62a&&loadHistory();},window[_0x4683ec(0x160)]=function(){const _0x595f17=_0x4683ec;document[_0x595f17(0x1c5)](_0x595f17(0x1a0))[_0x595f17(0x1bf)]['display']=_0x595f17(0x202);},window[_0x4683ec(0x1ef)]=function(){loadHistory();};function listenForNewMessages(){const _0x33037f=_0x4683ec,_0x4d4609=ref(db,_0x33037f(0x1b7)+currentVendorId+'/messages');onChildAdded(_0x4d4609,_0x1be7d0=>{const _0x42124c=_0x33037f,_0xf5619d=_0x1be7d0[_0x42124c(0x1c3)]();displayNewMessage(_0xf5619d);});}function displayNewMessage(_0x150e70){const _0x189b0a=_0x4683ec,_0x598082=document[_0x189b0a(0x1c5)](_0x189b0a(0x1d9)),_0x3abc99=document[_0x189b0a(0x1e7)](_0x189b0a(0x174));_0x3abc99['classList'][_0x189b0a(0x1eb)](_0x189b0a(0x1b4)),_0x3abc99[_0x189b0a(0x141)]=_0x189b0a(0x166)+_0x150e70[_0x189b0a(0x170)]+_0x189b0a(0x1df)+new Date(_0x150e70[_0x189b0a(0x17b)])[_0x189b0a(0x1aa)]()+_0x189b0a(0x182),_0x598082[_0x189b0a(0x1f6)](_0x3abc99),_0x598082[_0x189b0a(0x1f2)]=_0x598082[_0x189b0a(0x1e4)];}window[_0x4683ec(0x199)]=function(){const _0x2c36ee=_0x4683ec,_0x4d16fb=document[_0x2c36ee(0x1c5)](_0x2c36ee(0x1c4))['innerText'];navigator['share']?navigator['share']({'title':_0x2c36ee(0x151),'text':_0x4d16fb})[_0x2c36ee(0x15c)](()=>console[_0x2c36ee(0x1ca)]('Partage\x20réussi'))[_0x2c36ee(0x1f9)](_0x554953=>console[_0x2c36ee(0x1e0)](_0x2c36ee(0x1a1),_0x554953)):alert('Le\x20partage\x20n\x27est\x20pas\x20supporté\x20sur\x20votre\x20navigateur.\x20Veuillez\x20copier\x20manuellement\x20les\x20détails\x20du\x20ticket.');},window[_0x4683ec(0x188)]=function(){const _0x40d723=_0x4683ec,_0x3481aa=document['getElementById']('notification-message')[_0x40d723(0x1b6)];navigator['clipboard'][_0x40d723(0x19f)](_0x3481aa)[_0x40d723(0x15c)](()=>{const _0x1c6a87=_0x40d723;showNotification(_0x1c6a87(0x155),_0x1c6a87(0x168));})['catch'](_0xd31471=>{const _0x2cbed7=_0x40d723;console[_0x2cbed7(0x1e0)](_0x2cbed7(0x1d0),_0xd31471),showNotification('Erreur',_0x2cbed7(0x132));});},window[_0x4683ec(0x1e3)]=async function(){const _0x273a83=_0x4683ec;showLoader();const _0x8ccae3=document[_0x273a83(0x1c5)](_0x273a83(0x1c4)),_0x558c75=new jsPDF(),_0x1105fb=await html2canvas(_0x8ccae3),_0x2fab36=_0x1105fb[_0x273a83(0x12d)](_0x273a83(0x1e2));_0x558c75[_0x273a83(0x1fb)](_0x2fab36,_0x273a83(0x184),0xa,0xa,0xbe,0x0),_0x558c75['save'](_0x273a83(0x17d)),hideLoader();};function showLoader(){const _0x319a4f=_0x4683ec;document[_0x319a4f(0x1c5)]('loaderWrapper')[_0x319a4f(0x1bf)]['display']=_0x319a4f(0x1a2);}function hideLoader(){const _0x4dfeb0=_0x4683ec;document['getElementById'](_0x4dfeb0(0x1cd))['style']['display']=_0x4dfeb0(0x202);}function showPageLoader(){const _0x5354e7=_0x4683ec;document['getElementById'](_0x5354e7(0x191))[_0x5354e7(0x1bf)][_0x5354e7(0x131)]='flex';}function hidePageLoader(){const _0x3fd2d5=_0x4683ec;document[_0x3fd2d5(0x1c5)](_0x3fd2d5(0x191))[_0x3fd2d5(0x1bf)][_0x3fd2d5(0x131)]=_0x3fd2d5(0x202);}function _0x16e7(){const _0x5a1121=['Impossible\x20de\x20finaliser\x20la\x20vente','1:719410601264:web:44fd2e3757721866303cf5','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','.rates-section\x20table','PNG','828eKBUkc','showTicketDetailsFromHistory','password','copyTicket','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>Voulez-vous\x20vendre\x20ce\x20ticket\x20?</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Catégorie:</strong>\x20','totalRevenue','Aucun\x20ticket\x20en\x20cours\x20de\x20vente','totalTickets','click','toggleHistory','Impossible\x20de\x20récupérer\x20le\x20ticket','cyber-campus-2706f.firebaseapp.com','pageLoaderWrapper','category','preventDefault','3139674tdLHDE','entries','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Nom\x20d\x27utilisateur:</strong>\x20','10270540TDYmbc','TicketConnecté/','shareTicket','Erreur\x20lors\x20du\x20chargement\x20de\x20l\x27historique:','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Catégorie:</strong>\x20','.loading-message','Erreur\x20lors\x20de\x20la\x20vérification\x20de\x20l\x27abonnement\x20:','Erreur','writeText','historySection','Erreur\x20lors\x20du\x20partage:','block','jspdf','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','textContent','flex','Erreur:','pageLoaderMessage','input','toLocaleString','Confirmation\x20de\x20vente','TicketsTotal','value','toFixed','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr\x20onclick=\x22window.showTicketDetailsFromHistory(\x27','410XLoAnQ','Pas\x20d\x27abonnement\x20actif','active','Vendors','message','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn-sell\x22\x20onclick=\x22window.confirmSale()\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Confirmer\x20la\x20vente\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22btn-cancel\x22\x20onclick=\x22window.cancelSale()\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Annuler\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','innerText','Vendors/','location','TicketsTransit/','checked','createIcons','16AQoWHg','Ticket\x20','notification-title','style','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><button\x20onclick=\x22window.initTicketSale(\x27','rememberMe','Erreur\x20de\x20synchronisation\x20des\x20tickets.','val','notification-message','getElementById','141dDyQCd','cyber-campus-2706f','getItem','Vérification\x20des\x20tickets\x20connectés...','log','cyber-campus-2706f.appspot.com','ceil','loaderWrapper','Aucun\x20ticket\x20disponible.','utilisateur','Erreur\x20lors\x20de\x20la\x20copie:','Erreur\x20lors\x20du\x20traitement\x20du\x20ticket\x20:','indexOf','setHours','notification-buttons','toLowerCase','VendorsHistory/','Erreur\x20lors\x20du\x20traitement\x20des\x20tickets\x20connectés\x20:','periodFilter','messagesContainer','length','submit','proceedWithSale','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','insertRow','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22timestamp\x22>','error','slice','image/png','exportToPDF','scrollHeight','\x20FCFA</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','price','createElement','cancelSale','user','loginSection','add','\x20FCFA</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><i\x20class=\x22fa-solid\x20fa-arrow-right\x22></i></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','find','admin/subscription','filterHistory','forEach','motDePasse','scrollTop','Une\x20erreur\x20est\x20survenue\x20lors\x20de\x20l\x27initialisation.','jsPDF','loginForm','appendChild','target','contains','catch','getDay','addImage','VendorsHistory','setDate','soldAt','Vérification\x20de\x20l\x27abonnement...','13DgKxHO','Aucun\x20ticket\x20à\x20vendre','none','Impossible\x20de\x20charger\x20l\x27historique','toDataURL','sort','Ticket\x20vendu\x20avec\x20succès','map','display','Impossible\x20de\x20copier\x20le\x20ticket','now','\x27)\x22>Vendre</button></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','35365Eufkxw','max','Erreur\x20lors\x20de\x20la\x20récupération\x20des\x20vendeurs:','TicketsTotal/','Impossible\x20de\x20récupérer\x20les\x20détails\x20du\x20ticket','Traitement\x20des\x20tickets\x20uniques...','index.html','Erreur\x20lors\x20du\x20traitement\x20du\x20ticket\x20','Ticket\x20introuvable\x20dans\x20l\x27historique','G-CEEFJP5LYZ','username','prix','innerHTML','75691AbfUtt','status','filter','initTicketSale','Une\x20erreur\x20est\x20survenue\x20lors\x20du\x20traitement\x20des\x20tickets.','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Prix:</strong>\x20','TicketConnecté','Erreur\x20lors\x20du\x20traitement\x20des\x20tickets\x20:','\x20vendu\x20automatiquement.','topCategory','table','719410601264','Vendeur\x20automatique','loginError','Erreur\x20de\x20synchronisation:','Détails\x20du\x20Ticket','https://cyber-campus-2706f-default-rtdb.firebaseio.com','setItem','exists','Succès','autocompleteSuggestions','href','Erreur\x20lors\x20de\x20la\x20vérification\x20de\x20l\x27abonnement','addEventListener','Erreur\x20lors\x20de\x20la\x20vente\x20automatique\x20du\x20ticket\x20:','\x20FCFA','then','AIzaSyB6AUBnK_7Vy2ABWI2JMo3ebG_Sljr8XlY','Aucun\x20vendeur\x20trouvé.','endDate','closeHistory','redirectToSubscription','removeItem','1vCvcBj','1127042NTlaNe','usernameTimestamp','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p>','Vérification\x20du\x20ticket\x20pour\x20','Ticket\x20copié\x20dans\x20le\x20presse-papiers!','TicketsTransit','984EYewUE','47384cokcXg','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p><strong>Mot\x20de\x20passe:</strong>\x20','querySelector','Erreur\x20lors\x20de\x20la\x20vente\x20automatique\x20du\x20ticket.','Vente\x20du\x20ticket\x20','content','Abonnement\x20expiré','hideNotification','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Catégorie</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Prix\x20(FCFA)</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Restants</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Action</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','div','5ePymeN','TicketsVendus','ticket-actions','notification','keys','Ticket\x20vendu\x20avec\x20succès!','timestamp','Plus\x20de\x20tickets\x20disponibles','ticket.pdf','historyTableBody','messagesSection'];_0x16e7=function(){return _0x5a1121;};return _0x16e7();}function _0x3fab(_0x3a375f,_0x4944b3){const _0x16e777=_0x16e7();return _0x3fab=function(_0x3fab2e,_0x5d474c){_0x3fab2e=_0x3fab2e-0x12d;let _0x5720b1=_0x16e777[_0x3fab2e];return _0x5720b1;},_0x3fab(_0x3a375f,_0x4944b3);}async function processConnectedTickets(){const _0x1beadf=_0x4683ec,_0x500765=document[_0x1beadf(0x1c5)](_0x1beadf(0x1a8));try{_0x500765[_0x1beadf(0x1a5)]=_0x1beadf(0x1c9);const _0x5af162=ref(db,_0x1beadf(0x148)),_0x200f93=await get(_0x5af162);let _0x1afd42=_0x200f93[_0x1beadf(0x1c3)]()||{};const _0x2cbe54={};for(const _0x46dcd8 in _0x1afd42){const _0x2efbd9=_0x1afd42[_0x46dcd8][_0x1beadf(0x13f)];!_0x2cbe54[_0x2efbd9]&&(_0x2cbe54[_0x2efbd9]=_0x1afd42[_0x46dcd8]);}_0x500765['textContent']=_0x1beadf(0x13a);for(const _0x273d4a in _0x2cbe54){await processTicket(_0x2cbe54[_0x273d4a]);}_0x500765[_0x1beadf(0x1a5)]='Nettoyage\x20des\x20tickets\x20traités...';for(const _0x106d06 in _0x2cbe54){const _0x181a19=Object[_0x1beadf(0x179)](_0x1afd42)[_0x1beadf(0x1ed)](_0x50c0f2=>_0x1afd42[_0x50c0f2][_0x1beadf(0x13f)]===_0x106d06);_0x181a19&&await remove(ref(db,_0x1beadf(0x198)+_0x181a19));}}catch(_0x11532b){console[_0x1beadf(0x1e0)](_0x1beadf(0x1d7),_0x11532b),showNotification(_0x1beadf(0x19e),_0x1beadf(0x146));}}async function processTicket(_0x5ebcf9){const _0x3b3c18=_0x4683ec,_0x87776e=document[_0x3b3c18(0x1c5)](_0x3b3c18(0x1a8));try{_0x87776e[_0x3b3c18(0x1a5)]=_0x3b3c18(0x167)+_0x5ebcf9[_0x3b3c18(0x13f)]+'...';const _0x3a4fff=ref(db,_0x3b3c18(0x1fc)),_0x53d0c0=await get(_0x3a4fff),_0x2b48b3=_0x53d0c0[_0x3b3c18(0x1c3)]()||{};let _0xe7bd92=![];for(const _0x2ce50a in _0x2b48b3){const _0x1ef15a=_0x2b48b3[_0x2ce50a];for(const _0x3c5779 in _0x1ef15a){if(_0x1ef15a[_0x3c5779][_0x3b3c18(0x1e9)]===_0x5ebcf9[_0x3b3c18(0x13f)]){_0xe7bd92=!![];break;}}if(_0xe7bd92)break;}if(!_0xe7bd92){_0x87776e[_0x3b3c18(0x1a5)]='Traitement\x20du\x20ticket\x20'+_0x5ebcf9['username']+'...';const _0x5b8b17=ref(db,_0x3b3c18(0x1ac)),_0x67e409=ref(db,_0x3b3c18(0x169)),_0x7d4627=await get(_0x5b8b17),_0x5e86e4=await get(_0x67e409),_0x5cb7f0=_0x7d4627[_0x3b3c18(0x1c3)]()||{},_0x53a5a0=_0x5e86e4[_0x3b3c18(0x1c3)]()||{};let _0x4c8e8b=null,_0x4cf3a7=null,_0x3a3fc3=null;for(const _0x5068f4 in _0x5cb7f0){const _0x4eee72=(_0x5cb7f0[_0x5068f4][_0x3b3c18(0x1cf)]||[])[_0x3b3c18(0x1d2)](_0x5ebcf9[_0x3b3c18(0x13f)]);if(_0x4eee72>-0x1){_0x4c8e8b={'category':_0x5068f4,'user':_0x5cb7f0[_0x5068f4][_0x3b3c18(0x1cf)][_0x4eee72],'password':_0x5cb7f0[_0x5068f4][_0x3b3c18(0x1f1)][_0x4eee72],'price':_0x5cb7f0[_0x5068f4][_0x3b3c18(0x140)][_0x4eee72],'updatedData':{..._0x5cb7f0[_0x5068f4],'utilisateur':_0x5cb7f0[_0x5068f4][_0x3b3c18(0x1cf)][_0x3b3c18(0x144)]((_0x319315,_0x12219e)=>_0x12219e!==_0x4eee72),'motDePasse':_0x5cb7f0[_0x5068f4][_0x3b3c18(0x1f1)]['filter']((_0xd2be2,_0x16a7a8)=>_0x16a7a8!==_0x4eee72),'prix':_0x5cb7f0[_0x5068f4]['prix'][_0x3b3c18(0x144)]((_0x238f5c,_0x2a154e)=>_0x2a154e!==_0x4eee72)}},_0x4cf3a7=ref(db,'TicketsTotal/'+_0x5068f4),_0x3a3fc3='TicketsTotal';break;}}if(!_0x4c8e8b)for(const _0x2bb131 in _0x53a5a0){if(_0x53a5a0[_0x2bb131][_0x3b3c18(0x1e9)]===_0x5ebcf9[_0x3b3c18(0x13f)]){_0x4c8e8b={'category':_0x53a5a0[_0x2bb131][_0x3b3c18(0x192)],'user':_0x53a5a0[_0x2bb131][_0x3b3c18(0x1e9)],'password':_0x53a5a0[_0x2bb131]['password'],'price':_0x53a5a0[_0x2bb131][_0x3b3c18(0x1e6)]},_0x4cf3a7=ref(db,_0x3b3c18(0x1b9)+_0x2bb131),_0x3a3fc3=_0x3b3c18(0x169);break;}}_0x4c8e8b&&(_0x87776e[_0x3b3c18(0x1a5)]=_0x3b3c18(0x16f)+_0x5ebcf9[_0x3b3c18(0x13f)]+'...',await sellTicketAutomatically(_0x4c8e8b,_0x4cf3a7,_0x3a3fc3));}}catch(_0x27d5da){console['error'](_0x3b3c18(0x1d1),_0x27d5da),showNotification('Erreur',_0x3b3c18(0x13c)+_0x5ebcf9['username']+'.');}}async function sellTicketAutomatically(_0x441445,_0x29881a,_0x54bcc7){const _0x590a84=_0x4683ec;try{const _0x563f19=_0x590a84(0x14e),_0x4d1357=ref(db,_0x590a84(0x1d6)+_0x563f19);await push(_0x4d1357,{'category':_0x441445['category'],'user':_0x441445[_0x590a84(0x1e9)],'password':_0x441445[_0x590a84(0x187)],'price':_0x441445[_0x590a84(0x1e6)],'soldAt':Date[_0x590a84(0x133)]()});const _0x469609=ref(db,_0x590a84(0x176));await push(_0x469609,{'category':_0x441445[_0x590a84(0x192)],'user':_0x441445[_0x590a84(0x1e9)],'password':_0x441445[_0x590a84(0x187)],'price':_0x441445['price'],'soldAt':Date[_0x590a84(0x133)](),'vendorId':_0x563f19}),_0x54bcc7==='TicketsTotal'?await set(_0x29881a,_0x441445['updatedData']):await remove(_0x29881a),console['log'](_0x590a84(0x1bd)+_0x441445['user']+_0x590a84(0x14a));}catch(_0x457cd1){console['error'](_0x590a84(0x15a),_0x457cd1),showNotification(_0x590a84(0x19e),_0x590a84(0x16e));}}function showSubscriptionRequiredModal(){const _0x3eaa99=_0x4683ec;subscriptionRequiredModal[_0x3eaa99(0x1bf)][_0x3eaa99(0x131)]='flex';}function hideSubscriptionRequiredModal(){const _0x4f8214=_0x4683ec;subscriptionRequiredModal[_0x4f8214(0x1bf)]['display']=_0x4f8214(0x202);}function redirectToSubscription(){const _0x2b8b41=_0x4683ec;window[_0x2b8b41(0x1b8)][_0x2b8b41(0x157)]=_0x2b8b41(0x13b);}async function checkSubscriptionStatus(){const _0x3346a8=_0x4683ec,_0x308b51=document['getElementById'](_0x3346a8(0x1a8));_0x308b51['textContent']=_0x3346a8(0x1ff);try{const _0x1d7942=await get(adminRef),_0x37e230=_0x1d7942[_0x3346a8(0x1c3)](),_0x2626d7=new Date();if(_0x37e230&&_0x37e230[_0x3346a8(0x143)]===_0x3346a8(0x1b2)){const _0x5e23aa=new Date(_0x37e230[_0x3346a8(0x15f)]);_0x5e23aa<_0x2626d7?(_0x308b51[_0x3346a8(0x1a5)]=_0x3346a8(0x171),showSubscriptionRequiredModal(),await adminRef['update']({'status':'expired'})):_0x308b51[_0x3346a8(0x1a5)]='Abonnement\x20actif';}else _0x308b51[_0x3346a8(0x1a5)]=_0x3346a8(0x1b1),showSubscriptionRequiredModal();}catch(_0x5e7b56){console['error'](_0x3346a8(0x19d),_0x5e7b56),_0x308b51[_0x3346a8(0x1a5)]=_0x3346a8(0x158),showNotification(_0x3346a8(0x19e),'Erreur\x20lors\x20de\x20la\x20vérification\x20de\x20l\x27abonnement.');}}document[_0x4683ec(0x159)]('DOMContentLoaded',()=>{const _0x4a7179=_0x4683ec;showPageLoader(),processConnectedTickets()[_0x4a7179(0x15c)](()=>checkSubscriptionStatus())[_0x4a7179(0x15c)](()=>{fetchVendors(),lucide['createIcons'](),hidePageLoader();})[_0x4a7179(0x1f9)](_0x49e206=>{const _0x573022=_0x4a7179;console[_0x573022(0x1e0)](_0x573022(0x149),_0x49e206),hidePageLoader(),showNotification('Erreur',_0x573022(0x1f3));});}),window[_0x4683ec(0x161)]=redirectToSubscription,window['hideSubscriptionRequiredModal']=redirectToSubscription;
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get, set, push, remove, onChildAdded } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    
+        const firebaseConfig = {
+  apiKey: "AIzaSyCqYu8n0ct6KcMhiEvTKO74mh824PrNXfk",
+  authDomain: "cyberdemo-a38fc.firebaseapp.com",
+  databaseURL: "https://cyberdemo-a38fc-default-rtdb.firebaseio.com",
+  projectId: "cyberdemo-a38fc",
+  storageBucket: "cyberdemo-a38fc.firebasestorage.app",
+  messagingSenderId: "560596573477",
+  appId: "1:560596573477:web:f576224af5650fc081cecc",
+  measurementId: "G-XH1RH6DYK5"
+};
+    
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const adminRef = ref(db, 'admin/subscription');
+    
+        let ticketToSell = null;
+        let localTickets = {};
+        let currentReservedTicket = null;
+        let currentVendorId = '';
+        let vendors = {}; // Stockera les informations de connexion des partenaires
+        let availableUsernames = []; // Liste des noms d'utilisateur disponibles pour l'autocomplétion
+        window.jsPDF = window.jspdf.jsPDF;
+        // Fonction pour récupérer les informations de connexion des partenaires
+        async function fetchVendors() {
+            try {
+                const vendorsRef = ref(db, 'Vendors');
+                const snapshot = await get(vendorsRef);
+                if (snapshot.exists()) {
+                    vendors = snapshot.val();
+                    availableUsernames = Object.keys(vendors); // Mettre à jour la liste des noms d'utilisateur
+                } else {
+                    console.log("Aucun vendeur trouvé.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la récupération des vendeurs:", error);
+            }
+        }
+    
+// --- Autocomplétion ---
+const usernameInput = document.getElementById('username');
+const passwordInput = document.getElementById('password'); // Ajout pour le champ de mot de passe
+const suggestionsList = document.getElementById('autocompleteSuggestions');
+
+usernameInput.addEventListener('input', () => {
+    const inputValue = usernameInput.value.toLowerCase();
+    const suggestions = availableUsernames.filter(username => username.toLowerCase().startsWith(inputValue));
+
+    suggestionsList.innerHTML = ''; // Effacer les suggestions précédentes
+    if (inputValue.length === 0 || suggestions.length === 0) {
+        suggestionsList.style.display = 'none'; // Cacher la liste si aucune suggestion
+        return; // Sortir de la fonction si l'input est vide
+    }
+
+    suggestions.forEach(suggestion => {
+        const listItem = document.createElement('li');
+        listItem.textContent = suggestion;
+        listItem.addEventListener('click', () => {
+            usernameInput.value = suggestion;
+            suggestionsList.innerHTML = ''; // Effacer les suggestions
+            suggestionsList.style.display = 'none'; // Cacher la liste
+        });
+        suggestionsList.appendChild(listItem);
+    });
+
+    suggestionsList.style.display = 'block'; // Afficher la liste de suggestions
+});
+
+// Cacher les suggestions si on clique en dehors
+document.addEventListener('click', (event) => {
+    if (!usernameInput.contains(event.target) && !suggestionsList.contains(event.target)) {
+        suggestionsList.style.display = 'none';
+    }
+});
+
+// --- Mémorisation de l'ID et du MOT DE PASSE (DÉCONSEILLÉ) ---
+const rememberMeCheckbox = document.getElementById('rememberMe');
+
+// Pré-remplir l'ID et le MOT DE PASSE si mémorisés
+const storedUsername = localStorage.getItem('username');
+const storedPassword = localStorage.getItem('password'); // Ajout pour le mot de passe
+const storedTimestamp = localStorage.getItem('usernameTimestamp'); // Le timestamp est commun
+const now = Date.now();
+const twentyFourHours = 24 * 60 * 60 * 1000;
+
+if (storedUsername && storedPassword && storedTimestamp && (now - storedTimestamp < twentyFourHours)) {
+    usernameInput.value = storedUsername;
+    passwordInput.value = storedPassword; // Pré-remplir le mot de passe
+    rememberMeCheckbox.checked = true; // Cocher la case "Se souvenir de moi"
+}
+
+// Gestion du formulaire de connexion
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+const ratesSection = document.querySelector('.rates-section');
+const historySection = document.getElementById('historySection');
+const loginSection = document.getElementById('loginSection');
+const messagesSection = document.getElementById('messagesSection');
+
+loginForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    showLoader();
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+
+    if (vendors[username] && vendors[username].password === password) {
+        // Connexion réussie
+        loginError.style.display = 'none';
+        ratesSection.style.display = 'block';
+        historySection.style.display = 'none';
+        loginSection.style.display = 'none';
+        messagesSection.style.display = 'block';
+        currentVendorId = username; // Mettre à jour l'ID du vendeur actuel
+
+        // Mémoriser l'ID et le MOT DE PASSE si la case est cochée (DÉCONSEILLÉ)
+        if (rememberMeCheckbox.checked) {
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password); // Stocker le mot de passe
+            localStorage.setItem('usernameTimestamp', Date.now());
+        } else {
+            localStorage.removeItem('username');
+            localStorage.removeItem('password'); // Supprimer le mot de passe
+            localStorage.removeItem('usernameTimestamp');
+        }
+
+        // Charger les données et initialiser l'interface
+        await syncTickets();
+        loadHistory();
+        listenForNewMessages();
+        lucide.createIcons();
+        hideLoader();
+    } else {
+        // Identifiants incorrects
+        loginError.style.display = 'block';
+        loginError.textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+        hideLoader();
+    }
+});
+
+    
+        // Fonction pour synchroniser les tickets et gérer l'affichage
+        async function syncTickets() {
+            try {
+                const loadingMessage = document.querySelector('.loading-message');
+                const table = document.querySelector('.rates-section table');
+    
+                loadingMessage.style.display = 'block';
+                table.style.display = 'none';
+    
+                const ticketsTotalRef = ref(db, 'TicketsTotal');
+                const snapshot = await get(ticketsTotalRef);
+    
+                if (snapshot.exists()) {
+                    localTickets = snapshot.val();
+                    createTicketTable();
+                    loadingMessage.style.display = 'none';
+                    table.style.display = 'table';
+                } else {
+                    loadingMessage.textContent = 'Aucun ticket disponible.';
+                }
+            } catch (error) {
+                console.error("Erreur de synchronisation:", error);
+                loadingMessage.textContent = "Erreur de synchronisation des tickets.";
+            }
+        }
+    
+        // Mise à jour de la création du tableau pour afficher uniquement les tickets disponibles avec leur nombre restant
+        async function createTicketTable() {
+            const table = document.querySelector('.rates-section table');
+            table.innerHTML = `
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Prix (FCFA)</th>
+                    <th>Restants</th>
+                    <th>Action</th>
+                </tr>
+            `;
+
+            for (const [category, data] of Object.entries(localTickets)) {
+                const remaining = data.utilisateur ? data.utilisateur.length : 0;
+                if (remaining > 0) {
+                    const price = data.prix[0];
+                    const row = table.insertRow();
+                    row.innerHTML = `
+                        <td>${category}</td>
+                        <td>${price}</td>
+                        <td>${remaining}</td>
+                        <td><button onclick="window.initTicketSale('${category}')">Vendre</button></td>
+                    `;
+                }
+            }
+
+            document.querySelector('.loading-message').style.display = 'none';
+            table.style.display = 'table';
+        }
+    
+        // Modification de la fonction initTicketSale pour demander confirmation
+        window.initTicketSale = async function(category) {
+            showLoader();
+            try {
+                const ticketsTotalRef = ref(db, `TicketsTotal/${category}`);
+                const snapshot = await get(ticketsTotalRef);
+    
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    if (!data.utilisateur || data.utilisateur.length === 0) {
+                        throw new Error("Plus de tickets disponibles");
+                    }
+    
+                    ticketToSell = {
+                        category: category,
+                        user: data.utilisateur[0],
+                        password: data.motDePasse[0],
+                        price: data.prix[0],
+                        updatedData: {
+                            ...data,
+                            utilisateur: data.utilisateur.slice(1),
+                            motDePasse: data.motDePasse.slice(1),
+                            prix: data.prix.slice(1)
+                        }
+                    };
+    
+                    showConfirmation(ticketToSell);
+                    hideLoader();
+                }
+            } catch (error) {
+                console.error("Erreur:", error);
+                showNotification("Erreur", "Impossible de récupérer le ticket");
+                hideLoader();
+            }
+        };
+    
+        // Fonction pour afficher la confirmation
+        function showConfirmation(ticket) {
+            const notification = document.getElementById('notification');
+            const message = document.getElementById('notification-message');
+            const ticketActions = document.getElementById('ticket-actions');
+            const confirmationButtons = document.getElementById('confirmation-buttons');
+    
+            document.getElementById('notification-title').textContent = 'Confirmation de vente';
+            message.innerHTML = `
+                <p>Voulez-vous vendre ce ticket ?</p>
+                <p><strong>Catégorie:</strong> ${ticket.category}</p>
+                <p><strong>Prix:</strong> ${ticket.price} FCFA</p>
+            `;
+    
+            confirmationButtons.style.display = 'flex';
+            ticketActions.style.display = 'none';
+            notification.style.display = 'block';
+        }
+    
+        // Fonction pour procéder à la vente après confirmation
+        window.proceedWithSale = async function() {
+            showLoader();
+            if (!ticketToSell) {
+                showNotification("Erreur", "Aucun ticket à vendre");
+                hideLoader();
+                return;
+            }
+    
+            try {
+                // Mettre à jour la base de données
+                const ticketsTotalRef = ref(db, `TicketsTotal/${ticketToSell.category}`);
+                await set(ticketsTotalRef, ticketToSell.updatedData);
+    
+                // Ajouter aux tickets vendus
+                const ticketsVendusRef = ref(db, 'TicketsVendus');
+                await push(ticketsVendusRef, {
+                    category: ticketToSell.category,
+                    user: ticketToSell.user,
+                    password: ticketToSell.password,
+                    price: ticketToSell.price,
+                    soldAt: Date.now(),
+                    vendorId: currentVendorId
+                });
+    
+                // Ajouter à l'historique du vendeur
+                const vendorHistoryRef = ref(db, `VendorsHistory/${currentVendorId}`);
+                await push(vendorHistoryRef, {
+                    category: ticketToSell.category,
+                    user: ticketToSell.user,
+                    password: ticketToSell.password,
+                    price: ticketToSell.price,
+                    soldAt: Date.now()
+                });
+    
+                // Afficher les détails du ticket vendu
+                showTicketDetails(ticketToSell);
+                await syncTickets();
+                hideLoader();
+            } catch (error) {
+                console.error("Erreur lors de la vente:", error);
+                showNotification("Erreur", "Impossible de finaliser la vente");
+                hideLoader();
+            }
+    
+            ticketToSell = null;
+        };
+    
+        // Fonction pour afficher les détails après la vente
+        function showTicketDetails(ticket) {
+            const notification = document.getElementById('notification');
+            const message = document.getElementById('notification-message');
+            const ticketActions = document.getElementById('ticket-actions');
+            const confirmationButtons = document.getElementById('confirmation-buttons');
+    
+            document.getElementById('notification-title').textContent = 'Ticket vendu avec succès';
+            message.innerHTML = `
+                <p><strong>Catégorie:</strong> ${ticket.category}</p>
+                <p><strong>Nom d'utilisateur:</strong> ${ticket.user}</p>
+                <p><strong>Mot de passe:</strong> ${ticket.password}</p>
+                <p><strong>Prix:</strong> ${ticket.price} FCFA</p>
+            `;
+    
+            confirmationButtons.style.display = 'none';
+            ticketActions.style.display = 'flex';
+            notification.style.display = 'block';
+            lucide.createIcons();
+        }
+        // Afficher la confirmation de vente
+        function showSaleConfirmation(ticket) {
+            const notification = document.getElementById('notification');
+            const message = document.getElementById('notification-message');
+            const buttons = document.getElementById('notification-buttons');
+    
+            message.innerHTML = `
+                <p><strong>Catégorie:</strong> ${ticket.category}</p>
+                <p><strong>Nom d'utilisateur:</strong> ${ticket.user}</p>
+                <p><strong>Mot de passe:</strong> ${ticket.password}</p>
+                <p><strong>Prix:</strong> ${ticket.price} FCFA</p>
+            `;
+    
+            buttons.innerHTML = `
+                <button class="btn-sell" onclick="window.confirmSale()">
+                    Confirmer la vente
+                </button>
+                <button class="btn-cancel" onclick="window.cancelSale()">
+                    Annuler
+                </button>
+            `;
+    
+            notification.style.display = 'block';
+            lucide.createIcons();
+        }
+    
+        // Confirmation de la vente
+        window.confirmSale = async function() {
+            showLoader();
+            if (!currentReservedTicket) {
+                showNotification("Erreur", "Aucun ticket en cours de vente");
+                hideLoader();
+                return;
+            }
+    
+            try {
+                // Ajouter aux tickets vendus
+                const ticketsVendusRef = ref(db, 'TicketsVendus');
+                await push(ticketsVendusRef, {
+                    ...currentReservedTicket,
+                    soldAt: Date.now(),
+                    vendorId: currentVendorId
+                });
+    
+                // Ajouter à l'historique du vendeur
+                const vendorHistoryRef = ref(db, `VendorsHistory/${currentVendorId}`);
+                await push(vendorHistoryRef, {
+                    ...currentReservedTicket,
+                    soldAt: Date.now()
+                });
+    
+                showNotification("Succès", "Ticket vendu avec succès!");
+                currentReservedTicket = null;
+                hideNotification();
+                await syncTickets();
+                hideLoader();
+            } catch (error) {
+                console.error("Erreur de confirmation:", error);
+                showNotification("Erreur", "Erreur lors de la confirmation de la vente");
+                hideLoader();
+            }
+        };
+    
+        // Annulation de la vente
+        window.cancelSale = function() {
+            currentReservedTicket = null;
+            hideNotification();
+        };
+    
+        // Notifications
+        function showNotification(title, message) {
+            const notification = document.getElementById('notification');
+            const notificationTitle = document.getElementById('notification-title');
+            const notificationMessage = document.getElementById('notification-message');
+            const buttons = document.getElementById('notification-buttons');
+            const ticketActions = document.getElementById('ticket-actions');
+
+            notificationTitle.textContent = title;
+            notificationMessage.innerHTML = message;
+
+            if (title === "Succès" || title === "Erreur") {
+                buttons.style.display = 'none';
+                ticketActions.style.display = 'none';
+            } else {
+                buttons.style.display = 'flex';
+                ticketActions.style.display = 'none';
+            }
+
+            notification.style.display = 'block';
+        }
+    
+        window.hideNotification = function() {
+            document.getElementById('notification').style.display = 'none';
+        };
+    
+        // Chargement de l'historique
+        async function loadHistory() {
+            showLoader();
+            try {
+                const historyRef = ref(db, `VendorsHistory/${currentVendorId}`);
+                const snapshot = await get(historyRef);
+    
+                let salesHistory = [];
+                if (snapshot.exists()) {
+                    salesHistory = Object.entries(snapshot.val()).map(([id, data]) => ({
+                        id,
+                        ...data
+                    }));
+                }
+                filterHistory(salesHistory);
+                hideLoader();
+            } catch (error) {
+                console.error("Erreur lors du chargement de l'historique:", error);
+                showNotification("Erreur", "Impossible de charger l'historique");
+                hideLoader();
+            }
+        }
+    
+        // Filtrage de l'historique par période
+        function filterHistory(salesHistory) {
+            const period = document.getElementById('periodFilter').value;
+            const now = new Date();
+            const startOf = {
+                today: new Date(now.setHours(0,0,0,0)),
+                week: new Date(now.setDate(now.getDate() - now.getDay())),
+                month: new Date(now.setDate(1)),
+                all: new Date(0)
+            };
+    
+            const filteredSales = salesHistory.filter(sale =>
+                new Date(sale.soldAt) >= startOf[period]
+            );
+    
+            updateStats(filteredSales);
+            updateHistoryTable(filteredSales);
+        }
+    
+        // Mise à jour des statistiques
+        function updateStats(sales) {
+            const totalTickets = sales.length;
+            const totalRevenue = sales.reduce((sum, sale) => sum + parseFloat(sale.price), 0);
+            
+            const categoryCounts = sales.reduce((acc, sale) => {
+                acc[sale.category] = (acc[sale.category] || 0) + 1;
+                return acc;
+            }, {});
+            const topCategory = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || '-';
+    
+            const days = sales.length > 0 ? 
+                Math.max(1, Math.ceil((Date.now() - Math.min(...sales.map(s => s.soldAt))) / (1000 * 60 * 60 * 24))) : 1;
+            const avgDaily = (totalTickets / days).toFixed(1);
+    
+            document.getElementById('totalTickets').textContent = totalTickets;
+            document.getElementById('totalRevenue').textContent = `${totalRevenue.toLocaleString()} FCFA`;
+            document.getElementById('topCategory').textContent = topCategory;
+            document.getElementById('avgDaily').textContent = avgDaily;
+        }
+    
+        // Mise à jour du tableau d'historique
+        function updateHistoryTable(sales) {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = sales
+                .sort((a, b) => b.soldAt - a.soldAt)
+                .map(sale => `
+                    <tr onclick="window.showTicketDetailsFromHistory('${sale.id}')" style="cursor: pointer;">
+                        <td>${new Date(sale.soldAt).toLocaleString()}</td>
+                        <td>${sale.category}</td>
+                        <td>${sale.user}</td>
+                        <td>${sale.price} FCFA</td>
+                        <td><i class="fa-solid fa-arrow-right"></i></td>
+                    </tr>
+                `).join('');
+        }
+
+        window.showTicketDetailsFromHistory = async function(saleId){
+            showLoader();
+            try{
+                const historyRef = ref(db, `VendorsHistory/${currentVendorId}/${saleId}`);
+                const snapshot = await get(historyRef);
+                if (snapshot.exists()) {
+                    const sale = snapshot.val();
+                    window.closeHistory();
+                    showTicketDetails(sale);
+                    hideLoader();
+                } else {
+                    showNotification("Erreur", "Ticket introuvable dans l'historique");
+                    hideLoader();
+                }
+            }catch (error){
+                console.error("Erreur lors de la récupération du ticket:", error);
+                showNotification("Erreur", "Impossible de récupérer les détails du ticket");
+                hideLoader();
+            }
+        }
+    
+        // Gestionnaire pour le bouton d'historique
+        window.toggleHistory = function() {
+            const historySection = document.getElementById('historySection');
+            const isVisible = historySection.style.display === 'block';
+            historySection.style.display = isVisible ? 'none' : 'block';
+            if (!isVisible) {
+                loadHistory();
+            }
+        };
+    
+        window.closeHistory = function() {
+            document.getElementById('historySection').style.display = 'none';
+        };
+    
+        // Ajouter la fonction de filtrage à window pour l'accès depuis le HTML
+        window.filterHistory = function() {
+            loadHistory();
+        };
+    
+        // Fonction pour écouter les nouveaux messages
+        function listenForNewMessages() {
+            const messagesRef = ref(db, `Vendors/${currentVendorId}/messages`);
+    
+            onChildAdded(messagesRef, (snapshot) => {
+                const message = snapshot.val();
+                displayNewMessage(message);
+            });
+        }
+    
+        // Fonction pour afficher un nouveau message
+        function displayNewMessage(message) {
+            const messagesContainer = document.getElementById('messagesContainer');
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+            messageElement.innerHTML = `
+                <p>${message.content}</p>
+                <span class="timestamp">${new Date(message.timestamp).toLocaleString()}</span>
+            `;
+            messagesContainer.appendChild(messageElement);
+    
+            // Scroll vers le bas pour afficher le dernier message
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        // Fonction pour partager un ticket 
+        window.shareTicket = function() {
+            const ticketDetails = document.getElementById('notification-message').innerText;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Détails du Ticket',
+                    text: ticketDetails,
+                })
+                .then(() => console.log('Partage réussi'))
+                .catch((error) => console.error('Erreur lors du partage:', error));
+            } else {
+                // Méthode alternative si navigator.share n'est pas supporté
+                alert("Le partage n'est pas supporté sur votre navigateur. Veuillez copier manuellement les détails du ticket.");
+            }
+        };
+
+        // Fonction pour copier un ticket dans le presse-papiers
+        window.copyTicket = function() {
+            const ticketDetails = document.getElementById('notification-message').innerText;
+            navigator.clipboard.writeText(ticketDetails)
+                .then(() => {
+                    showNotification("Succès", "Ticket copié dans le presse-papiers!");
+                })
+                .catch(err => {
+                    console.error("Erreur lors de la copie:", err);
+                    showNotification("Erreur", "Impossible de copier le ticket");
+                });
+        };
+
+        // Fonction pour exporter un ticket en PDF
+        window.exportToPDF = async function() {
+            showLoader();
+            const ticketDetails = document.getElementById('notification-message');
+            const pdf = new jsPDF();
+            
+            // Convertir le HTML en canvas
+            const canvas = await html2canvas(ticketDetails);
+            const imgData = canvas.toDataURL('image/png');
+
+            // Ajouter l'image au PDF
+            pdf.addImage(imgData, 'PNG', 10, 10, 190, 0);
+
+            // Sauvegarder le PDF
+            pdf.save('ticket.pdf');
+            hideLoader();
+        };
+
+        function showLoader() {
+            document.getElementById('loaderWrapper').style.display = 'block';
+        }
+
+        function hideLoader() {
+            document.getElementById('loaderWrapper').style.display = 'none';
+        }
+
+        function showPageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'flex';
+        }
+
+        function hidePageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'none';
+        }
+
+
+        function showSubscriptionRequiredModal() {
+            subscriptionRequiredModal.style.display = 'flex';
+        }
+
+        function hideSubscriptionRequiredModal() {
+            subscriptionRequiredModal.style.display = 'none';
+        }
+
+        function redirectToSubscription() {
+            window.location.href = 'index.html';
+            
+        }
+        async function checkSubscriptionStatus() {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            pageLoaderMessage.textContent = "Vérification de l'abonnement...";
+
+            try {
+                const snapshot = await get(adminRef);
+                const subscription = snapshot.val();
+                const now = new Date();
+
+                if (subscription && subscription.status === 'active') {
+                    const endDate = new Date(subscription.endDate);
+                    if (endDate < now) {
+                        // Abonnement expiré
+                        pageLoaderMessage.textContent = "Abonnement expiré";
+                        showSubscriptionRequiredModal();
+                        await adminRef.update({ status: 'expired' });
+                    } else {
+                        // Abonnement actif
+                        pageLoaderMessage.textContent = "Abonnement actif";
+                    }
+                } else {
+                    // Pas d'abonnement
+                    pageLoaderMessage.textContent = "Pas d'abonnement actif";
+                    showSubscriptionRequiredModal();
+                }
+            } catch (error) {
+                console.error("Erreur lors de la vérification de l'abonnement :", error);
+                pageLoaderMessage.textContent = "Erreur lors de la vérification de l'abonnement";
+                showNotification("Erreur", "Erreur lors de la vérification de l'abonnement.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+    checkSubscriptionStatus()
+        .then(() => {
+            fetchVendors();
+            lucide.createIcons();
+            hidePageLoader()
+        })
+        .catch((error) => {
+            console.error("Erreur lors de l'initialisation :", error);
+            showNotification("Erreur", "Une erreur est survenue lors de l'initialisation.");
+            hidePageLoader()
+               });
+});
+        window.redirectToSubscription = redirectToSubscription;
+        window.hideSubscriptionRequiredModal = redirectToSubscription;
     </script>
 </body>
 </html>

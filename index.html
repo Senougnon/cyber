@@ -12,6 +12,7 @@
     <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
 
     <style>
+        /* ... (Styles CSS - Pas de modifications ici) ... */
         /* Style pour le modal de paiement */
         .payment-modal {
             display: none;
@@ -167,9 +168,75 @@
         .subscription-required-content button:hover {
             background-color: #e6a727;
         }
+        .loader-wrapper {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+
+        .loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #fdbb2d;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .page-loader-wrapper {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1002;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .page-loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #fdbb2d;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        .loader-message {
+            color: white;
+            margin-top: 16px;
+            font-size: 1rem;
+            text-align: center;
+            max-width: 80%;
+        }
     </style>
 </head>
 <body>
+    <div class="page-loader-wrapper" id="pageLoaderWrapper">
+        <div class="page-loader"></div>
+        <div class="loader-message" id="pageLoaderMessage">Initialisation...</div>
+    </div>
+    <div class="loader-wrapper" id="loaderWrapper">
+        <div class="loader"></div>
+    </div>
     <div class="container">
         <header>
             <h1>Gestion Wifi Zone</h1>
@@ -232,8 +299,425 @@
 
     <div class="overlay" id="overlay" style="display: none;" onclick="closePaymentModal()"></div>
 
-     <script>
-const _0x64af67=_0x6e71;function _0x371b(){const _0x11da08=['Données\x20d\x27abonnement\x20tentées:','loginAccueil.html','val','https://cyber-campus-2706f-default-rtdb.firebaseio.com','Erreur\x20lors\x20de\x20l\x27annulation\x20de\x20l\x27abonnement:','Erreur\x20lors\x20de\x20l\x27annulation\x20de\x20l\x27abonnement.','vente','click','style','cancelled','yearly','9TqCRCp','endDate','href','stock','subscriptionStatus','AIzaSyB6AUBnK_7Vy2ABWI2JMo3ebG_Sljr8XlY','addEventListener','G-CEEFJP5LYZ','cancelSubscription','status','isLoggedIn','textContent','color','subscribeYearly','database','inline-block','Abonnement\x20annuel','getFullYear','Statut\x20de\x20l\x27abonnement:\x20Inactif','1274180nXWNrx','none','1:719410601264:web:44fd2e3757721866303cf5','getElementById','cyber-campus-2706f','monthly','value','6EPcsID','Stock.html','active','update','paymentModal','error','createIcons','getItem','green','onload','Abonnement\x20','mensuel','expired','ref','DOMContentLoaded','initializeApp','pageshow','AdminVentePartenaires.html','Abonnement\x20annulé.','DIALOG_DISMISSED','PageVenteTicket.html','inventaire','2574195glTety','a3.html','getMonth','admin/subscription','toISOString','admin@example.com','2gMuKUQ','253cVzoYq','preventDefault','\x20réussi!','7681472OOKVcv','Abonnement\x20mensuel','subscribeMonthly','toLocaleDateString','location','subscriptionRequiredModal','Détails\x20de\x20la\x20réponse\x20de\x20FedaPay:','974234HeeSph','open','administration','reason','setMonth','3357875GVDztG','5171908imntxY','cyber-campus-2706f.firebaseapp.com','Erreur\x20lors\x20de\x20la\x20mise\x20à\x20jour\x20de\x20l\x27abonnement:','pk_live_TfSz212W0xSMKK7oPEogkFmp','display','940068CZKGiD','4POmXiz','replace','init','Statut\x20de\x20l\x27abonnement:\x20Actif\x20jusqu\x27au\x20'];_0x371b=function(){return _0x11da08;};return _0x371b();}(function(_0x580156,_0xae8604){const _0x2bf041=_0x6e71,_0x2bd36f=_0x580156();while(!![]){try{const _0x55c7e8=-parseInt(_0x2bf041(0x1e8))/0x1*(-parseInt(_0x2bf041(0x1f3))/0x2)+parseInt(_0x2bf041(0x1e2))/0x3+parseInt(_0x2bf041(0x1ff))/0x4*(parseInt(_0x2bf041(0x1f8))/0x5)+parseInt(_0x2bf041(0x228))/0x6*(parseInt(_0x2bf041(0x1f9))/0x7)+-parseInt(_0x2bf041(0x1ec))/0x8*(parseInt(_0x2bf041(0x20e))/0x9)+parseInt(_0x2bf041(0x221))/0xa+parseInt(_0x2bf041(0x1e9))/0xb*(-parseInt(_0x2bf041(0x1fe))/0xc);if(_0x55c7e8===_0xae8604)break;else _0x2bd36f['push'](_0x2bd36f['shift']());}catch(_0x8e09bc){_0x2bd36f['push'](_0x2bd36f['shift']());}}}(_0x371b,0x9479b));const firebaseConfig={'apiKey':_0x64af67(0x213),'authDomain':_0x64af67(0x1fa),'databaseURL':_0x64af67(0x206),'projectId':_0x64af67(0x225),'storageBucket':'cyber-campus-2706f.appspot.com','messagingSenderId':'719410601264','appId':_0x64af67(0x223),'measurementId':_0x64af67(0x215)};firebase[_0x64af67(0x1db)](firebaseConfig);const database=firebase[_0x64af67(0x21c)](),adminRef=database[_0x64af67(0x1d9)](_0x64af67(0x1e5)),venteMenuItem=document[_0x64af67(0x224)](_0x64af67(0x209)),inventaireMenuItem=document[_0x64af67(0x224)](_0x64af67(0x1e1)),stockMenuItem=document[_0x64af67(0x224)](_0x64af67(0x211)),administrationMenuItem=document[_0x64af67(0x224)](_0x64af67(0x1f5)),subscriptionStatus=document['getElementById'](_0x64af67(0x212)),subscribeMonthlyButton=document[_0x64af67(0x224)](_0x64af67(0x1ee)),subscribeYearlyButton=document[_0x64af67(0x224)](_0x64af67(0x21b)),cancelSubscriptionButton=document['getElementById'](_0x64af67(0x216)),paymentModal=document[_0x64af67(0x224)](_0x64af67(0x22c)),overlay=document['getElementById']('overlay'),subscriptionRequiredModal=document[_0x64af67(0x224)](_0x64af67(0x1f1));(function(){const _0x4d7856=_0x64af67,_0x4149d9=sessionStorage['getItem'](_0x4d7856(0x218));!_0x4149d9&&window[_0x4d7856(0x1f0)]['replace'](_0x4d7856(0x204));}()),document['addEventListener']('DOMContentLoaded',function(){const _0x126202=_0x64af67;!sessionStorage[_0x126202(0x22f)](_0x126202(0x218))&&window[_0x126202(0x1f0)]['replace'](_0x126202(0x204));}),window[_0x64af67(0x214)](_0x64af67(0x1dc),function(_0x2e7d7b){const _0x4e35de=_0x64af67;(_0x2e7d7b['persisted']||!sessionStorage['getItem']('isLoggedIn'))&&window[_0x4e35de(0x1f0)][_0x4e35de(0x200)](_0x4e35de(0x204));});function showSubscriptionRequiredModal(){const _0x7d0e54=_0x64af67;subscriptionRequiredModal[_0x7d0e54(0x20b)][_0x7d0e54(0x1fd)]='flex';}function hideSubscriptionRequiredModal(){const _0x5847f4=_0x64af67;subscriptionRequiredModal[_0x5847f4(0x20b)][_0x5847f4(0x1fd)]=_0x5847f4(0x222);}function redirectToSubscription(){hideSubscriptionRequiredModal();}function checkSubscriptionStatus(){const _0x562324=_0x64af67;adminRef['on'](_0x562324(0x227),_0x3dcdef=>{const _0x189b11=_0x562324,_0x23f271=_0x3dcdef[_0x189b11(0x205)](),_0x1de66e=new Date();if(_0x23f271&&_0x23f271[_0x189b11(0x217)]===_0x189b11(0x22a)){const _0x48fff7=new Date(_0x23f271[_0x189b11(0x20f)]);_0x48fff7<_0x1de66e?(subscriptionStatus[_0x189b11(0x219)]='Statut\x20de\x20l\x27abonnement:\x20Expiré',subscriptionStatus[_0x189b11(0x20b)][_0x189b11(0x21a)]='red',subscribeMonthlyButton['style'][_0x189b11(0x1fd)]=_0x189b11(0x21d),subscribeYearlyButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]=_0x189b11(0x21d),cancelSubscriptionButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]=_0x189b11(0x222),adminRef[_0x189b11(0x22b)]({'status':_0x189b11(0x1d8)})):(subscriptionStatus[_0x189b11(0x219)]=_0x189b11(0x202)+_0x48fff7[_0x189b11(0x1ef)](),subscriptionStatus[_0x189b11(0x20b)][_0x189b11(0x21a)]=_0x189b11(0x230),subscribeMonthlyButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]=_0x189b11(0x222),subscribeYearlyButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]='none',cancelSubscriptionButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]=_0x189b11(0x21d));}else subscriptionStatus[_0x189b11(0x219)]=_0x189b11(0x220),subscriptionStatus[_0x189b11(0x20b)]['color']='red',subscribeMonthlyButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]='inline-block',subscribeYearlyButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]=_0x189b11(0x21d),cancelSubscriptionButton[_0x189b11(0x20b)][_0x189b11(0x1fd)]=_0x189b11(0x222);});}function checkUserAccess(){const _0x19714e=_0x64af67;adminRef['once'](_0x19714e(0x227),_0x14867a=>{const _0x5447e4=_0x19714e,_0x23f016=_0x14867a[_0x5447e4(0x205)]();(!_0x23f016||_0x23f016[_0x5447e4(0x217)]!==_0x5447e4(0x22a))&&showSubscriptionRequiredModal();});}venteMenuItem['addEventListener']('click',_0x4397a7=>{const _0x7447d7=_0x64af67;_0x4397a7[_0x7447d7(0x1ea)](),checkUserAccess(),window[_0x7447d7(0x1f0)][_0x7447d7(0x210)]=_0x7447d7(0x1e0);}),inventaireMenuItem['addEventListener'](_0x64af67(0x20a),_0x519baf=>{const _0x2b6fde=_0x64af67;_0x519baf[_0x2b6fde(0x1ea)](),checkUserAccess(),window[_0x2b6fde(0x1f0)][_0x2b6fde(0x210)]=_0x2b6fde(0x1dd);}),stockMenuItem['addEventListener'](_0x64af67(0x20a),_0x466ddf=>{const _0x3e24f2=_0x64af67;_0x466ddf[_0x3e24f2(0x1ea)](),checkUserAccess(),window['location'][_0x3e24f2(0x210)]=_0x3e24f2(0x229);}),administrationMenuItem['addEventListener'](_0x64af67(0x20a),_0x6a713a=>{const _0x150150=_0x64af67;_0x6a713a[_0x150150(0x1ea)](),checkUserAccess(),window[_0x150150(0x1f0)]['href']=_0x150150(0x1e3);}),subscribeMonthlyButton[_0x64af67(0x214)](_0x64af67(0x20a),()=>{const _0x4b9783=_0x64af67;initiatePayment(_0x4b9783(0x226));}),subscribeYearlyButton[_0x64af67(0x214)](_0x64af67(0x20a),()=>{const _0xd0f0d9=_0x64af67;initiatePayment(_0xd0f0d9(0x20d));}),cancelSubscriptionButton[_0x64af67(0x214)]('click',()=>{cancelSubscription();});function initiatePayment(_0x4dd14c){const _0x4feac2=_0x64af67,_0x481670=_0x4dd14c===_0x4feac2(0x226)?0x3e8:0x2710,_0x1612ac=_0x4dd14c===_0x4feac2(0x226)?_0x4feac2(0x1ed):_0x4feac2(0x21e);FedaPay[_0x4feac2(0x201)]({'public_key':_0x4feac2(0x1fc),'transaction':{'amount':_0x481670,'description':_0x1612ac},'customer':{'email':_0x4feac2(0x1e7)},'onComplete':async function(_0x4ba946){const _0xd84ed5=_0x4feac2;if(_0x4ba946[_0xd84ed5(0x1f6)]===FedaPay[_0xd84ed5(0x1df)])alert('Paiement\x20échoué.');else _0x4ba946[_0xd84ed5(0x1f6)]===FedaPay['CHECKOUT_COMPLETED']&&handleSuccessfulPayment(_0x4dd14c,_0x4ba946);}})[_0x4feac2(0x1f4)]();}async function handleSuccessfulPayment(_0x51f37f,_0x32a933){const _0x120e9c=_0x64af67,_0x3e2800=new Date(),_0x486818=new Date(_0x3e2800);_0x51f37f===_0x120e9c(0x226)?_0x486818[_0x120e9c(0x1f7)](_0x486818[_0x120e9c(0x1e4)]()+0x1):_0x486818['setFullYear'](_0x486818[_0x120e9c(0x21f)]()+0x1);const _0xaf6f87={'status':_0x120e9c(0x22a),'startDate':_0x3e2800[_0x120e9c(0x1e6)](),'endDate':_0x486818[_0x120e9c(0x1e6)](),'transactionId':_0x32a933['transaction']['id'],'plan':_0x51f37f};try{await adminRef['set'](_0xaf6f87),checkSubscriptionStatus(),alert(_0x120e9c(0x1d6)+(_0x51f37f===_0x120e9c(0x226)?_0x120e9c(0x1d7):'annuel')+_0x120e9c(0x1eb));}catch(_0x399153){console[_0x120e9c(0x22d)](_0x120e9c(0x1fb),_0x399153),console[_0x120e9c(0x22d)](_0x120e9c(0x1f2),_0x32a933),console[_0x120e9c(0x22d)](_0x120e9c(0x203),_0xaf6f87),alert('Erreur\x20lors\x20de\x20la\x20mise\x20à\x20jour\x20de\x20l\x27abonnement.');}}async function cancelSubscription(){const _0x2f6706=_0x64af67;try{await adminRef[_0x2f6706(0x22b)]({'status':_0x2f6706(0x20c)}),checkSubscriptionStatus(),alert(_0x2f6706(0x1de));}catch(_0x3e04a8){console[_0x2f6706(0x22d)](_0x2f6706(0x207),_0x3e04a8),alert(_0x2f6706(0x208));}}function logout(){const _0x248412=_0x64af67;sessionStorage['clear'](),window['location'][_0x248412(0x200)](_0x248412(0x204));}document[_0x64af67(0x214)](_0x64af67(0x1da),()=>{const _0x3fe582=_0x64af67;checkSubscriptionStatus(),lucide[_0x3fe582(0x22e)]();});function closePaymentModal(){const _0xb0c1a9=_0x64af67;paymentModal[_0xb0c1a9(0x20b)][_0xb0c1a9(0x1fd)]='none',overlay[_0xb0c1a9(0x20b)][_0xb0c1a9(0x1fd)]=_0xb0c1a9(0x222);}function _0x6e71(_0x1b46b1,_0x42697a){const _0x371b8f=_0x371b();return _0x6e71=function(_0x6e7177,_0x5081b5){_0x6e7177=_0x6e7177-0x1d5;let _0x1c95f2=_0x371b8f[_0x6e7177];return _0x1c95f2;},_0x6e71(_0x1b46b1,_0x42697a);}window[_0x64af67(0x1d5)]=()=>{const _0xa9e294=_0x64af67;lucide[_0xa9e294(0x22e)]();};
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get, set, push, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCqYu8n0ct6KcMhiEvTKO74mh824PrNXfk",
+            authDomain: "cyberdemo-a38fc.firebaseapp.com",
+            databaseURL: "https://cyberdemo-a38fc-default-rtdb.firebaseio.com",
+            projectId: "cyberdemo-a38fc",
+            storageBucket: "cyberdemo-a38fc.firebasestorage.app",
+            messagingSenderId: "560596573477",
+            appId: "1:560596573477:web:f576224af5650fc081cecc",
+            measurementId: "G-XH1RH6DYK5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const adminRef = ref(database, 'admin/subscription');
+        const connectedTicketsRef = ref(database, 'TicketConnecté');
+
+        const venteMenuItem = document.getElementById('vente');
+        const inventaireMenuItem = document.getElementById('inventaire');
+        const stockMenuItem = document.getElementById('stock');
+        const administrationMenuItem = document.getElementById('administration');
+        const subscriptionStatus = document.getElementById('subscriptionStatus');
+        const subscribeMonthlyButton = document.getElementById('subscribeMonthly');
+        const subscribeYearlyButton = document.getElementById('subscribeYearly');
+        const cancelSubscriptionButton = document.getElementById('cancelSubscription');
+        const paymentModal = document.getElementById('paymentModal');
+        const overlay = document.getElementById('overlay');
+        const subscriptionRequiredModal = document.getElementById('subscriptionRequiredModal');
+
+        function showLoader() {
+            document.getElementById('loaderWrapper').style.display = 'block';
+        }
+
+        function hideLoader() {
+            document.getElementById('loaderWrapper').style.display = 'none';
+        }
+
+        function showPageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'flex';
+        }
+
+        function hidePageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'none';
+        }
+
+        // Vérification immédiate avant tout chargement
+        (function() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.replace('loginAccueil.html');
+            }
+        })();
+        
+        // Vérification continue pendant la session
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!sessionStorage.getItem('isLoggedIn')) {
+                window.location.replace('loginAccueil.html');
+            }
+        });
+        
+        // Empêcher le retour à la page après déconnexion
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || !sessionStorage.getItem('isLoggedIn')) {
+                window.location.replace('loginAccueil.html');
+            }
+        });
+
+        function showSubscriptionRequiredModal() {
+            subscriptionRequiredModal.style.display = 'flex';
+        }
+
+        function hideSubscriptionRequiredModal() {
+            subscriptionRequiredModal.style.display = 'none';
+        }
+
+        function redirectToSubscription() {
+            hideSubscriptionRequiredModal();
+            // Mettre l'accent sur la section d'abonnement
+        }
+
+        function checkSubscriptionStatus() {
+            get(adminRef).then((snapshot) => {
+                const subscription = snapshot.val();
+                const now = new Date();
+
+                if (subscription && subscription.status === 'active') {
+                    const endDate = new Date(subscription.endDate);
+                    if (endDate < now) {
+                        // L'abonnement a expiré
+                        subscriptionStatus.textContent = "Statut de l'abonnement: Expiré";
+                        subscriptionStatus.style.color = 'red';
+                        subscribeMonthlyButton.style.display = 'inline-block';
+                        subscribeYearlyButton.style.display = 'inline-block';
+                        cancelSubscriptionButton.style.display = 'none';
+
+                        // Mettre à jour l'état de l'abonnement dans la base de données comme 'expired'
+                        set(adminRef, { ...subscription, status: 'expired' });
+                    } else {
+                        // L'abonnement est actif
+                        subscriptionStatus.textContent = `Statut de l'abonnement: Actif jusqu'au ${endDate.toLocaleDateString()}`;
+                        subscriptionStatus.style.color = 'green';
+                        subscribeMonthlyButton.style.display = 'none';
+                        subscribeYearlyButton.style.display = 'none';
+                        cancelSubscriptionButton.style.display = 'inline-block';
+                    }
+                } else {
+                    // Pas d'abonnement actif
+                    subscriptionStatus.textContent = "Statut de l'abonnement: Inactif";
+                    subscriptionStatus.style.color = 'red';
+                    subscribeMonthlyButton.style.display = 'inline-block';
+                    subscribeYearlyButton.style.display = 'inline-block';
+                    cancelSubscriptionButton.style.display = 'none';
+                }
+            });
+        }
+
+        function checkUserAccess() {
+            get(adminRef).then((snapshot) => {
+                const subscription = snapshot.val();
+                if (!subscription || subscription.status !== 'active') {
+                    showSubscriptionRequiredModal();
+                }
+            });
+        }
+
+        venteMenuItem.addEventListener('click', (event) => {
+            event.preventDefault();
+            checkUserAccess();
+            window.location.href = 'PageVenteTicket.html';
+        });
+
+        inventaireMenuItem.addEventListener('click', (event) => {
+            event.preventDefault();
+            checkUserAccess();
+            window.location.href = 'AdminVentePartenaires.html';
+        });
+
+        stockMenuItem.addEventListener('click', (event) => {
+            event.preventDefault();
+            checkUserAccess();
+            window.location.href = 'Stock.html';
+        });
+
+        administrationMenuItem.addEventListener('click', (event) => {
+            event.preventDefault();
+            checkUserAccess();
+            window.location.href = 'a3.html';
+        });
+
+        subscribeMonthlyButton.addEventListener('click', () => {
+            initiatePayment('monthly');
+        });
+
+        subscribeYearlyButton.addEventListener('click', () => {
+            initiatePayment('yearly');
+        });
+
+        cancelSubscriptionButton.addEventListener('click', () => {
+            cancelSubscription();
+        });
+
+        function initiatePayment(plan) {
+            const amount = plan === 'monthly' ? 1000 : 10000;
+            const planDescription = plan === 'monthly' ? 'Abonnement mensuel' : 'Abonnement annuel';
+
+            FedaPay.init({
+                public_key: 'pk_live_TfSz212W0xSMKK7oPEogkFmp',
+                transaction: {
+                    amount: amount,
+                    description: planDescription,
+                },
+                customer: {
+                    email: 'admin@example.com', // Email de l'administrateur
+                },
+                onComplete: async function(response) {
+                        if (response.reason === FedaPay.DIALOG_DISMISSED) {
+                            alert('Paiement échoué.');
+                        } else if (response.reason === FedaPay.CHECKOUT_COMPLETED) {
+                            handleSuccessfulPayment(plan, response);
+                        }
+                    }
+            }).open();
+        }
+
+        async function handleSuccessfulPayment(plan, response) {
+            const startDate = new Date();
+            const endDate = new Date(startDate);
+            if (plan === 'monthly') {
+                endDate.setMonth(endDate.getMonth() + 1);
+            } else {
+                endDate.setFullYear(endDate.getFullYear() + 1);
+            }
+
+            const subscriptionData = {
+                status: 'active',
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString(),
+                transactionId: response.transaction.id,
+                plan: plan
+            };
+
+            try {
+                await set(adminRef, subscriptionData);
+                checkSubscriptionStatus();
+                alert(`Abonnement ${plan === 'monthly' ? 'mensuel' : 'annuel'} réussi!`);
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour de l\'abonnement:', error);
+                console.error('Détails de la réponse de FedaPay:', response);
+                console.error('Données d\'abonnement tentées:', subscriptionData);
+                alert('Erreur lors de la mise à jour de l\'abonnement.');
+            }
+        }
+
+        async function cancelSubscription() {
+            try {
+                await set(adminRef, { ... (await get(adminRef)).val(), status: 'cancelled' });
+                checkSubscriptionStatus();
+                alert('Abonnement annulé.');
+            } catch (error) {
+                console.error('Erreur lors de l\'annulation de l\'abonnement:', error);
+                alert('Erreur lors de l\'annulation de l\'abonnement.');
+            }
+        }
+
+        // Fonction de déconnexion améliorée
+        function logout() {
+            sessionStorage.clear(); // Nettoie toutes les données de session
+            window.location.replace('loginAccueil.html');
+        }
+        
+        async function processConnectedTickets() {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            try {
+                pageLoaderMessage.textContent = "Vérification des tickets connectés...";
+                const snapshot = await get(connectedTicketsRef);
+                let connectedTickets = snapshot.val() || {};
+
+                // Supprimer les doublons et récupérer les informations complètes des tickets
+                const uniqueTickets = {};
+                for (const ticketId in connectedTickets) {
+                    const user = connectedTickets[ticketId].username;
+                    if (!uniqueTickets[user]) {
+                        uniqueTickets[user] = connectedTickets[ticketId];
+                    }
+                }
+                
+                pageLoaderMessage.textContent = "Traitement des tickets uniques...";
+                for (const user in uniqueTickets) {
+                    await processTicket(uniqueTickets[user]);
+                }
+                
+                pageLoaderMessage.textContent = "Nettoyage des tickets traités...";
+                
+                // Nettoyer tous les tickets de TicketConnecté
+                await remove(connectedTicketsRef);
+
+            } catch (error) {
+                console.error("Erreur lors du traitement des tickets connectés :", error);
+                showNotification("Erreur", "Une erreur est survenue lors du traitement des tickets.");
+            }
+        }
+
+        async function processTicket(ticket) {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            try {
+                pageLoaderMessage.textContent = `Vérification du ticket pour ${ticket.username}...`;
+
+                // Vérifier dans VendorsHistory
+                const vendorsHistoryRef = ref(database, 'VendorsHistory');
+                const vendorsHistorySnapshot = await get(vendorsHistoryRef);
+                const vendorsHistory = vendorsHistorySnapshot.val() || {};
+
+                let foundInHistory = false;
+                for (const vendorId in vendorsHistory) {
+                    const vendorHistory = vendorsHistory[vendorId];
+                    for (const saleId in vendorHistory) {
+                        if (vendorHistory[saleId].user === ticket.username) {
+                            foundInHistory = true;
+                            break;
+                        }
+                    }
+                    if (foundInHistory) break;
+                }
+
+                if (!foundInHistory) {
+                    pageLoaderMessage.textContent = `Traitement du ticket ${ticket.username}...`;
+
+                    // Vérifier dans TicketsTotal et TicketsTransit
+                    const ticketsTotalRef = ref(database, 'TicketsTotal');
+                    const ticketsTransitRef = ref(database, 'TicketsTransit');
+                    const totalSnapshot = await get(ticketsTotalRef);
+                    const transitSnapshot = await get(ticketsTransitRef);
+                    const totalTickets = totalSnapshot.val() || {};
+                    const transitTickets = transitSnapshot.val() || {};
+
+                    let foundTicket = null;
+                    let foundTicketRef = null;
+                    let foundInCategory = null;
+
+                    // Chercher dans TicketsTotal
+                    for (const category in totalTickets) {
+                        const ticketIndex = (totalTickets[category].utilisateur || []).indexOf(ticket.username);
+                        
+                        if (ticketIndex > -1) {
+                            foundTicket = {
+                                category: category,
+                                user: totalTickets[category].utilisateur[ticketIndex],
+                                password: totalTickets[category].motDePasse[ticketIndex],
+                                price: totalTickets[category].prix[ticketIndex],
+                                updatedData: {
+                                    ...totalTickets[category],
+                                    utilisateur: totalTickets[category].utilisateur.filter((_, index) => index !== ticketIndex),
+                                    motDePasse: totalTickets[category].motDePasse.filter((_, index) => index !== ticketIndex),
+                                    prix: totalTickets[category].prix.filter((_, index) => index !== ticketIndex)
+                                }
+                            };
+                            foundTicketRef = ref(database, `TicketsTotal/${category}`);
+                            foundInCategory = "TicketsTotal";
+                            break;
+                        }
+                    }
+
+                    // Si non trouvé dans TicketsTotal, chercher dans TicketsTransit
+                    if (!foundTicket) {
+                        for (const transitId in transitTickets) {
+                            if (transitTickets[transitId].user === ticket.username) {
+                                foundTicket = {
+                                    category: transitTickets[transitId].category,
+                                    user: transitTickets[transitId].user,
+                                    password: transitTickets[transitId].password,
+                                    price: transitTickets[transitId].price
+                                };
+                                foundTicketRef = ref(database, `TicketsTransit/${transitId}`);
+                                foundInCategory = "TicketsTransit";
+                                break;
+                            }
+                        }
+                    }
+
+                    if (foundTicket) {
+                        pageLoaderMessage.textContent = `Vente du ticket ${ticket.username}...`;
+                        await sellTicketAutomatically(foundTicket, foundTicketRef, foundInCategory);
+                    }
+                }
+            } catch (error) {
+                console.error("Erreur lors du traitement du ticket :", error);
+                showNotification("Erreur", `Erreur lors du traitement du ticket ${ticket.username}.`);
+            }
+        }
+
+        async function sellTicketAutomatically(ticket, ticketRef, foundInCategory) {
+            try {
+                const automaticVendorId = "Vendeur automatique";
+
+                // Enregistrement de la vente dans VendorsHistory
+                const vendorHistoryRef = ref(database, `VendorsHistory/${automaticVendorId}`);
+                await push(vendorHistoryRef, {
+                    category: ticket.category,
+                    user: ticket.user,
+                    password: ticket.password,
+                    price: ticket.price,
+                    soldAt: Date.now()
+                });
+
+                // Enregistrement de la vente dans TicketsVendus
+                const ticketsVendusRef = ref(database, 'TicketsVendus');
+                await push(ticketsVendusRef, {
+                    category: ticket.category,
+                    user: ticket.user,
+                    password: ticket.password,
+                    price: ticket.price,
+                    soldAt: Date.now(),
+                    vendorId: automaticVendorId
+                });
+
+                // Suppression du ticket de la source (TicketsTotal ou TicketsTransit)
+                if(foundInCategory === "TicketsTotal"){
+                    await set(ticketRef, ticket.updatedData);
+                } else {
+                    await remove(ticketRef);
+                }
+
+                console.log(`Ticket ${ticket.user} vendu automatiquement.`);
+            } catch (error) {
+                console.error("Erreur lors de la vente automatique du ticket :", error);
+                showNotification("Erreur", "Erreur lors de la vente automatique du ticket.");
+            }
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', () => {
+            showPageLoader();
+            processConnectedTickets()
+                .then(() => checkSubscriptionStatus())
+                .then(() => {
+                  lucide.createIcons();
+                  hidePageLoader();
+                })
+                .catch((error) => {
+                    console.error("Erreur lors du traitement des tickets :", error);
+                    hidePageLoader();
+                    showNotification("Erreur", "Une erreur est survenue lors de l'initialisation.");
+                });
+        });
+        window.redirectToSubscription = redirectToSubscription;
+        window.hideSubscriptionRequiredModal = redirectToSubscription;
+
+        function closePaymentModal() {
+            paymentModal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+         window.onload = () => {
+            
+            lucide.createIcons();
+        };
     </script>
     
 </body>
