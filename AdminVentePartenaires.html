@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Administrateur - Cyber Campus</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
@@ -16,7 +21,7 @@
         }
 
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background: linear-gradient(135deg, #424242, #073018, #553a01);
             min-height: 100vh;
             color: white;
         }
@@ -82,6 +87,7 @@
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 20px;
+            position: relative; /* Ajout pour le positionnement absolu des boutons */
         }
 
         table {
@@ -106,7 +112,7 @@
             border-radius: 5px;
             cursor: pointer;
             margin-right: 5px;
-            color: white;
+            color: rgb(60, 255, 0);
         }
 
         .delete-btn {
@@ -287,6 +293,37 @@
         .subscription-required-content button:hover {
             background-color: #e6a727;
         }
+
+        /* Styles pour les boutons d'exportation */
+        .export-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px;
+            z-index: 10; /* Pour s'assurer qu'ils restent au-dessus du tableau */
+        }
+
+        .export-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .export-btn:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .export-btn i {
+            margin-right: 6px;
+        }
+
     </style>
 </head>
 <body>
@@ -333,6 +370,7 @@
         </div>
 
         <div class="sales-table">
+
             <table>
                 <thead>
                     <tr>
@@ -346,6 +384,11 @@
                 </thead>
                 <tbody id="salesTable"></tbody>
             </table>
+            <div class="export-buttns">
+                <button class="action-btn delete-btn" onclick="printTable()"><i data-lucide="printer"></i> Imprimer</button>
+                <button class="action-btn delete-btn" onclick="exportToPDF()"><i data-lucide="file-down"></i> Exporter en PDF</button>
+                <button class="action-btn delete-btn" onclick="exportToExcel()"><i data-lucide="file-spreadsheet"></i> Exporter en Excel</button>
+            </div>
         </div>
 
         <div class="partners-management">
@@ -876,7 +919,7 @@
 
                     // Chercher dans TicketsTotal
                     for (const category in totalTickets) {
-                        const ticketIndex = (totalTickets[category].utilisateur || []).indexOf(ticket.username);
+                        const ticketIndex = (totalTickets[category].utilisateur || []                        ).indexOf(ticket.username);
                         
                         if (ticketIndex > -1) {
                             foundTicket = {
@@ -989,7 +1032,7 @@
                     if (endDate < now) {
                         // Abonnement expiré
                         pageLoaderMessage.textContent = "Abonnement expiré";
-                        hidePageLoader(); // Supprimer cette ligne
+                        hidePageLoader();
 
                         showSubscriptionRequiredModal();
 
@@ -997,31 +1040,90 @@
                     } else {
                         // Abonnement actif
                         pageLoaderMessage.textContent = "Abonnement actif";
-                        hidePageLoader(); // Supprimer cette ligne
+                        hidePageLoader();
 
                     }
                 } else {
                     // Pas d'abonnement
                     pageLoaderMessage.textContent = "Pas d'abonnement actif";
-                    hidePageLoader(); // Supprimer cette ligne
+                    hidePageLoader();
 
                     showSubscriptionRequiredModal();
                 }
             } catch (error) {
-                hidePageLoader(); // Supprimer cette ligne
+                hidePageLoader();
                 console.error("Erreur lors de la vérification de l'abonnement :", error);
                 pageLoaderMessage.textContent = "Erreur lors de la vérification de l'abonnement";
                 showNotification("Erreur", "Erreur lors de la vérification de l'abonnement.");
             }
         }
+
+        // Fonctions pour l'exportation des données
+        window.printTable = function() {
+            window.print();
+        };
+
+        window.exportToPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const table = document.getElementById("salesTable");
+
+            // Personnalisation du header du tableau
+            const headerStyles = {
+                fillColor: [42, 58, 108], // Couleur de fond bleu foncé
+                textColor: [255, 255, 255], // Texte en blanc
+                fontStyle: 'bold', // Texte en gras
+                halign: 'center' // Alignement horizontal au centre
+            };
+
+            // Personnalisation des cellules du tableau
+            const bodyStyles = {
+                halign: 'left' // Alignement horizontal à gauche
+            };
+
+            // Personnalisation du style du tableau
+            const styles = {
+                theme: 'grid', // Thème en grille pour une meilleure lisibilité
+                headStyles: headerStyles,
+                bodyStyles: bodyStyles,
+                margin: { top: 20 }, // Marge en haut pour le titre
+                startY: 20 // Position de départ du tableau sur la page
+            };
+
+            // Ajout d'un titre au document
+            doc.text("Liste des ventes", 14, 15);
+
+            // Génération du tableau avec autoTable
+            doc.autoTable({
+                html: '#salesTable',
+                ...styles
+            });
+
+            doc.save("ventes.pdf");
+        };
+
+        window.exportToExcel = function() {
+            const wb = XLSX.utils.table_to_book(document.getElementById('salesTable'), { sheet: "Ventes" });
+            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            function s2ab(s) {
+                const buf = new ArrayBuffer(s.length);
+                const view = new Uint8Array(buf);
+                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "ventes.xlsx");
+        };
+
         window.addEventListener('DOMContentLoaded', async () => {
-    await checkSubscriptionStatus();
-    await loadSalesData(); // Charger les données de vente et des vendeurs
-    await loadPartners(); // Charger la liste des partenaires
-    document.getElementById('periodFilter').value = 'today';
-    applyFilters();
-    lucide.createIcons();
-});
+            await checkSubscriptionStatus();
+            await loadSalesData(); // Charger les données de vente et des vendeurs
+            await loadPartners(); // Charger la liste des partenaires
+            document.getElementById('periodFilter').value = 'today';
+            applyFilters();
+            lucide.createIcons();
+        });
         window.redirectToSubscription = redirectToSubscription;
         window.hideSubscriptionRequiredModal = redirectToSubscription;
     </script>
