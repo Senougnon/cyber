@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrateur - Cyber Campus</title>
+    <title>Dashboard Administrateur - E-FDR WIFI ZONE</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
@@ -463,7 +463,669 @@
         </div>
     </div>
     <script type="module">
-function _0x433d(_0x129512,_0xdf6acc){const _0x36c54b=_0x36c5();return _0x433d=function(_0x433df4,_0xf75de1){_0x433df4=_0x433df4-0x102;let _0x128ccb=_0x36c54b[_0x433df4];return _0x128ccb;},_0x433d(_0x129512,_0xdf6acc);}const _0x2d7672=_0x433d;(function(_0x28a757,_0x366def){const _0x29f7fb=_0x433d,_0x566a53=_0x28a757();while(!![]){try{const _0x52bf3e=parseInt(_0x29f7fb(0x123))/0x1*(-parseInt(_0x29f7fb(0x15d))/0x2)+parseInt(_0x29f7fb(0x163))/0x3*(parseInt(_0x29f7fb(0x11f))/0x4)+-parseInt(_0x29f7fb(0x19e))/0x5*(-parseInt(_0x29f7fb(0x124))/0x6)+-parseInt(_0x29f7fb(0x171))/0x7+parseInt(_0x29f7fb(0x14e))/0x8*(-parseInt(_0x29f7fb(0x149))/0x9)+-parseInt(_0x29f7fb(0x13f))/0xa+-parseInt(_0x29f7fb(0x102))/0xb*(-parseInt(_0x29f7fb(0x114))/0xc);if(_0x52bf3e===_0x366def)break;else _0x566a53['push'](_0x566a53['shift']());}catch(_0x662830){_0x566a53['push'](_0x566a53['shift']());}}}(_0x36c5,0x955e7));import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';import{getDatabase,ref,get,remove,set,push}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js';const firebaseConfig={'apiKey':_0x2d7672(0x15e),'authDomain':_0x2d7672(0x198),'databaseURL':_0x2d7672(0x11c),'projectId':_0x2d7672(0x16d),'storageBucket':_0x2d7672(0x155),'messagingSenderId':_0x2d7672(0x134),'appId':_0x2d7672(0x110),'measurementId':'G-CEEFJP5LYZ'},app=initializeApp(firebaseConfig),db=getDatabase(app),adminRef=ref(db,_0x2d7672(0x162));let allSales=[],vendors=new Set(),partners={};async function loadPartners(){const _0x2d3a68=_0x2d7672;try{const _0x3ac9ee=ref(db,_0x2d3a68(0x181)),_0x358651=await get(_0x3ac9ee);_0x358651[_0x2d3a68(0x13a)]()&&(partners=_0x358651[_0x2d3a68(0x1ad)](),updatePartnersTable());}catch(_0x300748){console[_0x2d3a68(0x12c)](_0x2d3a68(0x183),_0x300748);}}function updatePartnersTable(){const _0x13aec0=_0x2d7672,_0x437da7=document[_0x13aec0(0x190)](_0x13aec0(0x1a9));_0x437da7['innerHTML']='';for(const _0x1c0e7a in partners){const _0x5754cd=partners[_0x1c0e7a],_0x175dbe=document['createElement']('tr');_0x175dbe['innerHTML']=_0x13aec0(0x17f)+_0x1c0e7a+_0x13aec0(0x148)+_0x1c0e7a+_0x13aec0(0x144)+_0x1c0e7a+_0x13aec0(0x18e)+_0x1c0e7a+'\x27)\x22>Message</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x437da7[_0x13aec0(0x159)](_0x175dbe);}}window['showAddPartnerForm']=function(){const _0x7ae019=_0x2d7672;document['getElementById'](_0x7ae019(0x177))['style'][_0x7ae019(0x12e)]=_0x7ae019(0x1af);},window[_0x2d7672(0x141)]=function(){const _0x224549=_0x2d7672;document[_0x224549(0x190)](_0x224549(0x150))['value']='',document[_0x224549(0x190)]('newPartnerPassword')[_0x224549(0x195)]='',document['getElementById']('addPartnerForm')[_0x224549(0x1ac)][_0x224549(0x12e)]='none';},window[_0x2d7672(0x12a)]=async function(){const _0x31abc8=_0x2d7672,_0x49d48c=document['getElementById'](_0x31abc8(0x150))['value'],_0x5ac208=document[_0x31abc8(0x190)]('newPartnerPassword')['value'];if(_0x49d48c&&_0x5ac208)try{const _0x1a7f61=ref(db,'Vendors/'+_0x49d48c);await set(_0x1a7f61,{'password':_0x5ac208}),await loadPartners(),hideAddPartnerForm();}catch(_0x1a2b7b){console[_0x31abc8(0x12c)]('Erreur\x20lors\x20de\x20l\x27ajout\x20du\x20partenaire:',_0x1a2b7b);}else alert(_0x31abc8(0x14b));},window[_0x2d7672(0x122)]=function(_0x24496a){const _0x297d13=_0x2d7672,_0x63b5a3=document[_0x297d13(0x190)](_0x297d13(0x130));document[_0x297d13(0x190)](_0x297d13(0x1a7))[_0x297d13(0x195)]=_0x24496a,document['getElementById'](_0x297d13(0x165))[_0x297d13(0x195)]=_0x24496a,document[_0x297d13(0x190)](_0x297d13(0x108))[_0x297d13(0x195)]=partners[_0x24496a][_0x297d13(0x10f)],_0x63b5a3['style']['display']='flex';},window[_0x2d7672(0x16a)]=function(){const _0x50f301=_0x2d7672;document['getElementById']('editPartnerModal')['style'][_0x50f301(0x12e)]='none';},window[_0x2d7672(0x13c)]=async function(){const _0x5601bd=_0x2d7672,_0x4a2bda=document[_0x5601bd(0x190)](_0x5601bd(0x1a7))[_0x5601bd(0x195)],_0x341198=document['getElementById'](_0x5601bd(0x165))[_0x5601bd(0x195)],_0x3a0513=document[_0x5601bd(0x190)](_0x5601bd(0x108))[_0x5601bd(0x195)];if(_0x341198&&_0x3a0513)try{const _0x4f5e05=ref(db,'Vendors/'+_0x341198);await set(_0x4f5e05,{'password':_0x3a0513}),_0x4a2bda!==_0x341198&&await remove(ref(db,_0x5601bd(0x19d)+_0x4a2bda)),await loadPartners(),closeEditModal();}catch(_0x37729c){console['error'](_0x5601bd(0x118),_0x37729c);}else alert('Veuillez\x20remplir\x20tous\x20les\x20champs.');},window['deletePartner']=async function(_0x213b70){const _0x57fe83=_0x2d7672;if(confirm(_0x57fe83(0x154)+_0x213b70+'\x20?'))try{const _0x3f3d78=ref(db,_0x57fe83(0x19d)+_0x213b70);await remove(_0x3f3d78),await loadPartners();}catch(_0x7c3c16){console[_0x57fe83(0x12c)](_0x57fe83(0x119),_0x7c3c16);}},window[_0x2d7672(0x193)]=function(_0x494c8a){const _0x3767c7=_0x2d7672,_0x3f3359=document['getElementById'](_0x3767c7(0x12d));document[_0x3767c7(0x190)]('messagePartnerId')['value']=_0x494c8a,document['getElementById'](_0x3767c7(0x19c))['value']='',_0x3f3359[_0x3767c7(0x1ac)][_0x3767c7(0x12e)]=_0x3767c7(0x197);},window[_0x2d7672(0x120)]=function(){const _0x2783fc=_0x2d7672;document[_0x2783fc(0x190)](_0x2783fc(0x12d))[_0x2783fc(0x1ac)]['display']=_0x2783fc(0x107);},window['sendMessage']=async function(){const _0x2a54a1=_0x2d7672,_0x203c87=document[_0x2a54a1(0x190)](_0x2a54a1(0x129))[_0x2a54a1(0x195)],_0x793eb2=document['getElementById'](_0x2a54a1(0x19c))[_0x2a54a1(0x195)];if(_0x793eb2)try{const _0x1d7f5d=ref(db,'Vendors/'+_0x203c87+_0x2a54a1(0x15b));await push(_0x1d7f5d,{'content':_0x793eb2,'timestamp':Date[_0x2a54a1(0x1a5)]()}),alert(_0x2a54a1(0x19a)),closeMessageModal();}catch(_0x300094){console['error'](_0x2a54a1(0x17a),_0x300094);}else alert(_0x2a54a1(0x133));};async function loadSalesData(){const _0x13961b=_0x2d7672;try{const _0x540991=ref(db,_0x13961b(0x15c)),_0x4cbb6a=await get(_0x540991);_0x4cbb6a[_0x13961b(0x13a)]()&&(vendors=new Set(Object[_0x13961b(0x11a)](_0x4cbb6a[_0x13961b(0x1ad)]())),updateVendorFilter());const _0x5069f8=ref(db,'VendorsHistory'),_0x5a1dfd=await get(_0x5069f8);if(_0x5a1dfd[_0x13961b(0x13a)]()){allSales=[];const _0x42bc46=_0x5a1dfd[_0x13961b(0x1ad)]();Object[_0x13961b(0x176)](_0x42bc46)['forEach'](([_0x1a1a39,_0x2df538])=>{const _0x87d17c=_0x13961b;Object[_0x87d17c(0x176)](_0x2df538)[_0x87d17c(0x116)](([_0x33122e,_0x319223])=>{const _0x163aaf=_0x87d17c;allSales[_0x163aaf(0x121)]({'id':_0x33122e,'vendor':_0x1a1a39,..._0x319223});});}),applyFilters();}}catch(_0x170b42){console['error'](_0x13961b(0x142),_0x170b42);}}function updateVendorFilter(){const _0x3455bb=_0x2d7672,_0x315db1=document['getElementById'](_0x3455bb(0x10a));_0x315db1['innerHTML']='<option\x20value=\x22all\x22>Tous\x20les\x20vendeurs</option>',vendors['forEach'](_0x36888f=>{const _0x52aee5=_0x3455bb;_0x315db1[_0x52aee5(0x136)]+=_0x52aee5(0x15f)+_0x36888f+'\x22>'+_0x36888f+_0x52aee5(0x188);});}function _0x36c5(){const _0x4c353a=['cyber-campus-2706f.appspot.com','exportToPDF','Abonnement\x20expiré','category','appendChild','print','/messages','VendorsHistory','5058nmWbLz','AIzaSyB6AUBnK_7Vy2ABWI2JMo3ebG_Sljr8XlY','<option\x20value=\x22','getDate','totalTickets','admin/subscription','12381pAwejj','...','editPartnerName','Traitement\x20du\x20ticket\x20','\x20FCFA','confirmBtn','center','closeEditModal','utils','active','cyber-campus-2706f','toLocaleString','Vérification\x20des\x20tickets\x20connectés...','index.html','6550166mqSRya','today','redirectToSubscription','onclick','closeModal','entries','addPartnerForm','pageLoaderWrapper','\x20vendu\x20automatiquement.','Erreur\x20lors\x20de\x20l\x27envoi\x20du\x20message:','table_to_book','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','clearVendorHistory','save','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','loaderWrapper','Vendors','Une\x20erreur\x20est\x20survenue\x20lors\x20du\x20traitement\x20des\x20tickets.','Erreur\x20lors\x20du\x20chargement\x20des\x20partenaires:','updatedData','Nettoyage\x20des\x20tickets\x20traités...','bold','username','</option>','sort','TicketsTransit','Erreur\x20lors\x20du\x20traitement\x20du\x20ticket\x20:','TicketsVendus','Ticket\x20','\x27)\x22>Supprimer</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x22\x20onclick=\x22showMessagePartnerForm(\x27','applyFilters','getElementById','DOMContentLoaded','Liste\x20des\x20ventes','showMessagePartnerForm','write','value','prix','flex','cyber-campus-2706f.firebaseapp.com','soldAt','Message\x20envoyé\x20!','Traitement\x20des\x20tickets\x20uniques...','messageContent','Vendors/','205tMYxDJ','status','modalMessage','\x20FCFA</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20delete-btn\x22\x20onclick=\x22deleteSale(\x27','textContent','Vente\x20du\x20ticket\x20','getTime','now','TicketConnecté','editPartnerId','Erreur\x20lors\x20du\x20chargement\x20des\x20ventes:','partnersTable','topVendor','binary','style','val','price','block','utilisateur','periodFilter','54956hbPKiq','Erreur','Erreur\x20lors\x20de\x20la\x20suppression:','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Supprimer\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','reduce','none','editPartnerPassword','\x27,\x20\x27','vendorFilter','text','href','xlsx','pageLoaderMessage','password','1:719410601264:web:44fd2e3757721866303cf5','salesTable','find','expired','7716xZMmWQ','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','forEach','Abonnement\x20actif','Erreur\x20lors\x20de\x20la\x20mise\x20à\x20jour\x20du\x20partenaire:','Erreur\x20lors\x20de\x20la\x20suppression\x20du\x20partenaire:','keys','addEventListener','https://cyber-campus-2706f-default-rtdb.firebaseio.com','totalSales','length','948UFuCjG','closeMessageModal','push','showEditPartnerForm','273WaenXi','37032RozaUG','user','update','getDay','TicketsTransit/','messagePartnerId','addPartner','TicketsTotal','error','messagePartnerModal','display','VendorsHistory/','editPartnerModal','filter','Erreur\x20lors\x20du\x20traitement\x20des\x20tickets\x20connectés\x20:','Veuillez\x20saisir\x20un\x20message.','719410601264','confirmModal','innerHTML','all','deleteSale','vendor','exists','application/octet-stream','updatePartner','setHours','TicketConnecté/','11831720iAYWXI','ventes.xlsx','hideAddPartnerForm','Erreur\x20lors\x20du\x20chargement\x20des\x20données:','motDePasse','\x27)\x22>Modifier</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x20delete-btn\x22\x20onclick=\x22deletePartner(\x27','endDate','setDate','Erreur\x20lors\x20de\x20la\x20vente\x20automatique\x20du\x20ticket\x20:','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22action-btn\x22\x20onclick=\x22showEditPartnerForm(\x27','117NYuHkW','join','Veuillez\x20remplir\x20tous\x20les\x20champs.','TicketsTotal/','charCodeAt','629192VIfILX','location','newPartnerName','left','exportToExcel','Erreur\x20lors\x20de\x20la\x20vérification\x20de\x20l\x27abonnement.','Êtes-vous\x20sûr\x20de\x20vouloir\x20supprimer\x20le\x20partenaire\x20'];_0x36c5=function(){return _0x4c353a;};return _0x36c5();}async function loadSales(){const _0x35eaa7=_0x2d7672;try{const _0x1697fd=ref(db,_0x35eaa7(0x15c)),_0x3400e=await get(_0x1697fd);if(_0x3400e['exists']()){allSales=[];const _0x4f6785=_0x3400e[_0x35eaa7(0x1ad)]();Object[_0x35eaa7(0x176)](_0x4f6785)[_0x35eaa7(0x116)](([_0x28c53a,_0x30321b])=>{const _0xb72f19=_0x35eaa7;Object[_0xb72f19(0x176)](_0x30321b)[_0xb72f19(0x116)](([_0x4d1414,_0x3cf354])=>{const _0x2f0e34=_0xb72f19;allSales[_0x2f0e34(0x121)]({'id':_0x4d1414,'vendor':_0x28c53a,..._0x3cf354});});}),applyFilters();}}catch(_0x3b1c10){console[_0x35eaa7(0x12c)](_0x35eaa7(0x1a8),_0x3b1c10);}}window[_0x2d7672(0x18f)]=function(){const _0x4edb5f=_0x2d7672,_0x19691d=document[_0x4edb5f(0x190)](_0x4edb5f(0x10a))[_0x4edb5f(0x195)],_0x1cf0da=document[_0x4edb5f(0x190)](_0x4edb5f(0x1b1))[_0x4edb5f(0x195)],_0x1c857d=new Date(document[_0x4edb5f(0x190)]('startDate')['value']),_0x2d930a=new Date(document[_0x4edb5f(0x190)]('endDate')[_0x4edb5f(0x195)]);_0x2d930a[_0x4edb5f(0x13d)](0x17,0x3b,0x3b);let _0x2e7d31=allSales;_0x19691d!==_0x4edb5f(0x137)&&(_0x2e7d31=_0x2e7d31['filter'](_0x450a81=>_0x450a81[_0x4edb5f(0x139)]===_0x19691d));if(_0x1cf0da!=='all'||!isNaN(_0x1c857d[_0x4edb5f(0x1a4)]())||!isNaN(_0x2d930a[_0x4edb5f(0x1a4)]())){const _0x4858c6=new Date(),_0x217ac6={'today':new Date(_0x4858c6[_0x4edb5f(0x13d)](0x0,0x0,0x0,0x0)),'week':new Date(_0x4858c6[_0x4edb5f(0x146)](_0x4858c6[_0x4edb5f(0x160)]()-_0x4858c6[_0x4edb5f(0x127)]())),'month':new Date(_0x4858c6[_0x4edb5f(0x146)](0x1))};_0x2e7d31=_0x2e7d31[_0x4edb5f(0x131)](_0x4bb7aa=>{const _0x4a90bd=_0x4edb5f,_0x3bd528=new Date(_0x4bb7aa[_0x4a90bd(0x199)]);if(_0x1cf0da!=='all'&&_0x217ac6[_0x1cf0da])return _0x3bd528>=_0x217ac6[_0x1cf0da];if(!isNaN(_0x1c857d[_0x4a90bd(0x1a4)]())&&!isNaN(_0x2d930a['getTime']()))return _0x3bd528>=_0x1c857d&&_0x3bd528<=_0x2d930a;return!![];});}updateTable(_0x2e7d31),updateStats(_0x2e7d31);};function updateTable(_0x521041){const _0x23d8a5=_0x2d7672,_0x352925=document['getElementById'](_0x23d8a5(0x111));_0x352925['innerHTML']=_0x521041[_0x23d8a5(0x189)]((_0x5defbc,_0x577316)=>_0x577316['soldAt']-_0x5defbc[_0x23d8a5(0x199)])['map'](_0xcedce4=>_0x23d8a5(0x17c)+new Date(_0xcedce4[_0x23d8a5(0x199)])[_0x23d8a5(0x16e)]()+_0x23d8a5(0x115)+_0xcedce4[_0x23d8a5(0x139)]+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+_0xcedce4[_0x23d8a5(0x158)]+_0x23d8a5(0x115)+_0xcedce4[_0x23d8a5(0x125)]+_0x23d8a5(0x115)+_0xcedce4[_0x23d8a5(0x1ae)]+_0x23d8a5(0x1a1)+_0xcedce4[_0x23d8a5(0x139)]+_0x23d8a5(0x109)+_0xcedce4['id']+_0x23d8a5(0x105))[_0x23d8a5(0x14a)]('');}function updateStats(_0x1ffdd3){const _0x10fe73=_0x2d7672,_0x2b133e=_0x1ffdd3[_0x10fe73(0x106)]((_0x33bbd3,_0x298973)=>_0x33bbd3+parseFloat(_0x298973[_0x10fe73(0x1ae)]),0x0),_0xcfce1a=_0x1ffdd3[_0x10fe73(0x11e)],_0x4c8053=_0x1ffdd3['reduce']((_0x45446c,_0x381270)=>{const _0xe854a6=_0x10fe73;return _0x45446c[_0x381270[_0xe854a6(0x139)]]=(_0x45446c[_0x381270['vendor']]||0x0)+parseFloat(_0x381270['price']),_0x45446c;},{}),_0x498271=Object[_0x10fe73(0x176)](_0x4c8053)[_0x10fe73(0x189)](([,_0x155455],[,_0x4d5a54])=>_0x4d5a54-_0x155455)[0x0]?.[0x0]||'-';document[_0x10fe73(0x190)](_0x10fe73(0x11d))[_0x10fe73(0x1a2)]=_0x2b133e[_0x10fe73(0x16e)]()+_0x10fe73(0x167),document[_0x10fe73(0x190)](_0x10fe73(0x161))['textContent']=_0xcfce1a,document[_0x10fe73(0x190)](_0x10fe73(0x1aa))[_0x10fe73(0x1a2)]=_0x498271;}window[_0x2d7672(0x138)]=function(_0xf90524,_0xc6c87a){const _0x4a7f99=_0x2d7672,_0xfa8866=document[_0x4a7f99(0x190)](_0x4a7f99(0x135));document[_0x4a7f99(0x190)](_0x4a7f99(0x1a0))[_0x4a7f99(0x1a2)]='Êtes-vous\x20sûr\x20de\x20vouloir\x20supprimer\x20cette\x20vente\x20?';const _0x125215=document[_0x4a7f99(0x190)]('confirmBtn');_0x125215[_0x4a7f99(0x174)]=async()=>{const _0x4e6a9a=_0x4a7f99;try{await remove(ref(db,_0x4e6a9a(0x12f)+_0xf90524+'/'+_0xc6c87a)),await loadSales(),closeModal();}catch(_0x87a96a){console[_0x4e6a9a(0x12c)](_0x4e6a9a(0x104),_0x87a96a);}},_0xfa8866['style']['display']=_0x4a7f99(0x197);},window[_0x2d7672(0x17d)]=function(_0x371494){const _0x3c7d82=_0x2d7672,_0x31db13=document[_0x3c7d82(0x190)]('confirmModal');document[_0x3c7d82(0x190)](_0x3c7d82(0x1a0))['textContent']='Êtes-vous\x20sûr\x20de\x20vouloir\x20effacer\x20tout\x20l\x27historique\x20de\x20'+_0x371494+'\x20?';const _0x2471c3=document[_0x3c7d82(0x190)](_0x3c7d82(0x168));_0x2471c3[_0x3c7d82(0x174)]=async()=>{const _0x27f96c=_0x3c7d82;try{await set(ref(db,_0x27f96c(0x12f)+_0x371494),null),await loadSales(),closeModal();}catch(_0x30c3a8){console[_0x27f96c(0x12c)]('Erreur\x20lors\x20de\x20l\x27effacement:',_0x30c3a8);}},_0x31db13[_0x3c7d82(0x1ac)][_0x3c7d82(0x12e)]='flex';},window[_0x2d7672(0x175)]=function(){const _0x1a1386=_0x2d7672;document['getElementById'](_0x1a1386(0x135))[_0x1a1386(0x1ac)][_0x1a1386(0x12e)]=_0x1a1386(0x107);};function showLoader(){const _0x24d746=_0x2d7672;document[_0x24d746(0x190)](_0x24d746(0x180))[_0x24d746(0x1ac)][_0x24d746(0x12e)]=_0x24d746(0x1af);}function hideLoader(){const _0x3511a8=_0x2d7672;document[_0x3511a8(0x190)](_0x3511a8(0x180))[_0x3511a8(0x1ac)]['display']=_0x3511a8(0x107);}function showPageLoader(){const _0x5288a6=_0x2d7672;document['getElementById']('pageLoaderWrapper')['style']['display']=_0x5288a6(0x197);}function hidePageLoader(){const _0x3acd16=_0x2d7672;document[_0x3acd16(0x190)](_0x3acd16(0x178))[_0x3acd16(0x1ac)][_0x3acd16(0x12e)]=_0x3acd16(0x107);}async function processConnectedTickets(){const _0x15702f=_0x2d7672,_0x2906c8=document['getElementById'](_0x15702f(0x10e));try{_0x2906c8['textContent']=_0x15702f(0x16f);const _0x140567=ref(db,_0x15702f(0x1a6)),_0x5b4e5e=await get(_0x140567);let _0x1e57c7=_0x5b4e5e['val']()||{};const _0x59f507={};for(const _0x306f15 in _0x1e57c7){const _0x32b9ad=_0x1e57c7[_0x306f15]['username'];!_0x59f507[_0x32b9ad]&&(_0x59f507[_0x32b9ad]=_0x1e57c7[_0x306f15]);}_0x2906c8[_0x15702f(0x1a2)]=_0x15702f(0x19b);for(const _0x4c488b in _0x59f507){await processTicket(_0x59f507[_0x4c488b]);}_0x2906c8[_0x15702f(0x1a2)]=_0x15702f(0x185);for(const _0x481692 in _0x59f507){const _0x30b9a9=Object['keys'](_0x1e57c7)[_0x15702f(0x112)](_0x3b9290=>_0x1e57c7[_0x3b9290][_0x15702f(0x187)]===_0x481692);_0x30b9a9&&await remove(ref(db,_0x15702f(0x13e)+_0x30b9a9));}}catch(_0x1725a3){console[_0x15702f(0x12c)](_0x15702f(0x132),_0x1725a3),showNotification(_0x15702f(0x103),_0x15702f(0x182));}}async function processTicket(_0x21d7c2){const _0x48e8c=_0x2d7672,_0x2316b8=document['getElementById'](_0x48e8c(0x10e));try{_0x2316b8[_0x48e8c(0x1a2)]='Vérification\x20du\x20ticket\x20pour\x20'+_0x21d7c2[_0x48e8c(0x187)]+_0x48e8c(0x164);const _0x161ed5=ref(db,_0x48e8c(0x15c)),_0x233770=await get(_0x161ed5),_0x465ac6=_0x233770[_0x48e8c(0x1ad)]()||{};let _0x3a14e3=![];for(const _0x453f7d in _0x465ac6){const _0x3b31c2=_0x465ac6[_0x453f7d];for(const _0x3d3f18 in _0x3b31c2){if(_0x3b31c2[_0x3d3f18]['user']===_0x21d7c2[_0x48e8c(0x187)]){_0x3a14e3=!![];break;}}if(_0x3a14e3)break;}if(!_0x3a14e3){_0x2316b8[_0x48e8c(0x1a2)]=_0x48e8c(0x166)+_0x21d7c2[_0x48e8c(0x187)]+_0x48e8c(0x164);const _0x2d4c80=ref(db,_0x48e8c(0x12b)),_0x2a6cb4=ref(db,_0x48e8c(0x18a)),_0x5b27be=await get(_0x2d4c80),_0x522609=await get(_0x2a6cb4),_0x373d2e=_0x5b27be[_0x48e8c(0x1ad)]()||{},_0x336038=_0x522609[_0x48e8c(0x1ad)]()||{};let _0x545cec=null,_0x4329fe=null,_0x17cb96=null;for(const _0x2e45a6 in _0x373d2e){const _0x303596=(_0x373d2e[_0x2e45a6][_0x48e8c(0x1b0)]||[])['indexOf'](_0x21d7c2[_0x48e8c(0x187)]);if(_0x303596>-0x1){_0x545cec={'category':_0x2e45a6,'user':_0x373d2e[_0x2e45a6][_0x48e8c(0x1b0)][_0x303596],'password':_0x373d2e[_0x2e45a6][_0x48e8c(0x143)][_0x303596],'price':_0x373d2e[_0x2e45a6][_0x48e8c(0x196)][_0x303596],'updatedData':{..._0x373d2e[_0x2e45a6],'utilisateur':_0x373d2e[_0x2e45a6][_0x48e8c(0x1b0)][_0x48e8c(0x131)]((_0x4bc7b0,_0x37d0ff)=>_0x37d0ff!==_0x303596),'motDePasse':_0x373d2e[_0x2e45a6]['motDePasse'][_0x48e8c(0x131)]((_0x1d8045,_0x57037c)=>_0x57037c!==_0x303596),'prix':_0x373d2e[_0x2e45a6][_0x48e8c(0x196)][_0x48e8c(0x131)]((_0x2014e4,_0x4d0389)=>_0x4d0389!==_0x303596)}},_0x4329fe=ref(db,_0x48e8c(0x14c)+_0x2e45a6),_0x17cb96=_0x48e8c(0x12b);break;}}if(!_0x545cec)for(const _0x4dd8c2 in _0x336038){if(_0x336038[_0x4dd8c2][_0x48e8c(0x125)]===_0x21d7c2[_0x48e8c(0x187)]){_0x545cec={'category':_0x336038[_0x4dd8c2][_0x48e8c(0x158)],'user':_0x336038[_0x4dd8c2][_0x48e8c(0x125)],'password':_0x336038[_0x4dd8c2][_0x48e8c(0x10f)],'price':_0x336038[_0x4dd8c2]['price']},_0x4329fe=ref(db,_0x48e8c(0x128)+_0x4dd8c2),_0x17cb96=_0x48e8c(0x18a);break;}}_0x545cec&&(_0x2316b8[_0x48e8c(0x1a2)]=_0x48e8c(0x1a3)+_0x21d7c2[_0x48e8c(0x187)]+_0x48e8c(0x164),await sellTicketAutomatically(_0x545cec,_0x4329fe,_0x17cb96));}}catch(_0x32ce52){console['error'](_0x48e8c(0x18b),_0x32ce52),showNotification('Erreur','Erreur\x20lors\x20du\x20traitement\x20du\x20ticket\x20'+_0x21d7c2[_0x48e8c(0x187)]+'.');}}async function sellTicketAutomatically(_0x1f26b1,_0x18f781,_0x2455be){const _0x56f46c=_0x2d7672;try{const _0x534621='Vendeur\x20automatique',_0x2c0eea=ref(db,_0x56f46c(0x12f)+_0x534621);await push(_0x2c0eea,{'category':_0x1f26b1[_0x56f46c(0x158)],'user':_0x1f26b1[_0x56f46c(0x125)],'password':_0x1f26b1[_0x56f46c(0x10f)],'price':_0x1f26b1['price'],'soldAt':Date[_0x56f46c(0x1a5)]()});const _0x10c585=ref(db,_0x56f46c(0x18c));await push(_0x10c585,{'category':_0x1f26b1[_0x56f46c(0x158)],'user':_0x1f26b1[_0x56f46c(0x125)],'password':_0x1f26b1[_0x56f46c(0x10f)],'price':_0x1f26b1[_0x56f46c(0x1ae)],'soldAt':Date['now'](),'vendorId':_0x534621}),_0x2455be==='TicketsTotal'?await set(_0x18f781,_0x1f26b1[_0x56f46c(0x184)]):await remove(_0x18f781),console['log'](_0x56f46c(0x18d)+_0x1f26b1[_0x56f46c(0x125)]+_0x56f46c(0x179));}catch(_0xc2431d){console[_0x56f46c(0x12c)](_0x56f46c(0x147),_0xc2431d),showNotification(_0x56f46c(0x103),'Erreur\x20lors\x20de\x20la\x20vente\x20automatique\x20du\x20ticket.');}}function showSubscriptionRequiredModal(){const _0x425578=_0x2d7672;subscriptionRequiredModal[_0x425578(0x1ac)][_0x425578(0x12e)]='flex';}function hideSubscriptionRequiredModal(){const _0x2fcb4b=_0x2d7672;subscriptionRequiredModal[_0x2fcb4b(0x1ac)][_0x2fcb4b(0x12e)]='none';}function redirectToSubscription(){const _0x344d0b=_0x2d7672;window[_0x344d0b(0x14f)][_0x344d0b(0x10c)]=_0x344d0b(0x170);}async function checkSubscriptionStatus(){const _0x169af8=_0x2d7672,_0x496db3=document['getElementById'](_0x169af8(0x10e));_0x496db3[_0x169af8(0x1a2)]='Vérification\x20de\x20l\x27abonnement...';try{const _0x3bbf52=await get(adminRef),_0x2c27ad=_0x3bbf52[_0x169af8(0x1ad)](),_0x3a368a=new Date();if(_0x2c27ad&&_0x2c27ad[_0x169af8(0x19f)]===_0x169af8(0x16c)){const _0x36e34c=new Date(_0x2c27ad[_0x169af8(0x145)]);_0x36e34c<_0x3a368a?(_0x496db3[_0x169af8(0x1a2)]=_0x169af8(0x157),hidePageLoader(),showSubscriptionRequiredModal(),await adminRef[_0x169af8(0x126)]({'status':_0x169af8(0x113)})):(_0x496db3[_0x169af8(0x1a2)]=_0x169af8(0x117),hidePageLoader());}else _0x496db3[_0x169af8(0x1a2)]='Pas\x20d\x27abonnement\x20actif',hidePageLoader(),showSubscriptionRequiredModal();}catch(_0x39a961){hidePageLoader(),console[_0x169af8(0x12c)]('Erreur\x20lors\x20de\x20la\x20vérification\x20de\x20l\x27abonnement\x20:',_0x39a961),_0x496db3[_0x169af8(0x1a2)]='Erreur\x20lors\x20de\x20la\x20vérification\x20de\x20l\x27abonnement',showNotification(_0x169af8(0x103),_0x169af8(0x153));}}window['printTable']=function(){const _0x38c94d=_0x2d7672;window[_0x38c94d(0x15a)]();},window[_0x2d7672(0x156)]=function(){const _0x296f8d=_0x2d7672,{jsPDF:_0xd168cf}=window['jspdf'],_0x16bf72=new _0xd168cf(),_0x456f6e=document[_0x296f8d(0x190)](_0x296f8d(0x111)),_0x499bf8={'fillColor':[0x2a,0x3a,0x6c],'textColor':[0xff,0xff,0xff],'fontStyle':_0x296f8d(0x186),'halign':_0x296f8d(0x169)},_0x262e35={'halign':_0x296f8d(0x151)},_0x225d66={'theme':'grid','headStyles':_0x499bf8,'bodyStyles':_0x262e35,'margin':{'top':0x14},'startY':0x14};_0x16bf72[_0x296f8d(0x10b)](_0x296f8d(0x192),0xe,0xf),_0x16bf72['autoTable']({'html':'#salesTable',..._0x225d66}),_0x16bf72[_0x296f8d(0x17e)]('ventes.pdf');},window[_0x2d7672(0x152)]=function(){const _0x87a908=_0x2d7672,_0x3e0e10=XLSX[_0x87a908(0x16b)][_0x87a908(0x17b)](document[_0x87a908(0x190)](_0x87a908(0x111)),{'sheet':'Ventes'}),_0x3bb5f6=XLSX[_0x87a908(0x194)](_0x3e0e10,{'bookType':_0x87a908(0x10d),'type':_0x87a908(0x1ab)});function _0x2261bb(_0x54437c){const _0x4aae6e=_0x87a908,_0x5789a6=new ArrayBuffer(_0x54437c[_0x4aae6e(0x11e)]),_0x38ed06=new Uint8Array(_0x5789a6);for(let _0x564c59=0x0;_0x564c59<_0x54437c['length'];_0x564c59++)_0x38ed06[_0x564c59]=_0x54437c[_0x4aae6e(0x14d)](_0x564c59)&0xff;return _0x5789a6;}saveAs(new Blob([_0x2261bb(_0x3bb5f6)],{'type':_0x87a908(0x13b)}),_0x87a908(0x140));},window[_0x2d7672(0x11b)](_0x2d7672(0x191),async()=>{const _0xbe24ad=_0x2d7672;await checkSubscriptionStatus(),await loadSalesData(),await loadPartners(),document[_0xbe24ad(0x190)]('periodFilter')[_0xbe24ad(0x195)]=_0xbe24ad(0x172),applyFilters(),lucide['createIcons']();}),window[_0x2d7672(0x173)]=redirectToSubscription,window['hideSubscriptionRequiredModal']=redirectToSubscription;
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get, remove, set, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+  apiKey: "AIzaSyBvwJSv5iJy-YuL_m8QgVfqO06qNZVmAps",
+  authDomain: "bonjour-75278.firebaseapp.com",
+  databaseURL: "https://bonjour-75278-default-rtdb.firebaseio.com",
+  projectId: "bonjour-75278",
+  storageBucket: "bonjour-75278.firebasestorage.app",
+  messagingSenderId: "805380694708",
+  appId: "1:805380694708:web:55e6b53506b83624946de1",
+  measurementId: "G-W3CBW4735M"
+};
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const adminRef = ref(db, 'admin/subscription');
+
+        let allSales = [];
+        let vendors = new Set();
+        let partners = {}; // Stockera les informations des partenaires
+
+        // ------ Fonctions pour la gestion des partenaires ------
+
+        // Charger la liste des partenaires
+        async function loadPartners() {
+            try {
+                const partnersRef = ref(db, 'Vendors');
+                const snapshot = await get(partnersRef);
+
+                if (snapshot.exists()) {
+                    partners = snapshot.val();
+                    updatePartnersTable();
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des partenaires:", error);
+            }
+        }
+
+        // Mettre à jour le tableau des partenaires
+        function updatePartnersTable() {
+            const tbody = document.getElementById('partnersTable');
+            tbody.innerHTML = '';
+
+            for (const partnerId in partners) {
+                const partner = partners[partnerId];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${partnerId}</td>
+                    <td>
+                        <button class="action-btn" onclick="showEditPartnerForm('${partnerId}')">Modifier</button>
+                        <button class="action-btn delete-btn" onclick="deletePartner('${partnerId}')">Supprimer</button>
+                        <button class="action-btn" onclick="showMessagePartnerForm('${partnerId}')">Message</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+
+        // Afficher le formulaire d'ajout de partenaire
+        window.showAddPartnerForm = function() {
+            document.getElementById('addPartnerForm').style.display = 'block';
+        };
+
+        // Masquer le formulaire d'ajout de partenaire
+        window.hideAddPartnerForm = function() {
+            document.getElementById('newPartnerName').value = '';
+            document.getElementById('newPartnerPassword').value = '';
+            document.getElementById('addPartnerForm').style.display = 'none';
+        };
+
+        // Ajouter un nouveau partenaire
+        window.addPartner = async function() {
+            const name = document.getElementById('newPartnerName').value;
+            const password = document.getElementById('newPartnerPassword').value;
+
+            if (name && password) {
+                try {
+                    const partnersRef = ref(db, `Vendors/${name}`);
+                    await set(partnersRef, { password: password });
+                    await loadPartners();
+                    hideAddPartnerForm();
+                } catch (error) {
+                    console.error("Erreur lors de l'ajout du partenaire:", error);
+                }
+            } else {
+                alert('Veuillez remplir tous les champs.');
+            }
+        };
+
+        // Afficher le formulaire de modification de partenaire
+        window.showEditPartnerForm = function(partnerId) {
+            const modal = document.getElementById('editPartnerModal');
+            document.getElementById('editPartnerId').value = partnerId;
+            document.getElementById('editPartnerName').value = partnerId;
+            document.getElementById('editPartnerPassword').value = partners[partnerId].password;
+            modal.style.display = 'flex';
+        };
+
+        // Fermer le formulaire de modification de partenaire
+        window.closeEditModal = function() {
+            document.getElementById('editPartnerModal').style.display = 'none';
+        };
+
+        // Mettre à jour un partenaire
+        window.updatePartner = async function() {
+            const partnerId = document.getElementById('editPartnerId').value;
+            const name = document.getElementById('editPartnerName').value;
+            const password = document.getElementById('editPartnerPassword').value;
+
+            if (name && password) {
+                try {
+                    const partnersRef = ref(db, `Vendors/${name}`); // Met à jour avec le nouveau nom si modifié
+                    await set(partnersRef, { password: password });
+
+                    // Si le nom a changé, supprimer l'ancien
+                    if (partnerId !== name) {
+                        await remove(ref(db, `Vendors/${partnerId}`));
+                    }
+
+                    await loadPartners();
+                    closeEditModal();
+                } catch (error) {
+                    console.error("Erreur lors de la mise à jour du partenaire:", error);
+                }
+            } else {
+                alert('Veuillez remplir tous les champs.');
+            }
+        };
+
+        // Supprimer un partenaire
+        window.deletePartner = async function(partnerId) {
+            if (confirm(`Êtes-vous sûr de vouloir supprimer le partenaire ${partnerId} ?`)) {
+                try {
+                    const partnerRef = ref(db, `Vendors/${partnerId}`);
+                    await remove(partnerRef);
+                    await loadPartners();
+                } catch (error) {
+                    console.error("Erreur lors de la suppression du partenaire:", error);
+                }
+            }
+        };
+
+        // Afficher le formulaire d'envoi de message
+        window.showMessagePartnerForm = function(partnerId) {
+            const modal = document.getElementById('messagePartnerModal');
+            document.getElementById('messagePartnerId').value = partnerId;
+            document.getElementById('messageContent').value = '';
+            modal.style.display = 'flex';
+        };
+
+        // Fermer le formulaire d'envoi de message
+        window.closeMessageModal = function() {
+            document.getElementById('messagePartnerModal').style.display = 'none';
+        };
+
+        // Envoyer un message à un partenaire
+        window.sendMessage = async function() {
+            const partnerId = document.getElementById('messagePartnerId').value;
+            const message = document.getElementById('messageContent').value;
+
+            if (message) {
+                try {
+                    const messagesRef = ref(db, `Vendors/${partnerId}/messages`);
+                    await push(messagesRef, {
+                        content: message,
+                        timestamp: Date.now()
+                    });
+                    alert('Message envoyé !');
+                    closeMessageModal();
+                } catch (error) {
+                    console.error("Erreur lors de l'envoi du message:", error);
+                }
+            } else {
+                alert('Veuillez saisir un message.');
+            }
+        };
+
+        // ------ Fin des fonctions pour la gestion des partenaires ------
+
+        // Chargement initial des données de vente et des partenaires
+        async function loadSalesData() {
+            try {
+                // Charger les données des vendeurs
+                const vendorsRef = ref(db, 'VendorsHistory');
+                const vendorsSnapshot = await get(vendorsRef);
+
+                if (vendorsSnapshot.exists()) {
+                    vendors = new Set(Object.keys(vendorsSnapshot.val()));
+                    updateVendorFilter();
+                }
+
+                // Charger les données des ventes
+                const salesRef = ref(db, 'VendorsHistory');
+                const salesSnapshot = await get(salesRef);
+
+                if (salesSnapshot.exists()) {
+                    allSales = [];
+                    const data = salesSnapshot.val();
+                    Object.entries(data).forEach(([vendor, sales]) => {
+                        Object.entries(sales).forEach(([id, sale]) => {
+                            allSales.push({
+                                id,
+                                vendor,
+                                ...sale
+                            });
+                        });
+                    });
+                    applyFilters();
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des données:", error);
+            }
+        }
+
+        // Ancienement loadVendors
+        function updateVendorFilter() {
+            const vendorFilter = document.getElementById('vendorFilter');
+            vendorFilter.innerHTML = '<option value="all">Tous les vendeurs</option>';
+            vendors.forEach(vendor => {
+                vendorFilter.innerHTML += `<option value="${vendor}">${vendor}</option>`;
+            });
+        }
+
+        async function loadSales() {
+            try {
+                const salesRef = ref(db, 'VendorsHistory');
+                const snapshot = await get(salesRef);
+                
+                if (snapshot.exists()) {
+                    allSales = [];
+                    const data = snapshot.val();
+                    Object.entries(data).forEach(([vendor, sales]) => {
+                        Object.entries(sales).forEach(([id, sale]) => {
+                            allSales.push({
+                                id,
+                                vendor,
+                                ...sale
+                            });
+                        });
+                    });
+                    applyFilters();
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des ventes:", error);
+            }
+        }
+
+        window.applyFilters = function() {
+            const vendorFilter = document.getElementById('vendorFilter').value;
+            const periodFilter = document.getElementById('periodFilter').value;
+            const startDate = new Date(document.getElementById('startDate').value);
+            const endDate = new Date(document.getElementById('endDate').value);
+            endDate.setHours(23, 59, 59);
+
+            let filteredSales = allSales;
+
+            // Filtre par vendeur
+            if (vendorFilter !== 'all') {
+                filteredSales = filteredSales.filter(sale => sale.vendor === vendorFilter);
+            }
+
+            // Filtre par période
+            if (periodFilter !== 'all' || !isNaN(startDate.getTime()) || !isNaN(endDate.getTime())) {
+                const now = new Date();
+                const periods = {
+                    today: new Date(now.setHours(0, 0, 0, 0)),
+                    week: new Date(now.setDate(now.getDate() - now.getDay())),
+                    month: new Date(now.setDate(1))
+                };
+
+                filteredSales = filteredSales.filter(sale => {
+                    const saleDate = new Date(sale.soldAt);
+                    if (periodFilter !== 'all' && periods[periodFilter]) {
+                        return saleDate >= periods[periodFilter];
+                    }
+                    if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                        return saleDate >= startDate && saleDate <= endDate;
+                    }
+                    return true;
+                });
+            }
+
+            updateTable(filteredSales);
+            updateStats(filteredSales);
+        };
+
+        function updateTable(sales) {
+            const tbody = document.getElementById('salesTable');
+            tbody.innerHTML = sales
+                .sort((a, b) => b.soldAt - a.soldAt)
+                .map(sale => `
+                    <tr>
+                        <td>${new Date(sale.soldAt).toLocaleString()}</td>
+                        <td>${sale.vendor}</td>
+                        <td>${sale.category}</td>
+                        <td>${sale.user}</td>
+                        <td>${sale.price} FCFA</td>
+                        <td>
+                            <button class="action-btn delete-btn" onclick="deleteSale('${sale.vendor}', '${sale.id}')">
+                                Supprimer
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+        }
+
+        function updateStats(sales) {
+            const totalSales = sales.reduce((sum, sale) => sum + parseFloat(sale.price), 0);
+            const totalTickets = sales.length;
+            
+            const vendorSales = sales.reduce((acc, sale) => {
+                acc[sale.vendor] = (acc[sale.vendor] || 0) + parseFloat(sale.price);
+                return acc;
+            }, {});
+            const topVendor = Object.entries(vendorSales)
+                .sort(([,a], [,b]) => b - a)[0]?.[0] || '-';
+
+            document.getElementById('totalSales').textContent = `${totalSales.toLocaleString()} FCFA`;
+            document.getElementById('totalTickets').textContent = totalTickets;
+            document.getElementById('topVendor').textContent = topVendor;
+        }
+
+        window.deleteSale = function(vendor, saleId) {
+            const modal = document.getElementById('confirmModal');
+            document.getElementById('modalMessage').textContent = 'Êtes-vous sûr de vouloir supprimer cette vente ?';
+            
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.onclick = async () => {
+                try {
+                    await remove(ref(db, `VendorsHistory/${vendor}/${saleId}`));
+                    await loadSales();
+                    closeModal();
+                } catch (error) {
+                    console.error("Erreur lors de la suppression:", error);
+                }
+            };
+            
+            modal.style.display = 'flex';
+        };
+
+        window.clearVendorHistory = function(vendor) {
+            const modal = document.getElementById('confirmModal');
+            document.getElementById('modalMessage').textContent = 
+                `Êtes-vous sûr de vouloir effacer tout l'historique de ${vendor} ?`;
+            
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.onclick = async () => {
+                try {
+                    await set(ref(db, `VendorsHistory/${vendor}`), null);
+                    await loadSales();
+                    closeModal();
+                } catch (error) {
+                    console.error("Erreur lors de l'effacement:", error);
+                }
+            };
+            
+            modal.style.display = 'flex';
+        };
+
+        window.closeModal = function() {
+            document.getElementById('confirmModal').style.display = 'none';
+        };
+
+        function showLoader() {
+            document.getElementById('loaderWrapper').style.display = 'block';
+        }
+
+        function hideLoader() {
+            document.getElementById('loaderWrapper').style.display = 'none';
+        }
+
+        function showPageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'flex';
+        }
+
+        function hidePageLoader() {
+            document.getElementById('pageLoaderWrapper').style.display = 'none';
+        }
+
+        async function processConnectedTickets() {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            try {
+                pageLoaderMessage.textContent = "Vérification des tickets connectés...";
+                const connectedTicketsRef = ref(db, 'TicketConnecté');
+                const snapshot = await get(connectedTicketsRef);
+                let connectedTickets = snapshot.val() || {};
+
+                // Supprimer les doublons et récupérer les informations complètes des tickets
+                const uniqueTickets = {};
+                for (const ticketId in connectedTickets) {
+                    const user = connectedTickets[ticketId].username;
+                    if (!uniqueTickets[user]) {
+                        uniqueTickets[user] = connectedTickets[ticketId];
+                    }
+                }
+                
+                pageLoaderMessage.textContent = "Traitement des tickets uniques...";
+                for (const user in uniqueTickets) {
+                    await processTicket(uniqueTickets[user]);
+                }
+                
+                pageLoaderMessage.textContent = "Nettoyage des tickets traités...";
+                // Nettoyer les tickets traités de TicketConnecté
+                for (const user in uniqueTickets) {
+                    const ticketId = Object.keys(connectedTickets).find(key => connectedTickets[key].username === user);
+                    if (ticketId) {
+                        await remove(ref(db, `TicketConnecté/${ticketId}`));
+                    }
+                }
+
+            } catch (error) {
+                console.error("Erreur lors du traitement des tickets connectés :", error);
+                showNotification("Erreur", "Une erreur est survenue lors du traitement des tickets.");
+            }
+        }
+
+        async function processTicket(ticket) {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            try {
+                pageLoaderMessage.textContent = `Vérification du ticket pour ${ticket.username}...`;
+
+                // Vérifier dans VendorsHistory
+                const vendorsHistoryRef = ref(db, 'VendorsHistory');
+                const vendorsHistorySnapshot = await get(vendorsHistoryRef);
+                const vendorsHistory = vendorsHistorySnapshot.val() || {};
+
+                let foundInHistory = false;
+                for (const vendorId in vendorsHistory) {
+                    const vendorHistory = vendorsHistory[vendorId];
+                    for (const saleId in vendorHistory) {
+                        if (vendorHistory[saleId].user === ticket.username) {
+                            foundInHistory = true;
+                            break;
+                        }
+                    }
+                    if (foundInHistory) break;
+                }
+
+                if (!foundInHistory) {
+                    pageLoaderMessage.textContent = `Traitement du ticket ${ticket.username}...`;
+
+                    // Vérifier dans TicketsTotal et TicketsTransit
+                    const ticketsTotalRef = ref(db, 'TicketsTotal');
+                    const ticketsTransitRef = ref(db, 'TicketsTransit');
+                    const totalSnapshot = await get(ticketsTotalRef);
+                    const transitSnapshot = await get(ticketsTransitRef);
+                    const totalTickets = totalSnapshot.val() || {};
+                    const transitTickets = transitSnapshot.val() || {};
+
+                    let foundTicket = null;
+                    let foundTicketRef = null;
+                    let foundInCategory = null;
+
+                    // Chercher dans TicketsTotal
+                    for (const category in totalTickets) {
+                        const ticketIndex = (totalTickets[category].utilisateur || []                        ).indexOf(ticket.username);
+                        
+                        if (ticketIndex > -1) {
+                            foundTicket = {
+                                category: category,
+                                user: totalTickets[category].utilisateur[ticketIndex],
+                                password: totalTickets[category].motDePasse[ticketIndex],
+                                price: totalTickets[category].prix[ticketIndex],
+                                updatedData: {
+                                    ...totalTickets[category],
+                                    utilisateur: totalTickets[category].utilisateur.filter((_, index) => index !== ticketIndex),
+                                    motDePasse: totalTickets[category].motDePasse.filter((_, index) => index !== ticketIndex),
+                                    prix: totalTickets[category].prix.filter((_, index) => index !== ticketIndex)
+                                }
+                            };
+                            foundTicketRef = ref(db, `TicketsTotal/${category}`);
+                            foundInCategory = "TicketsTotal";
+                            break;
+                        }
+                    }
+
+                    // Si non trouvé dans TicketsTotal, chercher dans TicketsTransit
+                    if (!foundTicket) {
+                        for (const transitId in transitTickets) {
+                            if (transitTickets[transitId].user === ticket.username) {
+                                foundTicket = {
+                                    category: transitTickets[transitId].category,
+                                    user: transitTickets[transitId].user,
+                                    password: transitTickets[transitId].password,
+                                    price: transitTickets[transitId].price
+                                };
+                                foundTicketRef = ref(db, `TicketsTransit/${transitId}`);
+                                foundInCategory = "TicketsTransit";
+                                break;
+                            }
+                        }
+                    }
+
+                    if (foundTicket) {
+                        pageLoaderMessage.textContent = `Vente du ticket ${ticket.username}...`;
+                        await sellTicketAutomatically(foundTicket, foundTicketRef, foundInCategory);
+                    }
+                }
+            } catch (error) {
+                console.error("Erreur lors du traitement du ticket :", error);
+                showNotification("Erreur", `Erreur lors du traitement du ticket ${ticket.username}.`);
+            }
+        }
+
+        async function sellTicketAutomatically(ticket, ticketRef, foundInCategory) {
+            try {
+                const automaticVendorId = "Vendeur automatique";
+
+                // Enregistrement de la vente dans VendorsHistory
+                const vendorHistoryRef = ref(db, `VendorsHistory/${automaticVendorId}`);
+                await push(vendorHistoryRef, {
+                    category: ticket.category,
+                    user: ticket.user,
+                    password: ticket.password,
+                    price: ticket.price,
+                    soldAt: Date.now()
+                });
+
+                // Enregistrement de la vente dans TicketsVendus
+                const ticketsVendusRef = ref(db, 'TicketsVendus');
+                await push(ticketsVendusRef, {
+                    category: ticket.category,
+                    user: ticket.user,
+                    password: ticket.password,
+                    price: ticket.price,
+                    soldAt: Date.now(),
+                    vendorId: automaticVendorId
+                });
+
+                // Suppression du ticket de la source (TicketsTotal ou TicketsTransit)
+                if(foundInCategory === "TicketsTotal"){
+                    await set(ticketRef, ticket.updatedData);
+                } else {
+                    await remove(ticketRef);
+                }
+
+                console.log(`Ticket ${ticket.user} vendu automatiquement.`);
+            } catch (error) {
+                console.error("Erreur lors de la vente automatique du ticket :", error);
+                showNotification("Erreur", "Erreur lors de la vente automatique du ticket.");
+            }
+        }
+
+        function showSubscriptionRequiredModal() {
+            subscriptionRequiredModal.style.display = 'flex';
+        }
+
+        function hideSubscriptionRequiredModal() {
+            subscriptionRequiredModal.style.display = 'none';
+        }
+
+        function redirectToSubscription() {
+            window.location.href = 'index.html';
+        }
+        async function checkSubscriptionStatus() {
+            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            pageLoaderMessage.textContent = "Vérification de l'abonnement...";
+
+            try {
+                const snapshot = await get(adminRef);
+                const subscription = snapshot.val();
+                const now = new Date();
+
+                if (subscription && subscription.status === 'active') {
+                    const endDate = new Date(subscription.endDate);
+                    if (endDate < now) {
+                        // Abonnement expiré
+                        pageLoaderMessage.textContent = "Abonnement expiré";
+                        hidePageLoader();
+
+                        showSubscriptionRequiredModal();
+
+                        await adminRef.update({ status: 'expired' });
+                    } else {
+                        // Abonnement actif
+                        pageLoaderMessage.textContent = "Abonnement actif";
+                        hidePageLoader();
+
+                    }
+                } else {
+                    // Pas d'abonnement
+                    pageLoaderMessage.textContent = "Pas d'abonnement actif";
+                    hidePageLoader();
+
+                    showSubscriptionRequiredModal();
+                }
+            } catch (error) {
+                hidePageLoader();
+                console.error("Erreur lors de la vérification de l'abonnement :", error);
+                pageLoaderMessage.textContent = "Erreur lors de la vérification de l'abonnement";
+                showNotification("Erreur", "Erreur lors de la vérification de l'abonnement.");
+            }
+        }
+
+        // Fonctions pour l'exportation des données
+        window.printTable = function() {
+            window.print();
+        };
+
+        window.exportToPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const table = document.getElementById("salesTable");
+
+            // Personnalisation du header du tableau
+            const headerStyles = {
+                fillColor: [42, 58, 108], // Couleur de fond bleu foncé
+                textColor: [255, 255, 255], // Texte en blanc
+                fontStyle: 'bold', // Texte en gras
+                halign: 'center' // Alignement horizontal au centre
+            };
+
+            // Personnalisation des cellules du tableau
+            const bodyStyles = {
+                halign: 'left' // Alignement horizontal à gauche
+            };
+
+            // Personnalisation du style du tableau
+            const styles = {
+                theme: 'grid', // Thème en grille pour une meilleure lisibilité
+                headStyles: headerStyles,
+                bodyStyles: bodyStyles,
+                margin: { top: 20 }, // Marge en haut pour le titre
+                startY: 20 // Position de départ du tableau sur la page
+            };
+
+            // Ajout d'un titre au document
+            doc.text("Liste des ventes", 14, 15);
+
+            // Génération du tableau avec autoTable
+            doc.autoTable({
+                html: '#salesTable',
+                ...styles
+            });
+
+            doc.save("ventes.pdf");
+        };
+
+        window.exportToExcel = function() {
+            const wb = XLSX.utils.table_to_book(document.getElementById('salesTable'), { sheet: "Ventes" });
+            const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+            function s2ab(s) {
+                const buf = new ArrayBuffer(s.length);
+                const view = new Uint8Array(buf);
+                for (let i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "ventes.xlsx");
+        };
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            await checkSubscriptionStatus();
+            await loadSalesData(); // Charger les données de vente et des vendeurs
+            await loadPartners(); // Charger la liste des partenaires
+            document.getElementById('periodFilter').value = 'today';
+            applyFilters();
+            lucide.createIcons();
+        });
+        window.redirectToSubscription = redirectToSubscription;
+        window.hideSubscriptionRequiredModal = redirectToSubscription;
     </script>
 </body>
 </html>

@@ -409,7 +409,1143 @@
     </div>
 
     <script>
-const _0x5b7482=_0x50c4;(function(_0x5f215e,_0x1a0d3a){const _0x2c2dbc=_0x50c4,_0x139b17=_0x5f215e();while(!![]){try{const _0x2c7094=parseInt(_0x2c2dbc(0x1fc))/0x1+-parseInt(_0x2c2dbc(0x20c))/0x2+parseInt(_0x2c2dbc(0x25c))/0x3*(-parseInt(_0x2c2dbc(0x261))/0x4)+parseInt(_0x2c2dbc(0x274))/0x5*(parseInt(_0x2c2dbc(0x291))/0x6)+-parseInt(_0x2c2dbc(0x225))/0x7*(-parseInt(_0x2c2dbc(0x20f))/0x8)+-parseInt(_0x2c2dbc(0x277))/0x9*(parseInt(_0x2c2dbc(0x204))/0xa)+-parseInt(_0x2c2dbc(0x267))/0xb*(-parseInt(_0x2c2dbc(0x28b))/0xc);if(_0x2c7094===_0x1a0d3a)break;else _0x139b17['push'](_0x139b17['shift']());}catch(_0x3a7421){_0x139b17['push'](_0x139b17['shift']());}}}(_0x15af,0xe325a));const firebaseConfig={'apiKey':'AIzaSyB6AUBnK_7Vy2ABWI2JMo3ebG_Sljr8XlY','authDomain':_0x5b7482(0x223),'databaseURL':_0x5b7482(0x1ed),'projectId':_0x5b7482(0x26e),'storageBucket':_0x5b7482(0x249),'messagingSenderId':'719410601264','appId':_0x5b7482(0x243),'measurementId':_0x5b7482(0x1f8)};firebase[_0x5b7482(0x276)](firebaseConfig);const database=firebase[_0x5b7482(0x246)]();let allTickets={},tempImportData=null,tempCategory=null,currentEditingTicket=null,currentEditingCategory=null,currentDatabase=_0x5b7482(0x2a1),editingCategory='',editingIndex=-0x1,editingId='';(function(){const _0x25cb26=_0x5b7482,_0x559960=sessionStorage[_0x25cb26(0x29d)](_0x25cb26(0x226));!_0x559960&&window[_0x25cb26(0x24e)]['replace'](_0x25cb26(0x1f6));}()),document[_0x5b7482(0x271)](_0x5b7482(0x245),function(){const _0x43d74b=_0x5b7482;!sessionStorage[_0x43d74b(0x29d)](_0x43d74b(0x226))&&window[_0x43d74b(0x24e)][_0x43d74b(0x27b)]('login.html');}),window[_0x5b7482(0x271)](_0x5b7482(0x25f),function(_0x3031f6){const _0x6690be=_0x5b7482;(_0x3031f6[_0x6690be(0x207)]||!sessionStorage[_0x6690be(0x29d)]('isLoggedIn'))&&window[_0x6690be(0x24e)][_0x6690be(0x27b)](_0x6690be(0x1f6));});function showLoading(){const _0x50128e=_0x5b7482;document[_0x50128e(0x275)](_0x50128e(0x278))['style'][_0x50128e(0x25e)]=_0x50128e(0x26b);}function _0x50c4(_0x13ea5c,_0x244221){const _0x15af9d=_0x15af();return _0x50c4=function(_0x50c4c2,_0xcf9a35){_0x50c4c2=_0x50c4c2-0x1e9;let _0x3b8086=_0x15af9d[_0x50c4c2];return _0x3b8086;},_0x50c4(_0x13ea5c,_0x244221);}function hideLoading(){const _0x3ff1d2=_0x5b7482;document[_0x3ff1d2(0x275)](_0x3ff1d2(0x278))[_0x3ff1d2(0x254)][_0x3ff1d2(0x25e)]=_0x3ff1d2(0x235);}function loadTickets(){const _0x48a652=_0x5b7482;showLoading();const _0x32450d=database[_0x48a652(0x1f7)](currentDatabase);_0x32450d[_0x48a652(0x286)](_0x48a652(0x230)),_0x32450d['on'](_0x48a652(0x230),_0x5f1114=>{const _0x4898ca=_0x48a652;allTickets=_0x5f1114[_0x4898ca(0x218)]()||{},displayTickets(allTickets),hideLoading();},_0x2a4cb2=>{const _0x42ae05=_0x48a652;console[_0x42ae05(0x2a0)](_0x42ae05(0x25b),_0x2a4cb2),hideLoading(),alert(_0x42ae05(0x1ee));});}function displayTickets(_0x4926ef,_0xc941cc=''){const _0x20c314=_0x5b7482,_0x131cde=document[_0x20c314(0x275)]('ticketCategories');_0x131cde[_0x20c314(0x23b)]='';if(currentDatabase==='TicketsTotal')displayTicketsTotal(_0x4926ef,_0xc941cc);else currentDatabase==='TicketsTransit'&&displayTicketsTransit(_0x4926ef,_0xc941cc);}function displayTicketsTotal(_0x5652ed,_0xf091ad=''){const _0x3b7d22=_0x5b7482,_0x597b52=document[_0x3b7d22(0x275)](_0x3b7d22(0x298));for(let _0x17f0f8 in _0x5652ed){const _0x14995d=_0x5652ed[_0x17f0f8],_0x315d91=_0x3b7d22(0x2a5)+_0x17f0f8+_0x3b7d22(0x212)+_0x17f0f8+'\x27)\x22></i>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22add-ticket-btn\x22\x20onclick=\x22showAddTicketModal(\x27'+_0x17f0f8+'\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-plus\x22></i>\x20Ajouter\x20un\x20ticket\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20for=\x22importFile_'+_0x17f0f8+_0x3b7d22(0x22f)+_0x17f0f8+_0x3b7d22(0x1fd)+_0x17f0f8+_0x3b7d22(0x20d)+_0x17f0f8+_0x3b7d22(0x281)+_0x17f0f8+_0x3b7d22(0x252)+_0x17f0f8+_0x3b7d22(0x28f)+_0x17f0f8+_0x3b7d22(0x24f)+generateTicketRowsTotal(_0x17f0f8,_0x14995d,_0xf091ad)+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tbody>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</table>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22deleteSelectedTickets(\x27'+_0x17f0f8+'\x27)\x22>Supprimer\x20les\x20tickets\x20sélectionnés\x20de\x20'+_0x17f0f8+_0x3b7d22(0x231);_0x597b52['innerHTML']+=_0x315d91;}}function _0x15af(){const _0x2ca767=['data:text/json;charset=utf-8,','\x27,\x20','</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22editSelectedTickets(\x27','pop','style','Veuillez\x20entrer\x20un\x20prix','Les\x20tickets\x20correspondant\x20à\x20la\x20recherche\x20ont\x20été\x20supprimés.','Le\x20nom\x20de\x20la\x20catégorie\x20ne\x20peut\x20pas\x20être\x20vide','editUser','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trash\x22></i>\x20Supprimer\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','Ticket\x20ajouté\x20avec\x20succès\x20dans\x20TicketsTransit!','Erreur\x20lors\x20du\x20chargement\x20des\x20tickets:','90669wDskNx','Ticket\x20supprimé\x20avec\x20succès!','display','pageshow','<span\x20class=\x22highlight\x22>','36PRqOvB','files','N/A','utilisateur','filtered_tickets_export_','split','11VjQpQW','Êtes-vous\x20sûr\x20de\x20vouloir\x20importer\x20ces\x20tickets\x20?\x20Les\x20nouveaux\x20tickets\x20seront\x20ajoutés\x20aux\x20tickets\x20existants.','motDePasse','bulkEditCategory','flex','Erreur\x20lors\x20de\x20la\x20suppression:','input','cyber-campus-2706f','from','editCategoryModal','addEventListener','user','Êtes-vous\x20sûr\x20de\x20vouloir\x20supprimer\x20tous\x20les\x20tickets\x20correspondant\x20à\x20votre\x20recherche\x20?','1105340wYFoed','getElementById','initializeApp','135eUPWNN','loadingIndicator','/ip\x20hotspot\x20user','includes','replace','bulkEditModal','Aucun\x20ticket\x20valide\x20n\x27a\x20été\x20trouvé\x20dans\x20le\x20fichier','Erreur\x20lors\x20de\x20la\x20suppression\x20des\x20résultats\x20de\x20recherche.\x20Veuillez\x20réessayer.','sort','editId','\x27)\x22>Supprimer\x20tous\x20les\x20tickets\x20de\x20','href','Importation\x20réussie\x20!','set','length','off','splice','newPrice','priceInput','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22edit-btn\x22\x20onclick=\x22editTicketTransit(\x27','42620748kZhtxg','Erreur\x20lors\x20de\x20la\x20modification\x20groupée:','download','clear','\x27)\x22>Modifier\x20les\x20tickets\x20selectionnés</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<table>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<thead>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Sélectionner</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Mot\x20de\x20passe</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Prix</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Utilisateur</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Actions</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</thead>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tbody\x20id=\x22ticketsBody_','indexOf','30IyjwtJ','target','Importation\x20réussie\x20dans\x20','TicketsTransit','setAttribute','selectedTicketsData','Erreur\x20lors\x20de\x20la\x20suppression\x20des\x20tickets','ticketCategories','tickets','Êtes-vous\x20sûr\x20de\x20vouloir\x20supprimer\x20TOUS\x20les\x20tickets\x20de\x20','update','editTicketModal','getItem','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22edit-btn\x22\x20onclick=\x22editTicketTotal(\x27','Erreur\x20lors\x20de\x20l\x27importation.\x20Veuillez\x20réessayer.','error','TicketsTotal','\x22]:checked','result','now','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-section\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>','</span>','searchBar','importFile','newUser','fill','then','onload','.json','https://cyber-campus-2706f-default-rtdb.firebaseio.com','Erreur\x20lors\x20du\x20chargement\x20des\x20tickets.\x20Veuillez\x20réessayer.','match','id-','Veuillez\x20entrer\x20un\x20terme\x20de\x20recherche\x20avant\x20de\x20supprimer.','Veuillez\x20sélectionner\x20au\x20moins\x20un\x20ticket\x20à\x20modifier','prix','price','Tous\x20les\x20champs\x20sont\x20obligatoires','login.html','ref','G-CEEFJP5LYZ','Erreur\x20lors\x20de\x20la\x20modification\x20groupée\x20des\x20tickets','bulkEditUser','Tous\x20les\x20tickets\x20ont\x20été\x20supprimés\x20avec\x20succès!','39981gQJetJ','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<input\x20type=\x22file\x22\x20id=\x22importFile_','Erreur\x20d\x27importation:','toLowerCase','.txt,.json','block','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','stringify','1173050oyUBCm','trim','click','persisted','priceModal','push','Erreur\x20lors\x20de\x20l\x27ajout\x20du\x20ticket','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22checkbox\x22\x20name=\x22ticketSelect_Transit\x22\x20value=\x22','3666734GUdbLY','\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20accept=\x22.json,.csv,.txt\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20style=\x22display:\x20none;\x22\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20onchange=\x22importTickets(event)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22deleteAllTicketsInCategory(\x27','body','8zdKQpg','password','editCategoryName','</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-thumbtack\x20pin-icon\x22\x20onclick=\x22editCategory(\x27','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tbody>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</table>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22deleteSelectedTickets(null)\x22>Supprimer\x20les\x20tickets\x20sélectionnés</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','index','categoryName','Erreur\x20lors\x20de\x20la\x20modification\x20de\x20la\x20catégorie:','Erreur\x20lors\x20de\x20l\x27importation:','val','remove','\x27)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-edit\x22></i>\x20Modifier\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22delete-btn\x22\x20onclick=\x22deleteTicket(null,null,\x20\x27',',null)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-trash\x22></i>\x20Supprimer\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','accept','editPrice','Erreur\x20lors\x20de\x20la\x20suppression\x20du\x20ticket','addTicketModal','bulkEditPrice','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><input\x20type=\x22checkbox\x22\x20name=\x22ticketSelect_','Format\x20de\x20fichier\x20non\x20supporté','cyber-campus-2706f.firebaseapp.com','editPassword','688051NHQdNV','isLoggedIn','\x22></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','map','newPassword','Erreur\x20lors\x20de\x20l\x27ajout\x20du\x20ticket:','Erreur\x20lors\x20de\x20la\x20modification:','querySelectorAll','Catégorie\x20modifiée\x20avec\x20succès!','random','\x22\x20class=\x22file-input-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-file-import\x22></i>\x20Importer\x20dans\x20','value','</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',')\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-edit\x22></i>\x20Modifier\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22delete-btn\x22\x20onclick=\x22deleteTicket(\x27','forEach','category','none','readAsText','Ticket\x20modifié\x20avec\x20succès!','Erreur\x20lors\x20de\x20la\x20modification\x20du\x20ticket','data','databaseSelect','innerHTML','textContent','catch','keys','input[name^=\x22ticketSelect_','tickets_export_','TicketsTransit\x20Import','Êtes-vous\x20sûr\x20de\x20vouloir\x20supprimer\x20ce\x20ticket\x20?','1:719410601264:web:44fd2e3757721866303cf5','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-section\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22category-title\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h2>Tickets\x20en\x20transit</h2>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22add-ticket-btn\x22\x20onclick=\x22showAddTicketModal(null)\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-plus\x22></i>\x20Ajouter\x20un\x20ticket\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<label\x20for=\x22importFile_Transit\x22\x20class=\x22file-input-label\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<i\x20class=\x22fas\x20fa-file-import\x22></i>\x20Importer\x20dans\x20TicketsTransit\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</label>\x0a<input\x20type=\x22file\x22\x20id=\x22importFile_Transit\x22\x20\x0a\x20\x20\x20\x20accept=\x22.txt,.json\x22\x20\x0a\x20\x20\x20\x20style=\x22display:\x20none;\x22\x20\x0a\x20\x20\x20\x20onchange=\x22importTickets(event)\x22>\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22deleteAllTicketsInCategory(null)\x22>Supprimer\x20tous\x20les\x20tickets</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20onclick=\x22editSelectedTickets(null)\x22>Modifier\x20les\x20tickets\x20selectionnés</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<table>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<thead>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Sélectionner</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>ID</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Catégorie</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Mot\x20de\x20passe</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Prix</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Utilisateur</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<th>Actions</th>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</thead>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tbody\x20id=\x22ticketsBody_Transit\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','DOMContentLoaded','database','newCategory','Ticket\x20ajouté\x20avec\x20succès\x20dans\x20TicketsTotal!','cyber-campus-2706f.appspot.com','editCategory','Erreur\x20lors\x20de\x20l\x27importation.\x20Veuillez\x20vérifier\x20le\x20format\x20du\x20fichier.','floor','parse','location','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'];_0x15af=function(){return _0x2ca767;};return _0x15af();}function generateTicketRowsTotal(_0x44df67,_0x5e45ad,_0x39c2cc){const _0x34b0cd=_0x5b7482;let _0x188092='';for(let _0x420f54=0x0;_0x420f54<_0x5e45ad[_0x34b0cd(0x269)][_0x34b0cd(0x285)];_0x420f54++){if(_0x39c2cc&&!matchesSearchTotal(_0x5e45ad,_0x420f54,_0x39c2cc))continue;_0x188092+=_0x34b0cd(0x221)+_0x44df67+'\x22\x20value=\x22'+_0x420f54+_0x34b0cd(0x227)+highlightMatch(_0x5e45ad[_0x34b0cd(0x269)][_0x420f54],_0x39c2cc)+_0x34b0cd(0x202)+highlightMatch(_0x5e45ad[_0x34b0cd(0x1f3)][_0x420f54],_0x39c2cc)+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+highlightMatch(_0x5e45ad[_0x34b0cd(0x264)][_0x420f54],_0x39c2cc)+_0x34b0cd(0x29e)+_0x44df67+_0x34b0cd(0x251)+_0x420f54+_0x34b0cd(0x232)+_0x44df67+_0x34b0cd(0x251)+_0x420f54+_0x34b0cd(0x21b);}return _0x188092;}function displayTicketsTransit(_0x4b490e,_0x59e9a0=''){const _0x1ba82e=_0x5b7482,_0x38695d=document['getElementById'](_0x1ba82e(0x298));_0x38695d[_0x1ba82e(0x23b)]='';const _0x27e47c=_0x1ba82e(0x244)+generateTicketRowsTransit(_0x4b490e,_0x59e9a0)+_0x1ba82e(0x213);_0x38695d[_0x1ba82e(0x23b)]=_0x27e47c;}function generateTicketRowsTransit(_0x43623d,_0x4ca4e6){const _0x38e42e=_0x5b7482;let _0x384f96='';for(let _0x13d6bb in _0x43623d){const _0x219f83=_0x43623d[_0x13d6bb];if(_0x4ca4e6&&!matchesSearchTransit(_0x219f83,_0x4ca4e6))continue;_0x384f96+=_0x38e42e(0x20b)+_0x13d6bb+_0x38e42e(0x227)+highlightMatch(_0x13d6bb,_0x4ca4e6)+_0x38e42e(0x202)+highlightMatch(_0x219f83[_0x38e42e(0x234)],_0x4ca4e6)+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>'+highlightMatch(_0x219f83['password'],_0x4ca4e6)+_0x38e42e(0x202)+highlightMatch(_0x219f83[_0x38e42e(0x1f4)],_0x4ca4e6)+_0x38e42e(0x202)+highlightMatch(_0x219f83[_0x38e42e(0x272)],_0x4ca4e6)+_0x38e42e(0x28a)+_0x13d6bb+_0x38e42e(0x21a)+_0x13d6bb+_0x38e42e(0x259);}return _0x384f96;}function editTicketTransit(_0x31eefa){const _0x34dd84=_0x5b7482,_0x4d6b80=allTickets[_0x31eefa];_0x4d6b80?(editingId=_0x31eefa,document[_0x34dd84(0x275)](_0x34dd84(0x280))[_0x34dd84(0x230)]=_0x31eefa,document[_0x34dd84(0x275)](_0x34dd84(0x24a))['value']=_0x4d6b80['category'],document[_0x34dd84(0x275)](_0x34dd84(0x224))[_0x34dd84(0x230)]=_0x4d6b80['password'],document[_0x34dd84(0x275)](_0x34dd84(0x21d))[_0x34dd84(0x230)]=_0x4d6b80[_0x34dd84(0x1f4)],document[_0x34dd84(0x275)]('editUser')['value']=_0x4d6b80[_0x34dd84(0x272)],document[_0x34dd84(0x275)](_0x34dd84(0x29c))[_0x34dd84(0x254)][_0x34dd84(0x25e)]=_0x34dd84(0x201)):alert('Ticket\x20introuvable.');}function saveTicketEdit(){const _0x5631d8=_0x5b7482,_0x3d25a2=document[_0x5631d8(0x275)](_0x5631d8(0x224))['value'],_0x32d9db=document[_0x5631d8(0x275)](_0x5631d8(0x21d))[_0x5631d8(0x230)],_0xaabf84=document[_0x5631d8(0x275)](_0x5631d8(0x258))['value'],_0x178abb=document[_0x5631d8(0x275)](_0x5631d8(0x24a))[_0x5631d8(0x230)];if(!_0x3d25a2||!_0x32d9db||!_0xaabf84||!_0x178abb){alert(_0x5631d8(0x1f5));return;}showLoading();if(currentDatabase===_0x5631d8(0x2a1)){const _0x39e8b1=allTickets[editingCategory];_0x39e8b1[_0x5631d8(0x269)][editingIndex]=_0x3d25a2,_0x39e8b1[_0x5631d8(0x1f3)][editingIndex]=_0x32d9db,_0x39e8b1['utilisateur'][editingIndex]=_0xaabf84;const _0x574fb1={[currentDatabase+'/'+editingCategory]:_0x39e8b1};database[_0x5631d8(0x1f7)]()['update'](_0x574fb1)[_0x5631d8(0x1ea)](()=>{const _0x5028a7=_0x5631d8;hideLoading(),closeEditModal(),alert(_0x5028a7(0x237));})[_0x5631d8(0x23d)](_0x3734b0=>{const _0x408d7e=_0x5631d8;console[_0x408d7e(0x2a0)](_0x408d7e(0x22b),_0x3734b0),hideLoading(),alert('Erreur\x20lors\x20de\x20la\x20modification\x20du\x20ticket');});}else{if(currentDatabase===_0x5631d8(0x294)){const _0x1197c2=database[_0x5631d8(0x1f7)](currentDatabase+'/'+editingId);_0x1197c2[_0x5631d8(0x29b)]({'category':_0x178abb,'password':_0x3d25a2,'price':_0x32d9db,'user':_0xaabf84})[_0x5631d8(0x1ea)](()=>{const _0x4286eb=_0x5631d8;hideLoading(),closeEditModal(),alert(_0x4286eb(0x237));})[_0x5631d8(0x23d)](_0x45556a=>{const _0x21b471=_0x5631d8;console[_0x21b471(0x2a0)](_0x21b471(0x22b),_0x45556a),hideLoading(),alert(_0x21b471(0x238));});}}}function editTicketTotal(_0x77da9b,_0x4878de){const _0x10fa34=_0x5b7482;editingCategory=_0x77da9b,editingIndex=_0x4878de;const _0x4f11c1=allTickets[_0x77da9b];document['getElementById']('editId')['value']='',document[_0x10fa34(0x275)](_0x10fa34(0x24a))['value']=_0x77da9b,document['getElementById'](_0x10fa34(0x224))[_0x10fa34(0x230)]=_0x4f11c1['motDePasse'][_0x4878de],document[_0x10fa34(0x275)](_0x10fa34(0x21d))[_0x10fa34(0x230)]=_0x4f11c1[_0x10fa34(0x1f3)][_0x4878de],document[_0x10fa34(0x275)](_0x10fa34(0x258))[_0x10fa34(0x230)]=_0x4f11c1[_0x10fa34(0x264)][_0x4878de],document[_0x10fa34(0x275)](_0x10fa34(0x29c))[_0x10fa34(0x254)][_0x10fa34(0x25e)]=_0x10fa34(0x201);}function mergeTicketsToCategory(_0x533929,_0x15ccd4){const _0x37d7f9=_0x5b7482;let _0x3e308a={};if(currentDatabase==='TicketsTransit')for(let _0x43b356 in _0x15ccd4){_0x3e308a[currentDatabase+'/'+_0x43b356]=_0x15ccd4[_0x43b356];}else{!allTickets[_0x533929]&&(allTickets[_0x533929]={'motDePasse':[],'prix':[],'utilisateur':[]});const _0xd3d165=allTickets[_0x533929],_0x46c204={'motDePasse':[..._0xd3d165[_0x37d7f9(0x269)],..._0x15ccd4[_0x37d7f9(0x269)]],'prix':[..._0xd3d165['prix'],..._0x15ccd4[_0x37d7f9(0x1f3)]],'utilisateur':[..._0xd3d165[_0x37d7f9(0x264)],..._0x15ccd4['utilisateur']]};_0x3e308a[currentDatabase+'/'+_0x533929]=_0x46c204;}database[_0x37d7f9(0x1f7)]()[_0x37d7f9(0x29b)](_0x3e308a)['then'](()=>{const _0x40c6f2=_0x37d7f9;hideLoading(),alert(_0x40c6f2(0x293)+(_0x533929||_0x40c6f2(0x294))+'!');})[_0x37d7f9(0x23d)](_0x5b71be=>{const _0x1d0e2a=_0x37d7f9;console[_0x1d0e2a(0x2a0)](_0x1d0e2a(0x217),_0x5b71be),hideLoading(),alert(_0x1d0e2a(0x29f));});}function editCategory(_0x4bbaee){const _0x29287c=_0x5b7482;currentEditingCategory=_0x4bbaee,document['getElementById'](_0x29287c(0x211))['value']=_0x4bbaee,document[_0x29287c(0x275)](_0x29287c(0x270))[_0x29287c(0x254)]['display']=_0x29287c(0x201);}function saveCategoryEdit(){const _0x4356e7=_0x5b7482,_0x160430=document[_0x4356e7(0x275)](_0x4356e7(0x211))[_0x4356e7(0x230)]['trim']();if(!_0x160430){alert(_0x4356e7(0x257));return;}if(_0x160430===currentEditingCategory){closeEditCategoryModal();return;}showLoading();const _0x4f51e1=allTickets[currentEditingCategory],_0x2f95c4={[currentDatabase+'/'+currentEditingCategory]:null,[currentDatabase+'/'+_0x160430]:_0x4f51e1};database[_0x4356e7(0x1f7)]()[_0x4356e7(0x29b)](_0x2f95c4)[_0x4356e7(0x1ea)](()=>{const _0x5e6020=_0x4356e7;hideLoading(),closeEditCategoryModal(),alert(_0x5e6020(0x22d));})['catch'](_0x47f597=>{const _0x4f7327=_0x4356e7;console[_0x4f7327(0x2a0)](_0x4f7327(0x216),_0x47f597),hideLoading(),alert('Erreur\x20lors\x20de\x20la\x20modification\x20de\x20la\x20catégorie');});}function showAddTicketModal(_0x2181cf){const _0x5117e6=_0x5b7482;currentEditingCategory=_0x2181cf,document['getElementById'](_0x5117e6(0x229))[_0x5117e6(0x230)]='',document[_0x5117e6(0x275)](_0x5117e6(0x288))['value']='',document[_0x5117e6(0x275)](_0x5117e6(0x2a9))[_0x5117e6(0x230)]='',document[_0x5117e6(0x275)](_0x5117e6(0x247))[_0x5117e6(0x230)]='',document[_0x5117e6(0x275)](_0x5117e6(0x21f))[_0x5117e6(0x254)][_0x5117e6(0x25e)]=_0x5117e6(0x201);}function saveNewTicket(){const _0x4bce0a=_0x5b7482;showLoading();if(currentDatabase==='TicketsTransit'){const _0x17337c=_0x4bce0a(0x1f0)+Date[_0x4bce0a(0x2a4)](),_0xe34ab2={'id':_0x17337c,'category':document[_0x4bce0a(0x275)](_0x4bce0a(0x247))[_0x4bce0a(0x230)][_0x4bce0a(0x205)](),'password':document[_0x4bce0a(0x275)]('newPassword')[_0x4bce0a(0x230)][_0x4bce0a(0x205)](),'price':document['getElementById'](_0x4bce0a(0x288))[_0x4bce0a(0x230)][_0x4bce0a(0x205)](),'user':document[_0x4bce0a(0x275)](_0x4bce0a(0x2a9))[_0x4bce0a(0x230)]['trim']()};database[_0x4bce0a(0x1f7)](currentDatabase+'/'+_0x17337c)[_0x4bce0a(0x284)](_0xe34ab2)[_0x4bce0a(0x1ea)](()=>{const _0x161ad3=_0x4bce0a;hideLoading(),closeAddTicketModal(),alert(_0x161ad3(0x25a));})[_0x4bce0a(0x23d)](_0x18482c=>{const _0xc98381=_0x4bce0a;console['error'](_0xc98381(0x22a),_0x18482c),hideLoading(),alert(_0xc98381(0x20a));});}else{const _0x4ff7de=currentEditingCategory,_0x6defdf={'password':document[_0x4bce0a(0x275)](_0x4bce0a(0x229))[_0x4bce0a(0x230)][_0x4bce0a(0x205)](),'price':document[_0x4bce0a(0x275)](_0x4bce0a(0x288))[_0x4bce0a(0x230)][_0x4bce0a(0x205)](),'user':document[_0x4bce0a(0x275)](_0x4bce0a(0x2a9))[_0x4bce0a(0x230)][_0x4bce0a(0x205)]()},_0x462cec=allTickets[_0x4ff7de]||{'motDePasse':[],'prix':[],'utilisateur':[]};_0x462cec['motDePasse'][_0x4bce0a(0x209)](_0x6defdf[_0x4bce0a(0x210)]),_0x462cec[_0x4bce0a(0x1f3)]['push'](_0x6defdf[_0x4bce0a(0x1f4)]),_0x462cec[_0x4bce0a(0x264)][_0x4bce0a(0x209)](_0x6defdf[_0x4bce0a(0x272)]),database[_0x4bce0a(0x1f7)](currentDatabase+'/'+_0x4ff7de)[_0x4bce0a(0x284)](_0x462cec)['then'](()=>{const _0x20e42a=_0x4bce0a;hideLoading(),closeAddTicketModal(),alert(_0x20e42a(0x248));})['catch'](_0x52246e=>{const _0x3c9ee9=_0x4bce0a;console['error'](_0x3c9ee9(0x22a),_0x52246e),hideLoading(),alert(_0x3c9ee9(0x20a));});}}function closeEditModal(){const _0x317f05=_0x5b7482;document['getElementById'](_0x317f05(0x29c))[_0x317f05(0x254)][_0x317f05(0x25e)]=_0x317f05(0x235),editingCategory='',editingIndex=-0x1;}function closeEditCategoryModal(){const _0x19e430=_0x5b7482;document[_0x19e430(0x275)]('editCategoryModal')[_0x19e430(0x254)][_0x19e430(0x25e)]='none',currentEditingCategory=null;}function closeAddTicketModal(){const _0x497d35=_0x5b7482;document['getElementById'](_0x497d35(0x21f))[_0x497d35(0x254)]['display']='none',currentEditingCategory=null;}function matchesSearchTotal(_0x21d8f0,_0x15d506,_0x3d3ab4){const _0x5f3d10=_0x5b7482,_0x240278=_0x3d3ab4[_0x5f3d10(0x1ff)]();return _0x21d8f0[_0x5f3d10(0x269)][_0x15d506][_0x5f3d10(0x1ff)]()[_0x5f3d10(0x27a)](_0x240278)||_0x21d8f0[_0x5f3d10(0x1f3)][_0x15d506][_0x5f3d10(0x1ff)]()[_0x5f3d10(0x27a)](_0x240278)||_0x21d8f0[_0x5f3d10(0x264)][_0x15d506][_0x5f3d10(0x1ff)]()[_0x5f3d10(0x27a)](_0x240278);}function matchesSearchTransit(_0x3a2324,_0x9a8539){const _0x3ae46e=_0x5b7482,_0x4cbe3b=_0x9a8539['toLowerCase']();return _0x3a2324['id']&&_0x3a2324['id'][_0x3ae46e(0x1ff)]()[_0x3ae46e(0x27a)](_0x4cbe3b)||_0x3a2324['category']&&_0x3a2324['category'][_0x3ae46e(0x1ff)]()[_0x3ae46e(0x27a)](_0x4cbe3b)||_0x3a2324[_0x3ae46e(0x210)]&&_0x3a2324['password'][_0x3ae46e(0x1ff)]()[_0x3ae46e(0x27a)](_0x4cbe3b)||_0x3a2324[_0x3ae46e(0x1f4)]&&_0x3a2324['price'][_0x3ae46e(0x1ff)]()[_0x3ae46e(0x27a)](_0x4cbe3b)||_0x3a2324[_0x3ae46e(0x272)]&&_0x3a2324[_0x3ae46e(0x272)][_0x3ae46e(0x1ff)]()[_0x3ae46e(0x27a)](_0x4cbe3b);}function matchesSearch(_0x3ff5b5,_0x337d0d,_0x2d2cfa){const _0x18d451=_0x5b7482;if(currentDatabase===_0x18d451(0x2a1))return matchesSearchTotal(_0x3ff5b5,_0x337d0d,_0x2d2cfa);else{if(currentDatabase==='TicketsTransit')return matchesSearchTransit(_0x3ff5b5,_0x2d2cfa);}return![];}function highlightMatch(_0x10670e,_0x39fd8d){const _0x496f5d=_0x5b7482;if(!_0x39fd8d)return _0x10670e;const _0x33d0b5=new RegExp(_0x39fd8d,'gi');return _0x10670e[_0x496f5d(0x27b)](_0x33d0b5,_0x1f87bd=>_0x496f5d(0x260)+_0x1f87bd+_0x496f5d(0x2a6));}function deleteTicket(_0x255da5,_0x4a4493,_0x4df983){const _0x51a30a=_0x5b7482;if(confirm(_0x51a30a(0x242))){showLoading();if(currentDatabase==='TicketsTransit')database[_0x51a30a(0x1f7)](currentDatabase+'/'+_0x4df983)[_0x51a30a(0x219)]()[_0x51a30a(0x1ea)](()=>{const _0x48e86b=_0x51a30a;hideLoading(),alert(_0x48e86b(0x25d));})[_0x51a30a(0x23d)](_0x362f6d=>{const _0x33e158=_0x51a30a;console[_0x33e158(0x2a0)](_0x33e158(0x26c),_0x362f6d),hideLoading(),alert(_0x33e158(0x21e));});else{const _0x440b5b=allTickets[_0x255da5];_0x440b5b['motDePasse'][_0x51a30a(0x287)](_0x4a4493,0x1),_0x440b5b[_0x51a30a(0x1f3)]['splice'](_0x4a4493,0x1),_0x440b5b['utilisateur'][_0x51a30a(0x287)](_0x4a4493,0x1),database[_0x51a30a(0x1f7)](currentDatabase+'/'+_0x255da5)[_0x51a30a(0x284)](_0x440b5b)['then'](()=>{const _0x3fa78d=_0x51a30a;hideLoading(),alert(_0x3fa78d(0x25d));})['catch'](_0x2a2be4=>{const _0x5f5408=_0x51a30a;console[_0x5f5408(0x2a0)](_0x5f5408(0x26c),_0x2a2be4),hideLoading(),alert(_0x5f5408(0x21e));});}}}function deleteSelectedTickets(_0x2d6296){const _0x37833f=_0x5b7482,_0x3e48ed=document[_0x37833f(0x22c)](_0x37833f(0x23f)+(_0x2d6296||'Transit')+_0x37833f(0x2a2));if(_0x3e48ed[_0x37833f(0x285)]===0x0){alert('Veuillez\x20sélectionner\x20au\x20moins\x20un\x20ticket\x20à\x20supprimer');return;}if(confirm('Êtes-vous\x20sûr\x20de\x20vouloir\x20supprimer\x20les\x20tickets\x20sélectionnés\x20?')){showLoading();const _0x2ff77a={};if(currentDatabase===_0x37833f(0x294))_0x3e48ed[_0x37833f(0x233)](_0x7b7d8d=>{const _0x2a828f=_0x7b7d8d['value'];_0x2ff77a[currentDatabase+'/'+_0x2a828f]=null;});else{const _0x12ec7f=allTickets[_0x2d6296],_0x3bb183=Array[_0x37833f(0x26f)](_0x3e48ed)[_0x37833f(0x228)](_0x539752=>parseInt(_0x539752['value']))[_0x37833f(0x27f)]((_0x62dace,_0x5e9025)=>_0x5e9025-_0x62dace);_0x3bb183['forEach'](_0x52ae24=>{const _0x54e61b=_0x37833f;_0x12ec7f[_0x54e61b(0x269)][_0x54e61b(0x287)](_0x52ae24,0x1),_0x12ec7f[_0x54e61b(0x1f3)][_0x54e61b(0x287)](_0x52ae24,0x1),_0x12ec7f[_0x54e61b(0x264)][_0x54e61b(0x287)](_0x52ae24,0x1);}),_0x2ff77a[currentDatabase+'/'+_0x2d6296]=_0x12ec7f;}database[_0x37833f(0x1f7)]()[_0x37833f(0x29b)](_0x2ff77a)[_0x37833f(0x1ea)](()=>{hideLoading(),alert('Tickets\x20sélectionnés\x20supprimés\x20avec\x20succès!');})[_0x37833f(0x23d)](_0x1e3bdc=>{const _0x5d616d=_0x37833f;console[_0x5d616d(0x2a0)](_0x5d616d(0x26c),_0x1e3bdc),hideLoading(),alert('Erreur\x20lors\x20de\x20la\x20suppression\x20des\x20tickets');});}}function editSelectedTickets(_0x262f03){const _0x10f572=_0x5b7482,_0x3179ee=document['querySelectorAll']('input[name^=\x22ticketSelect_'+(_0x262f03||'Transit')+'\x22]:checked');if(_0x3179ee['length']===0x0){alert(_0x10f572(0x1f2));return;}window['selectedTicketsData']={'category':_0x262f03,'tickets':[]};if(currentDatabase==='TicketsTransit')_0x3179ee[_0x10f572(0x233)](_0x238a74=>{const _0x3fdbc5=_0x10f572,_0x2d8188=_0x238a74[_0x3fdbc5(0x230)];window[_0x3fdbc5(0x296)][_0x3fdbc5(0x299)][_0x3fdbc5(0x209)]({'id':_0x2d8188,'data':allTickets[_0x2d8188]});});else{const _0x1a97d2=Array[_0x10f572(0x26f)](_0x3179ee)[_0x10f572(0x228)](_0x5af870=>parseInt(_0x5af870[_0x10f572(0x230)]));window['selectedTicketsData']['tickets']=_0x1a97d2[_0x10f572(0x228)](_0x2e6403=>({'index':_0x2e6403,'data':{'password':allTickets[_0x262f03]['motDePasse'][_0x2e6403],'price':allTickets[_0x262f03][_0x10f572(0x1f3)][_0x2e6403],'user':allTickets[_0x262f03]['utilisateur'][_0x2e6403]}}));}document['getElementById'](_0x10f572(0x27c))['style'][_0x10f572(0x25e)]=_0x10f572(0x201);}function saveBulkEdit(){const _0x2d2b04=_0x5b7482,_0x314afb=document[_0x2d2b04(0x275)](_0x2d2b04(0x26a))[_0x2d2b04(0x230)][_0x2d2b04(0x205)](),_0x21e3b6=document[_0x2d2b04(0x275)]('bulkEditPassword')[_0x2d2b04(0x230)]['trim'](),_0x14986c=document[_0x2d2b04(0x275)](_0x2d2b04(0x220))[_0x2d2b04(0x230)][_0x2d2b04(0x205)](),_0x56e00f=document['getElementById'](_0x2d2b04(0x1fa))[_0x2d2b04(0x230)][_0x2d2b04(0x205)]();showLoading();const _0x631400={};if(currentDatabase===_0x2d2b04(0x294))window[_0x2d2b04(0x296)][_0x2d2b04(0x299)][_0x2d2b04(0x233)](_0x58aa8c=>{const _0x373b8e=_0x2d2b04,_0x18e73e={..._0x58aa8c[_0x373b8e(0x239)],'category':_0x314afb||_0x58aa8c[_0x373b8e(0x239)][_0x373b8e(0x234)],'password':_0x21e3b6||_0x58aa8c[_0x373b8e(0x239)]['password'],'price':_0x14986c||_0x58aa8c['data'][_0x373b8e(0x1f4)],'user':_0x56e00f||_0x58aa8c[_0x373b8e(0x239)][_0x373b8e(0x272)]};_0x631400[currentDatabase+'/'+_0x58aa8c['id']]=_0x18e73e;});else{const _0x2954ea=window[_0x2d2b04(0x296)][_0x2d2b04(0x234)],_0x303677=allTickets[_0x2954ea];window[_0x2d2b04(0x296)][_0x2d2b04(0x299)][_0x2d2b04(0x233)](_0x10f9db=>{const _0x7a6062=_0x2d2b04;if(_0x21e3b6)_0x303677['motDePasse'][_0x10f9db[_0x7a6062(0x214)]]=_0x21e3b6;if(_0x14986c)_0x303677[_0x7a6062(0x1f3)][_0x10f9db[_0x7a6062(0x214)]]=_0x14986c;if(_0x56e00f)_0x303677['utilisateur'][_0x10f9db[_0x7a6062(0x214)]]=_0x56e00f;}),_0x631400[currentDatabase+'/'+_0x2954ea]=_0x303677;}database['ref']()[_0x2d2b04(0x29b)](_0x631400)[_0x2d2b04(0x1ea)](()=>{hideLoading(),closeBulkEditModal(),alert('Tickets\x20sélectionnés\x20modifiés\x20avec\x20succès!');})[_0x2d2b04(0x23d)](_0x34eaa6=>{const _0x3d9759=_0x2d2b04;console['error'](_0x3d9759(0x28c),_0x34eaa6),hideLoading(),alert(_0x3d9759(0x1f9));});}function closeBulkEditModal(){const _0x3761e9=_0x5b7482;document[_0x3761e9(0x275)]('bulkEditModal')[_0x3761e9(0x254)][_0x3761e9(0x25e)]=_0x3761e9(0x235),window['selectedTicketsData']=null;}function deleteAllTicketsInCategory(_0x30770a){const _0x3bf0f0=_0x5b7482;confirm(_0x3bf0f0(0x29a)+(_0x30770a||_0x3bf0f0(0x294))+'\x20?')&&(showLoading(),currentDatabase===_0x3bf0f0(0x294)?database[_0x3bf0f0(0x1f7)](currentDatabase)['set']({})[_0x3bf0f0(0x1ea)](()=>{const _0x6a4c6d=_0x3bf0f0;hideLoading(),alert(_0x6a4c6d(0x1fb));})[_0x3bf0f0(0x23d)](_0x32ea8b=>{const _0x44f0db=_0x3bf0f0;console['error'](_0x44f0db(0x26c),_0x32ea8b),hideLoading(),alert(_0x44f0db(0x297));}):database[_0x3bf0f0(0x1f7)](currentDatabase+'/'+_0x30770a)[_0x3bf0f0(0x284)]({'motDePasse':[],'prix':[],'utilisateur':[]})[_0x3bf0f0(0x1ea)](()=>{hideLoading(),alert('Tous\x20les\x20tickets\x20de\x20la\x20catégorie\x20ont\x20été\x20supprimés\x20avec\x20succès!');})['catch'](_0x2c0795=>{const _0x429f14=_0x3bf0f0;console[_0x429f14(0x2a0)](_0x429f14(0x26c),_0x2c0795),hideLoading(),alert(_0x429f14(0x297));}));}function exportTickets(){const _0x45868d=_0x5b7482,_0x42f3d7=_0x45868d(0x250)+encodeURIComponent(JSON['stringify'](allTickets,null,0x2)),_0x1d8b75=document['createElement']('a');_0x1d8b75[_0x45868d(0x295)]('href',_0x42f3d7),_0x1d8b75[_0x45868d(0x295)](_0x45868d(0x28d),_0x45868d(0x240)+currentDatabase+'.json'),document[_0x45868d(0x20e)]['appendChild'](_0x1d8b75),_0x1d8b75[_0x45868d(0x206)](),_0x1d8b75[_0x45868d(0x219)]();}function exportFilteredTickets(){const _0x5f3068=_0x5b7482,_0x383f04=document[_0x5f3068(0x275)](_0x5f3068(0x2a7))[_0x5f3068(0x230)][_0x5f3068(0x205)](),_0x1e0a7b={};if(currentDatabase===_0x5f3068(0x294))for(let _0x131c6d in allTickets){(!_0x383f04||matchesSearchTransit(allTickets[_0x131c6d],_0x383f04))&&(_0x1e0a7b[_0x131c6d]=allTickets[_0x131c6d]);}else for(let _0xe658b2 in allTickets){const _0x18778a=allTickets[_0xe658b2];_0x1e0a7b[_0xe658b2]={'motDePasse':[],'prix':[],'utilisateur':[]};for(let _0x140791=0x0;_0x140791<_0x18778a[_0x5f3068(0x269)]['length'];_0x140791++){(!_0x383f04||matchesSearchTotal(_0x18778a,_0x140791,_0x383f04))&&(_0x1e0a7b[_0xe658b2]['motDePasse']['push'](_0x18778a[_0x5f3068(0x269)][_0x140791]),_0x1e0a7b[_0xe658b2][_0x5f3068(0x1f3)][_0x5f3068(0x209)](_0x18778a[_0x5f3068(0x1f3)][_0x140791]),_0x1e0a7b[_0xe658b2][_0x5f3068(0x264)][_0x5f3068(0x209)](_0x18778a['utilisateur'][_0x140791]));}}const _0x34db82=_0x5f3068(0x250)+encodeURIComponent(JSON[_0x5f3068(0x203)](_0x1e0a7b,null,0x2)),_0x2fbd8a=document['createElement']('a');_0x2fbd8a[_0x5f3068(0x295)](_0x5f3068(0x282),_0x34db82),_0x2fbd8a[_0x5f3068(0x295)](_0x5f3068(0x28d),_0x5f3068(0x265)+currentDatabase+_0x5f3068(0x1ec)),document['body']['appendChild'](_0x2fbd8a),_0x2fbd8a[_0x5f3068(0x206)](),_0x2fbd8a[_0x5f3068(0x219)]();}function handleJsonImport(_0x174909){const _0x2df2c3=_0x5b7482,_0x3ad667=JSON[_0x2df2c3(0x24d)](_0x174909);if(confirm('Êtes-vous\x20sûr\x20de\x20vouloir\x20importer\x20ces\x20tickets\x20?\x20Les\x20nouveaux\x20tickets\x20seront\x20ajoutés\x20aux\x20tickets\x20existants.')){(!allTickets||Object[_0x2df2c3(0x23e)](allTickets)[_0x2df2c3(0x285)]===0x0)&&(allTickets=currentDatabase===_0x2df2c3(0x294)?{}:{});const _0x421234={};if(currentDatabase===_0x2df2c3(0x294)){let _0x4f9996={};for(let _0x1c76f2 in _0x3ad667){let _0x15abf9=_0x1c76f2;while(allTickets[_0x15abf9]){_0x15abf9=_0x2df2c3(0x1f0)+Date['now']()+'-'+Math[_0x2df2c3(0x24c)](Math[_0x2df2c3(0x22e)]()*0x3e8);}_0x4f9996[_0x15abf9]={..._0x3ad667[_0x1c76f2],'id':_0x15abf9};}for(let _0xbd712e in _0x4f9996){_0x421234[currentDatabase+'/'+_0xbd712e]=_0x4f9996[_0xbd712e];}}else for(let _0x1853f0 in _0x3ad667){allTickets[_0x1853f0]?_0x421234[currentDatabase+'/'+_0x1853f0]={'motDePasse':[...allTickets[_0x1853f0][_0x2df2c3(0x269)],..._0x3ad667[_0x1853f0]['motDePasse']],'prix':[...allTickets[_0x1853f0][_0x2df2c3(0x1f3)],..._0x3ad667[_0x1853f0][_0x2df2c3(0x1f3)]],'utilisateur':[...allTickets[_0x1853f0][_0x2df2c3(0x264)],..._0x3ad667[_0x1853f0][_0x2df2c3(0x264)]]}:_0x421234[currentDatabase+'/'+_0x1853f0]=_0x3ad667[_0x1853f0];}database[_0x2df2c3(0x1f7)]()[_0x2df2c3(0x29b)](_0x421234)[_0x2df2c3(0x1ea)](()=>{const _0x65ebe3=_0x2df2c3;hideLoading(),alert(_0x65ebe3(0x283));})['catch'](_0x37685e=>{const _0x5f374a=_0x2df2c3;console[_0x5f374a(0x2a0)](_0x5f374a(0x217),_0x37685e),hideLoading(),alert(_0x5f374a(0x29f));});}else hideLoading();}function handleCsvImport(_0x448218){const _0x51b4c1=_0x5b7482,_0x5b8557=_0x448218[_0x51b4c1(0x266)]('\x0a');let _0x446da0={};if(currentDatabase==='TicketsTransit'){for(let _0x455a15=0x1;_0x455a15<_0x5b8557[_0x51b4c1(0x285)];_0x455a15++){if(!_0x5b8557[_0x455a15][_0x51b4c1(0x205)]())continue;const _0x561aaa=_0x5b8557[_0x455a15]['split'](','),_0x1671e0=_0x51b4c1(0x1f0)+Date[_0x51b4c1(0x2a4)]()+'-'+Math['floor'](Math[_0x51b4c1(0x22e)]()*0x3e8);_0x446da0[_0x1671e0]={'id':_0x1671e0,'category':_0x561aaa[0x1]?_0x561aaa[0x1][_0x51b4c1(0x205)]():_0x51b4c1(0x263),'password':_0x561aaa[0x2]?_0x561aaa[0x2][_0x51b4c1(0x205)]():'','price':_0x561aaa[0x3]?_0x561aaa[0x3][_0x51b4c1(0x205)]():'','user':_0x561aaa[0x4]?_0x561aaa[0x4][_0x51b4c1(0x205)]():''};}tempImportData={'tickets':_0x446da0},tempCategory=_0x51b4c1(0x294),showPriceModal(_0x51b4c1(0x241));}else{for(let _0xadfe5b=0x1;_0xadfe5b<_0x5b8557[_0x51b4c1(0x285)];_0xadfe5b++){if(!_0x5b8557[_0xadfe5b][_0x51b4c1(0x205)]())continue;const _0x5990f5=_0x5b8557[_0xadfe5b][_0x51b4c1(0x266)](','),_0x3ac11f=_0x5990f5[0x2]['trim']();!_0x446da0[_0x3ac11f]&&(_0x446da0[_0x3ac11f]={'motDePasse':[],'prix':[],'utilisateur':[]}),_0x446da0[_0x3ac11f][_0x51b4c1(0x264)][_0x51b4c1(0x209)](_0x5990f5[0x0][_0x51b4c1(0x205)]()),_0x446da0[_0x3ac11f][_0x51b4c1(0x269)]['push'](_0x5990f5[0x1][_0x51b4c1(0x205)]());}tempImportData=_0x446da0;const _0x25628d=Object[_0x51b4c1(0x23e)](_0x446da0)[0x0];showPriceModal(_0x25628d);}}function handleTxtImport(_0x48f17a){const _0x590f1f=_0x5b7482,_0x4d6403=_0x48f17a['split']('\x0a');let _0x5390de={};if(currentDatabase===_0x590f1f(0x294)){const _0x4c05b0=/add name="([^"]+)" password="([^"]+)" profile="([^"]+)"/;for(let _0x20db2d of _0x4d6403){_0x20db2d=_0x20db2d['trim']();if(!_0x20db2d||_0x20db2d===_0x590f1f(0x279))continue;const _0x18df15=_0x20db2d[_0x590f1f(0x1ef)](_0x4c05b0);if(_0x18df15){const [_0x236cf5,_0x449db0,_0x11735c,_0x47b392]=_0x18df15,_0x37b373=_0x590f1f(0x1f0)+Date[_0x590f1f(0x2a4)]()+'-'+Math[_0x590f1f(0x24c)](Math[_0x590f1f(0x22e)]()*0x3e8);_0x5390de[_0x37b373]={'id':_0x37b373,'category':_0x47b392,'password':_0x11735c,'price':'','user':_0x449db0};}}tempImportData={'tickets':_0x5390de},tempCategory=_0x590f1f(0x294),showPriceModal(_0x590f1f(0x241));}else{const _0xabb3d5=/add name="([^"]+)" password="([^"]+)" profile="([^"]+)"/;for(let _0x18c5bb of _0x4d6403){_0x18c5bb=_0x18c5bb[_0x590f1f(0x205)]();if(!_0x18c5bb||_0x18c5bb===_0x590f1f(0x279))continue;const _0x320030=_0x18c5bb[_0x590f1f(0x1ef)](_0xabb3d5);if(_0x320030){const [_0x2b7ff2,_0x46247b,_0x6c0fb7,_0x3f826f]=_0x320030;!_0x5390de[_0x3f826f]&&(_0x5390de[_0x3f826f]={'motDePasse':[],'prix':[],'utilisateur':[]}),_0x5390de[_0x3f826f][_0x590f1f(0x264)][_0x590f1f(0x209)](_0x46247b),_0x5390de[_0x3f826f][_0x590f1f(0x269)][_0x590f1f(0x209)](_0x6c0fb7);}}if(Object[_0x590f1f(0x23e)](_0x5390de)[_0x590f1f(0x285)]===0x0){hideLoading(),alert(_0x590f1f(0x27d));return;}tempImportData=_0x5390de;const _0x97e49b=Object[_0x590f1f(0x23e)](_0x5390de)[0x0];showPriceModal(_0x97e49b);}}function showPriceModal(_0x47ae4b){const _0x14ac3d=_0x5b7482;tempCategory=_0x47ae4b,document[_0x14ac3d(0x275)](_0x14ac3d(0x215))[_0x14ac3d(0x23c)]=_0x47ae4b,document[_0x14ac3d(0x275)]('priceModal')[_0x14ac3d(0x254)][_0x14ac3d(0x25e)]=_0x14ac3d(0x201),document[_0x14ac3d(0x275)](_0x14ac3d(0x289))[_0x14ac3d(0x230)]='';}function confirmPrice(){const _0x49ec66=_0x5b7482,_0x395965=document[_0x49ec66(0x275)]('priceInput')[_0x49ec66(0x230)][_0x49ec66(0x205)]();if(!_0x395965){alert(_0x49ec66(0x255));return;}if(currentDatabase===_0x49ec66(0x294)){for(let _0x3166f5 in tempImportData[_0x49ec66(0x299)]){tempImportData[_0x49ec66(0x299)][_0x3166f5]['price']=_0x395965;}finishImport();}else{tempImportData[tempCategory]['prix']=Array(tempImportData[tempCategory][_0x49ec66(0x269)][_0x49ec66(0x285)])[_0x49ec66(0x1e9)](_0x395965);const _0x2fa082=Object['keys'](tempImportData),_0x42ef05=_0x2fa082[_0x49ec66(0x290)](tempCategory);_0x42ef05<_0x2fa082[_0x49ec66(0x285)]-0x1?(document[_0x49ec66(0x275)](_0x49ec66(0x289))[_0x49ec66(0x230)]='',showPriceModal(_0x2fa082[_0x42ef05+0x1])):finishImport();}}function cancelImport(){const _0x496bef=_0x5b7482;document['getElementById']('priceModal')[_0x496bef(0x254)][_0x496bef(0x25e)]=_0x496bef(0x235),currentDatabase==='TicketsTransit'&&(tempImportData=null),document[_0x496bef(0x275)](_0x496bef(0x2a8))[_0x496bef(0x230)]='',tempCategory=null,hideLoading();}function finishImport(){const _0x310472=_0x5b7482;if(confirm(_0x310472(0x268))){(!allTickets||Object['keys'](allTickets)[_0x310472(0x285)]===0x0)&&(allTickets=currentDatabase==='TicketsTransit'?{}:{});const _0x5d7eb3={};if(currentDatabase===_0x310472(0x294))for(let _0x415242 in tempImportData[_0x310472(0x299)]){_0x5d7eb3[currentDatabase+'/'+_0x415242]=tempImportData[_0x310472(0x299)][_0x415242];}else for(let _0x5c8500 in tempImportData){allTickets[_0x5c8500]?_0x5d7eb3[currentDatabase+'/'+_0x5c8500]={'motDePasse':[...allTickets[_0x5c8500][_0x310472(0x269)],...tempImportData[_0x5c8500][_0x310472(0x269)]],'prix':[...allTickets[_0x5c8500]['prix'],...tempImportData[_0x5c8500][_0x310472(0x1f3)]],'utilisateur':[...allTickets[_0x5c8500][_0x310472(0x264)],...tempImportData[_0x5c8500][_0x310472(0x264)]]}:_0x5d7eb3[currentDatabase+'/'+_0x5c8500]=tempImportData[_0x5c8500];}database[_0x310472(0x1f7)]()[_0x310472(0x29b)](_0x5d7eb3)[_0x310472(0x1ea)](()=>{const _0x56db6d=_0x310472;document[_0x56db6d(0x275)](_0x56db6d(0x208))[_0x56db6d(0x254)][_0x56db6d(0x25e)]=_0x56db6d(0x235),document[_0x56db6d(0x275)](_0x56db6d(0x2a8))[_0x56db6d(0x230)]='',tempImportData=null,tempCategory=null,hideLoading(),alert(_0x56db6d(0x283));})[_0x310472(0x23d)](_0x58bbde=>{const _0x4be4fb=_0x310472;console[_0x4be4fb(0x2a0)]('Erreur\x20lors\x20de\x20l\x27importation:',_0x58bbde),hideLoading(),alert('Erreur\x20lors\x20de\x20l\x27importation.\x20Veuillez\x20réessayer.');});}else cancelImport();}function importTickets(_0x40ee1e){const _0x36bd8d=_0x5b7482,_0x208557=_0x40ee1e[_0x36bd8d(0x292)][_0x36bd8d(0x262)][0x0];if(!_0x208557)return;showLoading();const _0xdad760=new FileReader();_0xdad760['onload']=function(_0x5d8a88){const _0x562e7e=_0x36bd8d;try{const _0x32e975=_0x208557['name'][_0x562e7e(0x266)]('.')[_0x562e7e(0x253)]()[_0x562e7e(0x1ff)]();if(_0x32e975==='json')handleJsonImport(_0x5d8a88[_0x562e7e(0x292)][_0x562e7e(0x2a3)]);else{if(_0x32e975==='csv')handleCsvImport(_0x5d8a88[_0x562e7e(0x292)][_0x562e7e(0x2a3)]);else{if(_0x32e975==='txt')handleTxtImport(_0x5d8a88[_0x562e7e(0x292)][_0x562e7e(0x2a3)]);else throw new Error(_0x562e7e(0x222));}}}catch(_0x5b0d0a){console[_0x562e7e(0x2a0)](_0x562e7e(0x1fe),_0x5b0d0a),hideLoading(),alert(_0x562e7e(0x24b));}},_0xdad760[_0x36bd8d(0x236)](_0x208557);}function deleteSearchResults(){const _0x19ec74=_0x5b7482,_0x50dd4c=document['getElementById'](_0x19ec74(0x2a7))[_0x19ec74(0x230)][_0x19ec74(0x205)]();if(!_0x50dd4c){alert(_0x19ec74(0x1f1));return;}if(confirm(_0x19ec74(0x273))){showLoading();const _0x208331={};if(currentDatabase===_0x19ec74(0x294))for(let _0x1d0bf9 in allTickets){matchesSearchTransit(allTickets[_0x1d0bf9],_0x50dd4c)&&(_0x208331[currentDatabase+'/'+_0x1d0bf9]=null);}else for(let _0x3fd35f in allTickets){const _0x3dc7e6=allTickets[_0x3fd35f],_0xdc22c5={'motDePasse':[],'prix':[],'utilisateur':[]};for(let _0x6c0def=0x0;_0x6c0def<_0x3dc7e6[_0x19ec74(0x269)][_0x19ec74(0x285)];_0x6c0def++){!matchesSearchTotal(_0x3dc7e6,_0x6c0def,_0x50dd4c)&&(_0xdc22c5[_0x19ec74(0x269)][_0x19ec74(0x209)](_0x3dc7e6['motDePasse'][_0x6c0def]),_0xdc22c5['prix'][_0x19ec74(0x209)](_0x3dc7e6[_0x19ec74(0x1f3)][_0x6c0def]),_0xdc22c5[_0x19ec74(0x264)]['push'](_0x3dc7e6[_0x19ec74(0x264)][_0x6c0def]));}_0x208331[currentDatabase+'/'+_0x3fd35f]=_0xdc22c5;}database[_0x19ec74(0x1f7)]()[_0x19ec74(0x29b)](_0x208331)[_0x19ec74(0x1ea)](()=>{const _0xc02d9f=_0x19ec74;hideLoading(),alert(_0xc02d9f(0x256));})[_0x19ec74(0x23d)](_0xae2b9a=>{const _0x2a01ca=_0x19ec74;console[_0x2a01ca(0x2a0)]('Erreur\x20lors\x20de\x20la\x20suppression\x20des\x20résultats\x20de\x20recherche:',_0xae2b9a),hideLoading(),alert(_0x2a01ca(0x27e));});}}function searchTickets(){const _0x2d5438=_0x5b7482,_0x18b7f5=document['getElementById'](_0x2d5438(0x2a7))[_0x2d5438(0x230)]['trim']();displayTickets(allTickets,_0x18b7f5);}function checkAuth(){const _0x57b1f0=_0x5b7482,_0x549aeb=sessionStorage[_0x57b1f0(0x29d)](_0x57b1f0(0x226));if(!_0x549aeb)return window[_0x57b1f0(0x24e)][_0x57b1f0(0x27b)]('login.html'),![];return!![];}function changeDatabase(){const _0x5408f7=_0x5b7482;currentDatabase=document[_0x5408f7(0x275)](_0x5408f7(0x23a))['value'],updateImportFileAccept(),loadTickets();}function updateImportFileAccept(){const _0x1a2afc=_0x5b7482,_0x5e48f0=document['getElementById']('importFile');currentDatabase===_0x1a2afc(0x294)?_0x5e48f0[_0x1a2afc(0x21c)]=_0x1a2afc(0x200):_0x5e48f0[_0x1a2afc(0x21c)]='.json,.csv,.txt';}window[_0x5b7482(0x1eb)]=()=>{checkAuth()&&(updateImportFileAccept(),loadTickets());};function logout(){const _0x1b9584=_0x5b7482;sessionStorage[_0x1b9584(0x28e)](),window[_0x1b9584(0x24e)]['replace'](_0x1b9584(0x1f6));}document[_0x5b7482(0x275)](_0x5b7482(0x2a7))[_0x5b7482(0x271)](_0x5b7482(0x26d),searchTickets),window[_0x5b7482(0x1eb)]=()=>{checkAuth()&&loadTickets();};
+const firebaseConfig = {
+  apiKey: "AIzaSyBvwJSv5iJy-YuL_m8QgVfqO06qNZVmAps",
+  authDomain: "bonjour-75278.firebaseapp.com",
+  databaseURL: "https://bonjour-75278-default-rtdb.firebaseio.com",
+  projectId: "bonjour-75278",
+  storageBucket: "bonjour-75278.firebasestorage.app",
+  messagingSenderId: "805380694708",
+  appId: "1:805380694708:web:55e6b53506b83624946de1",
+  measurementId: "G-W3CBW4735M"
+};
+        
+        // Initialisation de Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        let allTickets = {};
+        let tempImportData = null;
+        let tempCategory = null;
+        let currentEditingTicket = null;
+        let currentEditingCategory = null;
+        let currentDatabase = 'TicketsTotal';
+        
+        // Variables pour stocker les informations d'édition
+        let editingCategory = '';
+        let editingIndex = -1;
+        let editingId = '';
+        
+        // Vérification immédiate avant tout chargement
+        (function() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.replace('login.html');
+            }
+        })();
+        
+        // Vérification continue pendant la session
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!sessionStorage.getItem('isLoggedIn')) {
+                window.location.replace('login.html');
+            }
+        });
+        
+        // Empêcher le retour à la page après déconnexion
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || !sessionStorage.getItem('isLoggedIn')) {
+                window.location.replace('login.html');
+            }
+        });
+        
+        function showLoading() {
+            document.getElementById('loadingIndicator').style.display = 'flex';
+        }
+        
+        function hideLoading() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+        
+        function loadTickets() {
+            showLoading();
+            const ticketsRef = database.ref(currentDatabase);
+            ticketsRef.off('value'); // Détacher les anciens listeners
+            ticketsRef.on('value', (snapshot) => {
+                allTickets = snapshot.val() || {};
+                displayTickets(allTickets);
+                hideLoading();
+            }, (error) => {
+                console.error("Erreur lors du chargement des tickets:", error);
+                hideLoading();
+                alert("Erreur lors du chargement des tickets. Veuillez réessayer.");
+            });
+        }
+        // Fonction pour afficher les tickets en fonction de la base de données sélectionnée
+        function displayTickets(tickets, searchTerm = '') {
+        const categoriesContainer = document.getElementById('ticketCategories');
+        categoriesContainer.innerHTML = '';
+        
+        if (currentDatabase === 'TicketsTotal') {
+            displayTicketsTotal(tickets, searchTerm);
+        } else if (currentDatabase === 'TicketsTransit') {
+            displayTicketsTransit(tickets, searchTerm);
+        }
+        }
+        
+        // Fonction pour afficher les tickets de TicketsTotal
+        function displayTicketsTotal(tickets, searchTerm = '') {
+        const categoriesContainer = document.getElementById('ticketCategories');
+        for (let category in tickets) {
+            const categoryTickets = tickets[category];
+            const categoryHtml = `
+                <div class="category-section">
+                    <div class="category-header">
+                        <div class="category-title">
+                            <h2>${category}</h2>
+                            <i class="fas fa-thumbtack pin-icon" onclick="editCategory('${category}')"></i>
+                        </div>
+                        <div>
+                            <button class="add-ticket-btn" onclick="showAddTicketModal('${category}')">
+                                <i class="fas fa-plus"></i> Ajouter un ticket
+                            </button>
+                            <label for="importFile_${category}" class="file-input-label">
+                                <i class="fas fa-file-import"></i> Importer dans ${category}
+                            </label>
+                            <input type="file" id="importFile_${category}" 
+                                accept=".json,.csv,.txt" 
+                                style="display: none;" 
+                                onchange="importTickets(event)">
+                        </div>
+                    </div>
+                    <button onclick="deleteAllTicketsInCategory('${category}')">Supprimer tous les tickets de ${category}</button>
+                    <button onclick="editSelectedTickets('${category}')">Modifier les tickets selectionnés</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sélectionner</th>
+                                <th>Mot de passe</th>
+                                <th>Prix</th>
+                                <th>Utilisateur</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketsBody_${category}">
+                            ${generateTicketRowsTotal(category, categoryTickets, searchTerm)}
+                        </tbody>
+                    </table>
+                    <button onclick="deleteSelectedTickets('${category}')">Supprimer les tickets sélectionnés de ${category}</button>
+                </div>
+            `;
+            categoriesContainer.innerHTML += categoryHtml;
+        }
+        }
+        
+        // Fonction pour générer les lignes de tableau pour TicketsTotal
+        function generateTicketRowsTotal(category, categoryTickets, searchTerm) {
+        let rows = '';
+        for (let i = 0; i < categoryTickets.motDePasse.length; i++) {
+            if (searchTerm && !matchesSearchTotal(categoryTickets, i, searchTerm)) continue;
+            rows += `
+                <tr>
+                    <td><input type="checkbox" name="ticketSelect_${category}" value="${i}"></td>
+                    <td>${highlightMatch(categoryTickets.motDePasse[i], searchTerm)}</td>
+                    <td>${highlightMatch(categoryTickets.prix[i], searchTerm)}</td>
+                    <td>${highlightMatch(categoryTickets.utilisateur[i], searchTerm)}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editTicketTotal('${category}', ${i})">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                        <button class="delete-btn" onclick="deleteTicket('${category}', ${i},null)">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+        return rows;
+        }
+        
+        // Fonction pour afficher les tickets de TicketsTransit
+        function displayTicketsTransit(tickets, searchTerm = '') {
+        const categoriesContainer = document.getElementById('ticketCategories');
+        categoriesContainer.innerHTML = '';
+        
+        const categoryHtml = `
+            <div class="category-section">
+                <div class="category-header">
+                    <div class="category-title">
+                        <h2>Tickets en transit</h2>
+                    </div>
+                    <div>
+                        <button class="add-ticket-btn" onclick="showAddTicketModal(null)">
+                            <i class="fas fa-plus"></i> Ajouter un ticket
+                        </button>
+                        <label for="importFile_Transit" class="file-input-label">
+                            <i class="fas fa-file-import"></i> Importer dans TicketsTransit
+                        </label>
+<input type="file" id="importFile_Transit" 
+    accept=".txt,.json" 
+    style="display: none;" 
+    onchange="importTickets(event)">                    </div>
+                </div>
+                <button onclick="deleteAllTicketsInCategory(null)">Supprimer tous les tickets</button>
+                <button onclick="editSelectedTickets(null)">Modifier les tickets selectionnés</button>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sélectionner</th>
+                            <th>ID</th>
+                            <th>Catégorie</th>
+                            <th>Mot de passe</th>
+                            <th>Prix</th>
+                            <th>Utilisateur</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketsBody_Transit">
+                        ${generateTicketRowsTransit(tickets, searchTerm)}
+                    </tbody>
+                </table>
+                <button onclick="deleteSelectedTickets(null)">Supprimer les tickets sélectionnés</button>
+            </div>
+        `;
+        
+        categoriesContainer.innerHTML = categoryHtml;
+        }
+        
+        // Fonction pour générer les lignes de tableau pour TicketsTransit
+        function generateTicketRowsTransit(tickets, searchTerm) {
+        let rows = '';
+        for (let id in tickets) {
+            const ticket = tickets[id];
+            if (searchTerm && !matchesSearchTransit(ticket, searchTerm)) continue;
+            rows += `
+                <tr>
+                    <td><input type="checkbox" name="ticketSelect_Transit" value="${id}"></td>
+                    <td>${highlightMatch(id, searchTerm)}</td>
+                    <td>${highlightMatch(ticket.category, searchTerm)}</td>
+                    <td>${highlightMatch(ticket.password, searchTerm)}</td>
+                    <td>${highlightMatch(ticket.price, searchTerm)}</td>
+                    <td>${highlightMatch(ticket.user, searchTerm)}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editTicketTransit('${id}')">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                        <button class="delete-btn" onclick="deleteTicket(null,null, '${id}')">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+        return rows;
+        }
+        
+        function editTicketTransit(id) {
+        const ticket = allTickets[id];
+        if (ticket) {
+            editingId = id;
+            document.getElementById('editId').value = id;
+            document.getElementById('editCategory').value = ticket.category;
+            document.getElementById('editPassword').value = ticket.password;
+            document.getElementById('editPrice').value = ticket.price;
+            document.getElementById('editUser').value = ticket.user;
+            document.getElementById('editTicketModal').style.display = 'block';
+        } else {
+            alert("Ticket introuvable.");
+        }
+        }
+        
+        function saveTicketEdit() {
+            const newPassword = document.getElementById('editPassword').value;
+            const newPrice = document.getElementById('editPrice').value;
+            const newUser = document.getElementById('editUser').value;
+            const newCategory = document.getElementById('editCategory').value;
+        
+            if (!newPassword || !newPrice || !newUser || !newCategory) {
+                alert('Tous les champs sont obligatoires');
+                return;
+            }
+        
+            showLoading();
+        
+            if (currentDatabase === 'TicketsTotal') {
+                const categoryData = allTickets[editingCategory];
+                categoryData.motDePasse[editingIndex] = newPassword;
+                categoryData.prix[editingIndex] = newPrice;
+                categoryData.utilisateur[editingIndex] = newUser;
+        
+                const updates = {
+                    [`${currentDatabase}/${editingCategory}`]: categoryData
+                };
+        
+                database.ref().update(updates)
+                    .then(() => {
+                        hideLoading();
+                        closeEditModal();
+                        alert('Ticket modifié avec succès!');
+                    })
+                    .catch(error => {
+                        console.error("Erreur lors de la modification:", error);
+                        hideLoading();
+                        alert('Erreur lors de la modification du ticket');
+                    });
+            } else if (currentDatabase === 'TicketsTransit') {
+                const ticketRef = database.ref(`${currentDatabase}/${editingId}`);
+                ticketRef.update({
+                    category: newCategory,
+                    password: newPassword,
+                    price: newPrice,
+                    user: newUser
+                })
+                .then(() => {
+                    hideLoading();
+                    closeEditModal();
+                    alert('Ticket modifié avec succès!');
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la modification:", error);
+                    hideLoading();
+                    alert('Erreur lors de la modification du ticket');
+                });
+            }
+        }
+        
+                function editTicketTotal(category, index) {
+                    editingCategory = category;
+                    editingIndex = index;
+                    const ticket = allTickets[category];
+                    
+                    document.getElementById('editId').value = '';
+                    document.getElementById('editCategory').value = category;
+                    document.getElementById('editPassword').value = ticket.motDePasse[index];
+                    document.getElementById('editPrice').value = ticket.prix[index];
+                    document.getElementById('editUser').value = ticket.utilisateur[index];
+                    
+                    document.getElementById('editTicketModal').style.display = 'block';
+                }
+                
+function mergeTicketsToCategory(category, newTickets) {
+    let updates = {};
+
+    if (currentDatabase === 'TicketsTransit') {
+        // Utiliser les IDs uniques pour mettre à jour la base de données
+        for (let uniqueId in newTickets) {
+            updates[`${currentDatabase}/${uniqueId}`] = newTickets[uniqueId];
+        }
+    } else {
+        // Si la catégorie n'existe pas, la créer
+        if (!allTickets[category]) {
+            allTickets[category] = {
+                motDePasse: [],
+                prix: [],
+                utilisateur: []
+            };
+        }
+        const currentTickets = allTickets[category];
+
+        // Fusionner les tickets existants avec les nouveaux
+        const mergedTickets = {
+            motDePasse: [...currentTickets.motDePasse, ...newTickets.motDePasse],
+            prix: [...currentTickets.prix, ...newTickets.prix],
+            utilisateur: [...currentTickets.utilisateur, ...newTickets.utilisateur]
+        };
+
+        updates[`${currentDatabase}/${category}`] = mergedTickets;
+    }
+
+    database.ref().update(updates)
+        .then(() => {
+            hideLoading();
+            alert(`Importation réussie dans ${category || 'TicketsTransit'}!`);
+        })
+        .catch((error) => {
+            console.error("Erreur lors de l'importation:", error);
+            hideLoading();
+            alert("Erreur lors de l'importation. Veuillez réessayer.");
+        });
+}
+
+function editCategory(category) {
+    currentEditingCategory = category;
+    document.getElementById('editCategoryName').value = category;
+    document.getElementById('editCategoryModal').style.display = 'block';
+}
+
+function saveCategoryEdit() {
+    const newCategoryName = document.getElementById('editCategoryName').value.trim();
+    
+    if (!newCategoryName) {
+        alert('Le nom de la catégorie ne peut pas être vide');
+        return;
+    }
+
+    if (newCategoryName === currentEditingCategory) {
+        closeEditCategoryModal();
+        return;
+    }
+
+    showLoading();
+    const categoryData = allTickets[currentEditingCategory];
+    
+    const updates = {
+        [`${currentDatabase}/${currentEditingCategory}`]: null,
+        [`${currentDatabase}/${newCategoryName}`]: categoryData
+    };
+
+    database.ref().update(updates)
+        .then(() => {
+            hideLoading();
+            closeEditCategoryModal();
+            alert('Catégorie modifiée avec succès!');
+        })
+        .catch(error => {
+            console.error("Erreur lors de la modification de la catégorie:", error);
+            hideLoading();
+            alert('Erreur lors de la modification de la catégorie');
+        });
+}
+
+function showAddTicketModal(category) {
+    currentEditingCategory = category;
+    document.getElementById('newPassword').value = '';
+    document.getElementById('newPrice').value = '';
+    document.getElementById('newUser').value = '';
+    document.getElementById('newCategory').value = '';
+    document.getElementById('addTicketModal').style.display = 'block';
+}
+
+function saveNewTicket() {
+    showLoading();
+    if (currentDatabase === 'TicketsTransit') {
+        const id = `id-${Date.now()}`; // Générer un ID unique pour TicketsTransit
+        const newTicket = {
+            id: id, // Ajout de l'ID
+            category: document.getElementById('newCategory').value.trim(),
+            password: document.getElementById('newPassword').value.trim(),
+            price: document.getElementById('newPrice').value.trim(),
+            user: document.getElementById('newUser').value.trim()
+        };
+        
+        database.ref(`${currentDatabase}/${id}`).set(newTicket)
+            .then(() => {
+                hideLoading();
+                closeAddTicketModal();
+                alert('Ticket ajouté avec succès dans TicketsTransit!');
+            })
+            .catch(error => {
+                console.error("Erreur lors de l'ajout du ticket:", error);
+                hideLoading();
+                alert('Erreur lors de l\'ajout du ticket');
+            });
+    } else {
+        const category = currentEditingCategory;
+        const newTicket = {
+            password: document.getElementById('newPassword').value.trim(),
+            price: document.getElementById('newPrice').value.trim(),
+            user: document.getElementById('newUser').value.trim()
+        };
+
+        const categoryData = allTickets[category] || { motDePasse: [], prix: [], utilisateur: [] };
+        categoryData.motDePasse.push(newTicket.password);
+        categoryData.prix.push(newTicket.price);
+        categoryData.utilisateur.push(newTicket.user);
+
+        database.ref(`${currentDatabase}/${category}`).set(categoryData)
+            .then(() => {
+                hideLoading();
+                closeAddTicketModal();
+                alert('Ticket ajouté avec succès dans TicketsTotal!');
+            })
+            .catch(error => {
+                console.error("Erreur lors de l'ajout du ticket:", error);
+                hideLoading();
+                alert('Erreur lors de l\'ajout du ticket');
+            });
+    }
+}
+
+function closeEditModal() {
+    document.getElementById('editTicketModal').style.display = 'none';
+    editingCategory = '';
+    editingIndex = -1;
+}
+
+function closeEditCategoryModal() {
+    document.getElementById('editCategoryModal').style.display = 'none';
+    currentEditingCategory = null;
+}
+
+function closeAddTicketModal() {
+    document.getElementById('addTicketModal').style.display = 'none';
+    currentEditingCategory = null;
+}
+
+function matchesSearchTotal(categoryTickets, index, searchTerm) {
+const lowerSearchTerm = searchTerm.toLowerCase();
+return categoryTickets.motDePasse[index].toLowerCase().includes(lowerSearchTerm) ||
+   categoryTickets.prix[index].toLowerCase().includes(lowerSearchTerm) ||
+   categoryTickets.utilisateur[index].toLowerCase().includes(lowerSearchTerm);
+}
+
+function matchesSearchTransit(ticket, searchTerm) {
+const lowerSearchTerm = searchTerm.toLowerCase();
+return (ticket.id && ticket.id.toLowerCase().includes(lowerSearchTerm)) ||
+   (ticket.category && ticket.category.toLowerCase().includes(lowerSearchTerm)) ||
+   (ticket.password && ticket.password.toLowerCase().includes(lowerSearchTerm)) ||
+   (ticket.price && ticket.price.toLowerCase().includes(lowerSearchTerm)) ||
+   (ticket.user && ticket.user.toLowerCase().includes(lowerSearchTerm));
+}
+
+// Modifiez la fonction matchesSearch pour utiliser la fonction appropriée en fonction de la base de données
+function matchesSearch(data, index, searchTerm) {
+if (currentDatabase === 'TicketsTotal') {
+return matchesSearchTotal(data, index, searchTerm);
+} else if (currentDatabase === 'TicketsTransit') {
+return matchesSearchTransit(data, searchTerm);
+}
+return false;
+}
+
+function highlightMatch(text, searchTerm) {
+    if (!searchTerm) return text;
+    const regex = new RegExp(searchTerm, 'gi');
+    return text.replace(regex, match => `<span class="highlight">${match}</span>`);
+}
+
+function deleteTicket(category, index, id) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce ticket ?')) {
+        showLoading();
+        if (currentDatabase === 'TicketsTransit') {
+            database.ref(`${currentDatabase}/${id}`).remove()
+                .then(() => {
+                    hideLoading();
+                    alert('Ticket supprimé avec succès!');
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la suppression:", error);
+                    hideLoading();
+                    alert('Erreur lors de la suppression du ticket');
+                });
+        } else {
+            const categoryData = allTickets[category];
+            categoryData.motDePasse.splice(index, 1);
+            categoryData.prix.splice(index, 1);
+            categoryData.utilisateur.splice(index, 1);
+
+            database.ref(`${currentDatabase}/${category}`).set(categoryData)
+            .then(() => {
+                hideLoading();
+                alert('Ticket supprimé avec succès!');
+            })
+            .catch(error => {
+                console.error("Erreur lors de la suppression:", error);
+                hideLoading();
+                alert('Erreur lors de la suppression du ticket');
+            });
+        }
+    }
+}
+
+function deleteSelectedTickets(category) {
+    const selectedTickets = document.querySelectorAll(`input[name^="ticketSelect_${category || 'Transit'}"]:checked`);
+    if (selectedTickets.length === 0) {
+        alert('Veuillez sélectionner au moins un ticket à supprimer');
+        return;
+    }
+
+    if (confirm('Êtes-vous sûr de vouloir supprimer les tickets sélectionnés ?')) {
+        showLoading();
+        const updates = {};
+
+        if (currentDatabase === 'TicketsTransit') {
+            selectedTickets.forEach(checkbox => {
+                const ticketId = checkbox.value;
+                updates[`${currentDatabase}/${ticketId}`] = null;
+            });
+        } else {
+            const categoryData = allTickets[category];
+            const indices = Array.from(selectedTickets)
+                .map(checkbox => parseInt(checkbox.value))
+                .sort((a, b) => b - a);
+
+            indices.forEach(index => {
+                categoryData.motDePasse.splice(index, 1);
+                categoryData.prix.splice(index, 1);
+                categoryData.utilisateur.splice(index, 1);
+            });
+
+            updates[`${currentDatabase}/${category}`] = categoryData;
+        }
+
+        database.ref().update(updates)
+            .then(() => {
+                hideLoading();
+                alert('Tickets sélectionnés supprimés avec succès!');
+            })
+            .catch(error => {
+                console.error("Erreur lors de la suppression:", error);
+                hideLoading();
+                alert('Erreur lors de la suppression des tickets');
+            });
+    }
+}
+
+// Fonction pour modifier les tickets sélectionnés
+function editSelectedTickets(category) {
+    const selectedTickets = document.querySelectorAll(`input[name^="ticketSelect_${category || 'Transit'}"]:checked`);
+    if (selectedTickets.length === 0) {
+        alert('Veuillez sélectionner au moins un ticket à modifier');
+        return;
+    }
+
+    // Stocker les informations des tickets sélectionnés pour la modification groupée
+    window.selectedTicketsData = {
+        category: category,
+        tickets: []
+    };
+
+    if (currentDatabase === 'TicketsTransit') {
+        selectedTickets.forEach(checkbox => {
+            const ticketId = checkbox.value;
+            window.selectedTicketsData.tickets.push({
+                id: ticketId,
+                data: allTickets[ticketId]
+            });
+        });
+    } else {
+        const indices = Array.from(selectedTickets).map(checkbox => parseInt(checkbox.value));
+        window.selectedTicketsData.tickets = indices.map(index => ({
+            index: index,
+            data: {
+                password: allTickets[category].motDePasse[index],
+                price: allTickets[category].prix[index],
+                user: allTickets[category].utilisateur[index]
+            }
+        }));
+    }
+
+    // Ouvrir la modale de modification groupée
+    document.getElementById('bulkEditModal').style.display = 'block';
+}
+
+// Fonction pour enregistrer les modifications groupées
+function saveBulkEdit() {
+    const newCategory = document.getElementById('bulkEditCategory').value.trim();
+    const newPassword = document.getElementById('bulkEditPassword').value.trim();
+    const newPrice = document.getElementById('bulkEditPrice').value.trim();
+    const newUser = document.getElementById('bulkEditUser').value.trim();
+
+    showLoading();
+    const updates = {};
+
+    if (currentDatabase === 'TicketsTransit') {
+        window.selectedTicketsData.tickets.forEach(ticket => {
+            const updatedTicket = {
+                ...ticket.data,
+                category: newCategory || ticket.data.category,
+                password: newPassword || ticket.data.password,
+                price: newPrice || ticket.data.price,
+                user: newUser || ticket.data.user
+            };
+            updates[`${currentDatabase}/${ticket.id}`] = updatedTicket;
+        });
+    } else {
+        const category = window.selectedTicketsData.category;
+        const categoryData = allTickets[category];
+
+        window.selectedTicketsData.tickets.forEach(ticket => {
+            if (newPassword) categoryData.motDePasse[ticket.index] = newPassword;
+            if (newPrice) categoryData.prix[ticket.index] = newPrice;
+            if (newUser) categoryData.utilisateur[ticket.index] = newUser;
+        });
+        updates[`${currentDatabase}/${category}`] = categoryData;
+    }
+
+    database.ref().update(updates)
+        .then(() => {
+            hideLoading();
+            closeBulkEditModal();
+            alert('Tickets sélectionnés modifiés avec succès!');
+        })
+        .catch(error => {
+            console.error("Erreur lors de la modification groupée:", error);
+            hideLoading();
+            alert('Erreur lors de la modification groupée des tickets');
+        });
+}
+
+// Fonction pour fermer la modale de modification groupée
+function closeBulkEditModal() {
+    document.getElementById('bulkEditModal').style.display = 'none';
+    window.selectedTicketsData = null;
+}
+
+function deleteAllTicketsInCategory(category) {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer TOUS les tickets de ${category || 'TicketsTransit'} ?`)) {
+        showLoading();
+        if (currentDatabase === 'TicketsTransit') {
+            database.ref(currentDatabase).set({})
+                .then(() => {
+                    hideLoading();
+                    alert('Tous les tickets ont été supprimés avec succès!');
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la suppression:", error);
+                    hideLoading();
+                    alert('Erreur lors de la suppression des tickets');
+                });
+        } else {
+            database.ref(`${currentDatabase}/${category}`).set({
+                motDePasse: [],
+                prix: [],
+                utilisateur: []
+            })
+            .then(() => {
+                hideLoading();
+                alert('Tous les tickets de la catégorie ont été supprimés avec succès!');
+            })
+            .catch(error => {
+                console.error("Erreur lors de la suppression:", error);
+                hideLoading();
+                alert('Erreur lors de la suppression des tickets');
+            });
+        }
+    }
+}
+
+function exportTickets() {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(allTickets, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", `tickets_export_${currentDatabase}.json`);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
+function exportFilteredTickets() {
+    const searchTerm = document.getElementById('searchBar').value.trim();
+    const filteredTickets = {};
+
+    if (currentDatabase === 'TicketsTransit') {
+        for (let id in allTickets) {
+            if (!searchTerm || matchesSearchTransit(allTickets[id], searchTerm)) {
+                filteredTickets[id] = allTickets[id];
+            }
+        }
+    } else {
+        for (let category in allTickets) {
+            const categoryTickets = allTickets[category];
+            filteredTickets[category] = {
+                motDePasse: [],
+                prix: [],
+                utilisateur: []
+            };
+
+            for (let i = 0; i < categoryTickets.motDePasse.length; i++) {
+                if (!searchTerm || matchesSearchTotal(categoryTickets, i, searchTerm)) {
+                    filteredTickets[category].motDePasse.push(categoryTickets.motDePasse[i]);
+                    filteredTickets[category].prix.push(categoryTickets.prix[i]);
+                    filteredTickets[category].utilisateur.push(categoryTickets.utilisateur[i]);
+                }
+            }
+        }
+    }
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(filteredTickets, null, 2));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", `filtered_tickets_export_${currentDatabase}.json`);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
+function handleJsonImport(jsonContent) {
+    const importedData = JSON.parse(jsonContent);
+    if (confirm('Êtes-vous sûr de vouloir importer ces tickets ? Les nouveaux tickets seront ajoutés aux tickets existants.')) {
+
+        // Vérifier si la base est vide
+        if (!allTickets || Object.keys(allTickets).length === 0) {
+            allTickets = currentDatabase === 'TicketsTransit' ? {} : {};
+        }
+
+        const updates = {};
+
+        if (currentDatabase === 'TicketsTransit') {
+            let updatedTickets = {};
+            for (let id in importedData) {
+                let uniqueId = id;
+                // Générer un ID unique si l'ID existe déjà
+                while (allTickets[uniqueId]) {
+                    uniqueId = `id-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+                }
+                updatedTickets[uniqueId] = { ...importedData[id], id: uniqueId };
+            }
+            for (let uniqueId in updatedTickets) {
+                updates[`${currentDatabase}/${uniqueId}`] = updatedTickets[uniqueId];
+            }
+        } else {
+            for (let category in importedData) {
+                if (allTickets[category]) {
+                    // Fusion des tickets existants avec les nouveaux
+                    updates[`${currentDatabase}/${category}`] = {
+                        motDePasse: [...allTickets[category].motDePasse, ...importedData[category].motDePasse],
+                        prix: [...allTickets[category].prix, ...importedData[category].prix],
+                        utilisateur: [...allTickets[category].utilisateur, ...importedData[category].utilisateur]
+                    };
+                } else {
+                    // Nouvelle catégorie
+                    updates[`${currentDatabase}/${category}`] = importedData[category];
+                }
+            }
+        }
+
+        database.ref().update(updates)
+            .then(() => {
+                hideLoading();
+                alert('Importation réussie !');
+            })
+            .catch((error) => {
+                console.error("Erreur lors de l'importation:", error);
+                hideLoading();
+                alert("Erreur lors de l'importation. Veuillez réessayer.");
+            });
+    } else {
+        hideLoading();
+    }
+}
+
+function handleCsvImport(csvContent) {
+    const lines = csvContent.split('\n');
+    let tickets = {};
+
+    if (currentDatabase === 'TicketsTransit') {
+        // Structure améliorée pour TicketsTransit
+        for (let i = 1; i < lines.length; i++) {
+            if (!lines[i].trim()) continue;
+            const values = lines[i].split(',');
+            // Générer un ID unique basé sur un timestamp plus précis et un nombre aléatoire
+            const uniqueId = `id-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+            tickets[uniqueId] = {
+                id: uniqueId,
+                category: values[1] ? values[1].trim() : 'N/A',
+                password: values[2] ? values[2].trim() : '',
+                price: values[3] ? values[3].trim() : '',
+                user: values[4] ? values[4].trim() : ''
+            };
+        }
+        tempImportData = { tickets: tickets };
+        tempCategory = "TicketsTransit";
+        showPriceModal("TicketsTransit Import");
+    } else {
+        for (let i = 1; i < lines.length; i++) {
+            if (!lines[i].trim()) continue;
+            const values = lines[i].split(',');
+            const category = values[2].trim(); // Profile column
+
+            if (!tickets[category]) {
+                tickets[category] = {
+                    motDePasse: [],
+                    prix: [],
+                    utilisateur: []
+                };
+            }
+
+            tickets[category].utilisateur.push(values[0].trim());
+            tickets[category].motDePasse.push(values[1].trim());
+        }
+
+        tempImportData = tickets;
+        const firstCategory = Object.keys(tickets)[0];
+        showPriceModal(firstCategory);
+    }
+}
+
+function handleTxtImport(txtContent) {
+    const lines = txtContent.split('\n');
+    let tickets = {};
+
+    if (currentDatabase === 'TicketsTransit') {
+        const regex = /add name="([^"]+)" password="([^"]+)" profile="([^"]+)"/;
+        for (let line of lines) {
+            line = line.trim();
+            if (!line || line === '/ip hotspot user') continue;
+            const match = line.match(regex);
+            if (match) {
+                const [_, name, password, profile] = match;
+                // Générer un ID unique pour chaque ticket
+                const uniqueId = `id-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+                tickets[uniqueId] = {
+                    id: uniqueId,
+                    category: profile,
+                    password: password,
+                    price: '', // Le prix sera défini plus tard
+                    user: name
+                };
+            }
+        }
+        tempImportData = { tickets: tickets };
+        tempCategory = "TicketsTransit";
+        showPriceModal("TicketsTransit Import");
+    } else {
+        const regex = /add name="([^"]+)" password="([^"]+)" profile="([^"]+)"/;
+        for (let line of lines) {
+            line = line.trim();
+            if (!line || line === '/ip hotspot user') continue;
+
+            const match = line.match(regex);
+            if (match) {
+                const [_, name, password, profile] = match;
+                if (!tickets[profile]) {
+                    tickets[profile] = {
+                        motDePasse: [],
+                        prix: [],
+                        utilisateur: []
+                    };
+                }
+
+                tickets[profile].utilisateur.push(name);
+                tickets[profile].motDePasse.push(password);
+            }
+        }
+
+        if (Object.keys(tickets).length === 0) {
+            hideLoading();
+            alert('Aucun ticket valide n\'a été trouvé dans le fichier');
+            return;
+        }
+
+        tempImportData = tickets;
+        const firstCategory = Object.keys(tickets)[0];
+        showPriceModal(firstCategory);
+    }
+}
+
+function showPriceModal(category) {
+    tempCategory = category;
+    document.getElementById('categoryName').textContent = category;
+    document.getElementById('priceModal').style.display = 'block';
+    document.getElementById('priceInput').value = '';
+}
+
+function confirmPrice() {
+    const price = document.getElementById('priceInput').value.trim();
+    if (!price) {
+        alert('Veuillez entrer un prix');
+        return;
+    }
+
+    if (currentDatabase === 'TicketsTransit') {
+        for (let id in tempImportData.tickets) {
+            tempImportData.tickets[id].price = price;
+        }
+        finishImport();
+    } else {
+        tempImportData[tempCategory].prix = Array(tempImportData[tempCategory].motDePasse.length).fill(price);
+        const categories = Object.keys(tempImportData);
+        const currentIndex = categories.indexOf(tempCategory);
+
+        if (currentIndex < categories.length - 1) {
+            document.getElementById('priceInput').value = '';
+            showPriceModal(categories[currentIndex + 1]);
+        } else {
+            finishImport();
+        }
+    }
+}
+
+function cancelImport() {
+    document.getElementById('priceModal').style.display = 'none';
+    if (currentDatabase === 'TicketsTransit') {
+        tempImportData = null;
+    }
+    document.getElementById('importFile').value = '';
+    tempCategory = null;
+    hideLoading();
+}
+
+function finishImport() {
+    if (confirm('Êtes-vous sûr de vouloir importer ces tickets ? Les nouveaux tickets seront ajoutés aux tickets existants.')) {
+
+        // Si la base est vide, initialiser allTickets
+        if (!allTickets || Object.keys(allTickets).length === 0) {
+            allTickets = currentDatabase === 'TicketsTransit' ? {} : {};
+        }
+
+        const updates = {};
+        if (currentDatabase === 'TicketsTransit') {
+            for (let id in tempImportData.tickets) {
+                updates[`${currentDatabase}/${id}`] = tempImportData.tickets[id];
+            }
+        } else {
+            for (let category in tempImportData) {
+                if (allTickets[category]) {
+                    // Fusion des tickets existants avec les nouveaux
+                    updates[`${currentDatabase}/${category}`] = {
+                        motDePasse: [...allTickets[category].motDePasse, ...tempImportData[category].motDePasse],
+                        prix: [...allTickets[category].prix, ...tempImportData[category].prix],
+                        utilisateur: [...allTickets[category].utilisateur, ...tempImportData[category].utilisateur]
+                    };
+                } else {
+                    // Nouvelle catégorie
+                    updates[`${currentDatabase}/${category}`] = tempImportData[category];
+                }
+            }
+        }
+
+        database.ref().update(updates)
+            .then(() => {
+                document.getElementById('priceModal').style.display = 'none';
+                document.getElementById('importFile').value = '';
+                tempImportData = null;
+                tempCategory = null;
+                hideLoading();
+                alert('Importation réussie !');
+            })
+            .catch((error) => {
+                console.error("Erreur lors de l'importation:", error);
+                hideLoading();
+                alert("Erreur lors de l'importation. Veuillez réessayer.");
+            });
+    } else {
+        cancelImport();
+    }
+}
+
+function importTickets(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    showLoading();
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (fileExtension === 'json') {
+                handleJsonImport(e.target.result);
+            } else if (fileExtension === 'csv') {
+                handleCsvImport(e.target.result);
+            } else if (fileExtension === 'txt') {
+                handleTxtImport(e.target.result);
+            } else {
+                throw new Error('Format de fichier non supporté');
+            }
+        } catch (error) {
+            console.error('Erreur d\'importation:', error);
+            hideLoading();
+            alert('Erreur lors de l\'importation. Veuillez vérifier le format du fichier.');
+        }
+    };
+    reader.readAsText(file);
+}
+
+function deleteSearchResults() {
+    const searchTerm = document.getElementById('searchBar').value.trim();
+    if (!searchTerm) {
+        alert('Veuillez entrer un terme de recherche avant de supprimer.');
+        return;
+    }
+
+    if (confirm('Êtes-vous sûr de vouloir supprimer tous les tickets correspondant à votre recherche ?')) {
+        showLoading();
+        const updates = {};
+
+        if (currentDatabase === 'TicketsTransit') {
+            for (let id in allTickets) {
+                if (matchesSearchTransit(allTickets[id], searchTerm)) {
+                    updates[`${currentDatabase}/${id}`] = null;
+                }
+            }
+        } else {
+            for (let category in allTickets) {
+                const categoryTickets = allTickets[category];
+                const newCategoryData = {
+                    motDePasse: [],
+                    prix: [],
+                    utilisateur: []
+                };
+
+                for (let i = 0; i < categoryTickets.motDePasse.length; i++) {
+                    if (!matchesSearchTotal(categoryTickets, i, searchTerm)) {
+                        newCategoryData.motDePasse.push(categoryTickets.motDePasse[i]);
+                        newCategoryData.prix.push(categoryTickets.prix[i]);
+                        newCategoryData.utilisateur.push(categoryTickets.utilisateur[i]);
+                    }
+                }
+                updates[`${currentDatabase}/${category}`] = newCategoryData;
+            }
+        }
+
+        database.ref().update(updates)
+            .then(() => {
+                hideLoading();
+                alert('Les tickets correspondant à la recherche ont été supprimés.');
+            })
+            .catch((error) => {
+                console.error("Erreur lors de la suppression des résultats de recherche:", error);
+                hideLoading();
+                alert("Erreur lors de la suppression des résultats de recherche. Veuillez réessayer.");
+            });
+    }
+}
+
+function searchTickets() {
+    const searchTerm = document.getElementById('searchBar').value.trim();
+    displayTickets(allTickets, searchTerm);
+}
+
+// Ajoutez ce code au début de votre script existant, juste après la déclaration des variables
+
+function checkAuth() {
+    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    
+    if (!isLoggedIn) {
+        window.location.replace('login.html');
+        return false;
+    }
+    
+    return true;
+}
+
+function changeDatabase() {
+    currentDatabase = document.getElementById('databaseSelect').value;
+    updateImportFileAccept(); // Appeler la fonction pour mettre à jour l'attribut accept
+    loadTickets();
+}
+
+function updateImportFileAccept() {
+    const importFileInput = document.getElementById('importFile');
+    if (currentDatabase === 'TicketsTransit') {
+        importFileInput.accept = '.txt,.json';
+    } else {
+        importFileInput.accept = '.json,.csv,.txt';
+    }
+}
+
+// Appeler updateImportFileAccept au chargement initial pour définir l'attribut accept correctement
+window.onload = () => {
+    if (checkAuth()) {
+        updateImportFileAccept();
+        loadTickets();
+    }
+};
+// Fonction de déconnexion améliorée
+function logout() {
+    sessionStorage.clear(); // Nettoie toutes les données de session
+    window.location.replace('login.html');
+}
+
+// Écouteur d'événement pour la recherche
+document.getElementById('searchBar').addEventListener('input', searchTickets);
+
+// Chargement initial des tickets
+window.onload = () => {
+    if (checkAuth()) {
+        loadTickets();
+    }
+};
 </script>
 
 </body>
