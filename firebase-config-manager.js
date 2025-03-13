@@ -41,7 +41,7 @@ async function synchronizeDataIfNeeded(oldIndex, newIndex) {
     const oldDb = getDatabase(initializeApp(firebaseConfigs[oldIndex])); // Initialize app with old config
     const newDb = getDatabase(initializeApp(firebaseConfigs[newIndex])); // Initialize app with new config
 
-    const dataPathsToSync = ['TicketsTotal', 'TicketsVendus', 'TicketsTransit', 'TicketConnecté', 'admin/subscription'];
+    const dataPathsToSync = ['TicketsTotal', 'TicketsVendus', 'TicketsTransit', 'TicketConnecté','Vendors','VendorsHistory','admins','sales','users','admin/subscription'];
 
     for (const path of dataPathsToSync) {
         try {
