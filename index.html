@@ -240,7 +240,7 @@
     <div class="container">
         <header>
             <h1>CYBER CAMPUS - WIFI ZONE</h1>
-            <div class="wave"></div>
+            <div class="wave"></div> 
         </header>
 
         <main>
@@ -275,12 +275,12 @@
                 </a>
                 <button id="cancelSubscription" style="display: none;">Annuler l'abonnement</button>
             </div>
-
+            
         </main>
 
     </div>
 
-
+    
     <div id="paymentModal" class="payment-modal" style="display: none;">
         <span class="close-modal" onclick="closePaymentModal()">×</span>
         <h2>Paiement de l'Abonnement</h2>
@@ -300,20 +300,24 @@
     <div class="overlay" id="overlay" style="display: none;" onclick="closePaymentModal()"></div>
 
     <script type="module">
-        import { getActiveDatabase } from './firebase-config-manager.js'; // Import getActiveDatabase
-        import { ref, get, set, push, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, get, set, push, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        let db; // Database object will be initialized here
-        let adminRef; // Admin reference
-        let connectedTicketsRef; // Connected Tickets reference
+        const firebaseConfig = {
+  apiKey: "AIzaSyB6AUBnK_7Vy2ABWI2JMo3ebG_Sljr8XlY",
+  authDomain: "cyber-campus-2706f.firebaseapp.com",
+  databaseURL: "https://cyber-campus-2706f-default-rtdb.firebaseio.com",
+  projectId: "cyber-campus-2706f",
+  storageBucket: "cyber-campus-2706f.appspot.com",
+  messagingSenderId: "719410601264",
+  appId: "1:719410601264:web:44fd2e3757721866303cf5",
+  measurementId: "G-CEEFJP5LYZ"
+};
 
-        async function initializeDatabase() {
-            db = await getActiveDatabase(); // Get the active database from the module
-            adminRef = ref(db, 'admin/subscription'); // Initialize adminRef after db is available
-            connectedTicketsRef = ref(db, 'TicketConnecté'); // Initialize connectedTicketsRef after db is available
-            console.log("Database initialized in index.html");
-        }
-
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const adminRef = ref(database, 'admin/subscription');
+        const connectedTicketsRef = ref(database, 'TicketConnecté');
 
         const venteMenuItem = document.getElementById('vente');
         const inventaireMenuItem = document.getElementById('inventaire');
@@ -342,6 +346,28 @@
         function hidePageLoader() {
             document.getElementById('pageLoaderWrapper').style.display = 'none';
         }
+
+        // Vérification immédiate avant tout chargement
+        (function() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                window.location.replace('loginAccueil.html');
+            }
+        })();
+        
+        // Vérification continue pendant la session
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!sessionStorage.getItem('isLoggedIn')) {
+                window.location.replace('loginAccueil.html');
+            }
+        });
+        
+        // Empêcher le retour à la page après déconnexion
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted || !sessionStorage.getItem('isLoggedIn')) {
+                window.location.replace('loginAccueil.html');
+            }
+        });
 
         function showSubscriptionRequiredModal() {
             subscriptionRequiredModal.style.display = 'flex';
@@ -505,7 +531,7 @@
             sessionStorage.clear(); // Nettoie toutes les données de session
             window.location.replace('loginAccueil.html');
         }
-
+        
         async function processConnectedTickets() {
             const pageLoaderMessage = document.getElementById('pageLoaderMessage');
             try {
@@ -521,14 +547,14 @@
                         uniqueTickets[user] = connectedTickets[ticketId];
                     }
                 }
-
+                
                 pageLoaderMessage.textContent = "Traitement des tickets uniques...";
                 for (const user in uniqueTickets) {
                     await processTicket(uniqueTickets[user]);
                 }
-
+                
                 pageLoaderMessage.textContent = "Nettoyage des tickets traités...";
-
+                
                 // Nettoyer tous les tickets de TicketConnecté
                 await remove(connectedTicketsRef);
 
@@ -544,7 +570,7 @@
                 pageLoaderMessage.textContent = `Vérification du ticket pour ${ticket.username}...`;
 
                 // Vérifier dans VendorsHistory
-                const vendorsHistoryRef = ref(db, 'VendorsHistory');
+                const vendorsHistoryRef = ref(database, 'VendorsHistory');
                 const vendorsHistorySnapshot = await get(vendorsHistoryRef);
                 const vendorsHistory = vendorsHistorySnapshot.val() || {};
 
@@ -564,8 +590,8 @@
                     pageLoaderMessage.textContent = `Traitement du ticket ${ticket.username}...`;
 
                     // Vérifier dans TicketsTotal et TicketsTransit
-                    const ticketsTotalRef = ref(db, 'TicketsTotal');
-                    const ticketsTransitRef = ref(db, 'TicketsTransit');
+                    const ticketsTotalRef = ref(database, 'TicketsTotal');
+                    const ticketsTransitRef = ref(database, 'TicketsTransit');
                     const totalSnapshot = await get(ticketsTotalRef);
                     const transitSnapshot = await get(ticketsTransitRef);
                     const totalTickets = totalSnapshot.val() || {};
@@ -578,7 +604,7 @@
                     // Chercher dans TicketsTotal
                     for (const category in totalTickets) {
                         const ticketIndex = (totalTickets[category].utilisateur || []).indexOf(ticket.username);
-
+                        
                         if (ticketIndex > -1) {
                             foundTicket = {
                                 category: category,
@@ -592,7 +618,7 @@
                                     prix: totalTickets[category].prix.filter((_, index) => index !== ticketIndex)
                                 }
                             };
-                            foundTicketRef = ref(db, `TicketsTotal/${category}`);
+                            foundTicketRef = ref(database, `TicketsTotal/${category}`);
                             foundInCategory = "TicketsTotal";
                             break;
                         }
@@ -608,7 +634,7 @@
                                     password: transitTickets[transitId].password,
                                     price: transitTickets[transitId].price
                                 };
-                                foundTicketRef = ref(db, `TicketsTransit/${transitId}`);
+                                foundTicketRef = ref(database, `TicketsTransit/${transitId}`);
                                 foundInCategory = "TicketsTransit";
                                 break;
                             }
@@ -631,7 +657,7 @@
                 const automaticVendorId = "Vendeur automatique";
 
                 // Enregistrement de la vente dans VendorsHistory
-                const vendorHistoryRef = ref(db, `VendorsHistory/${automaticVendorId}`);
+                const vendorHistoryRef = ref(database, `VendorsHistory/${automaticVendorId}`);
                 await push(vendorHistoryRef, {
                     category: ticket.category,
                     user: ticket.user,
@@ -641,7 +667,7 @@
                 });
 
                 // Enregistrement de la vente dans TicketsVendus
-                const ticketsVendusRef = ref(db, 'TicketsVendus');
+                const ticketsVendusRef = ref(database, 'TicketsVendus');
                 await push(ticketsVendusRef, {
                     category: ticket.category,
                     user: ticket.user,
@@ -666,9 +692,8 @@
         }
 
         // Initialisation
-        document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', () => {
             showPageLoader();
-            await initializeDatabase(); // Initialize database first
             processConnectedTickets()
                 .then(() => checkSubscriptionStatus())
                 .then(() => {
@@ -690,10 +715,10 @@
         }
 
          window.onload = () => {
-
+            
             lucide.createIcons();
         };
     </script>
-
+    
 </body>
 </html>
