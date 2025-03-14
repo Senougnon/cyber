@@ -1563,6 +1563,7 @@ loginForm.addEventListener('submit', async (event) => {
                     } else {
                         // Abonnement actif
                         pageLoaderMessage.textContent = "Abonnement actif";
+                        hidePageLoader()
                     }
                 } else {
                     // Pas d'abonnement
@@ -1577,7 +1578,7 @@ loginForm.addEventListener('submit', async (event) => {
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            showPageLoader();
+
             await initializeDatabase(); // Initialize database first
             checkSubscriptionStatus()
                 .then(async () => {
@@ -1596,6 +1597,7 @@ loginForm.addEventListener('submit', async (event) => {
         });
         window.redirectToSubscription = redirectToSubscription;
         window.hideSubscriptionRequiredModal = redirectToSubscription;
+        
     </script>
 </body>
 </html>
