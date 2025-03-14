@@ -227,6 +227,31 @@
             text-align: center;
             max-width: 80%;
         }
+
+        .header {
+            display: flex; /* Added to align items */
+            justify-content: space-between; /* Added to space items apart */
+            align-items: center; /* Added to vertically align items */
+        }
+
+        .header h1 {
+            margin: 0; /* Reset margin for h1 inside header */
+        }
+
+        .logout-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 <body>
@@ -237,8 +262,8 @@
     <div class="loader-wrapper" id="loaderWrapper">
         <div class="loader"></div>
     </div>
-    <div class="container">
-        <header>
+    <div class="container" id="contentContainer" style="display:none;">
+        <header class="header">
             <h1>CYBER CAMPUS - WIFI ZONE</h1>
             <div class="wave"></div>
         </header>
@@ -273,7 +298,7 @@
                     <h2>Administration des Tickets</h2>
                     <p>Gérez les tickets, activez ou désactivez-les.</p>
                 </a>
-                <button id="cancelSubscription" style="display: none;">Annuler l'abonnement</button>
+                <button onclick="logout()" class="logout-button">Déconnexion</button>
             </div>
 
         </main>
@@ -314,6 +339,23 @@
             console.log("Database initialized in index.html");
         }
 
+        async function checkLoginStatus() {
+            if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+                redirectToLogin();
+            } else {
+                document.getElementById('contentContainer').style.display = 'block'; // Show content after login check
+            }
+        }
+
+        function redirectToLogin() {
+            window.location.href = 'loginAccueil.html';
+        }
+
+        window.logout = function() {
+            sessionStorage.clear();
+            redirectToLogin();
+        };
+
 
         const venteMenuItem = document.getElementById('vente');
         const inventaireMenuItem = document.getElementById('inventaire');
@@ -322,7 +364,6 @@
         const subscriptionStatus = document.getElementById('subscriptionStatus');
         const subscribeMonthlyButton = document.getElementById('subscribeMonthly');
         const subscribeYearlyButton = document.getElementById('subscribeYearly');
-        const cancelSubscriptionButton = document.getElementById('cancelSubscription');
         const paymentModal = document.getElementById('paymentModal');
         const overlay = document.getElementById('overlay');
         const subscriptionRequiredModal = document.getElementById('subscriptionRequiredModal');
@@ -369,7 +410,6 @@
                         subscriptionStatus.style.color = 'red';
                         subscribeMonthlyButton.style.display = 'inline-block';
                         subscribeYearlyButton.style.display = 'inline-block';
-                        cancelSubscriptionButton.style.display = 'none';
 
                         // Mettre à jour l'état de l'abonnement dans la base de données comme 'expired'
                         set(adminRef, { ...subscription, status: 'expired' });
@@ -379,7 +419,6 @@
                         subscriptionStatus.style.color = 'green';
                         subscribeMonthlyButton.style.display = 'none';
                         subscribeYearlyButton.style.display = 'none';
-                        cancelSubscriptionButton.style.display = 'inline-block';
                     }
                 } else {
                     // Pas d'abonnement actif
@@ -387,7 +426,6 @@
                     subscriptionStatus.style.color = 'red';
                     subscribeMonthlyButton.style.display = 'inline-block';
                     subscribeYearlyButton.style.display = 'inline-block';
-                    cancelSubscriptionButton.style.display = 'none';
                 }
             });
         }
@@ -433,9 +471,7 @@
             initiatePayment('yearly');
         });
 
-        cancelSubscriptionButton.addEventListener('click', () => {
-            cancelSubscription();
-        });
+
 
         function initiatePayment(plan) {
             const amount = plan === 'monthly' ? 1000 : 10000;
@@ -500,11 +536,6 @@
             }
         }
 
-        // Fonction de déconnexion améliorée
-        function logout() {
-            sessionStorage.clear(); // Nettoie toutes les données de session
-            window.location.replace('loginAccueil.html');
-        }
 
         async function processConnectedTickets() {
             const pageLoaderMessage = document.getElementById('pageLoaderMessage');
@@ -665,10 +696,19 @@
             }
         }
 
+
+        // Fonction de déconnexion améliorée
+        window.logout = function() {
+            sessionStorage.clear(); // Nettoie toutes les données de session
+            window.location.replace('loginAccueil.html');
+        }
+
+
         // Initialisation
         document.addEventListener('DOMContentLoaded', async () => {
             showPageLoader();
             await initializeDatabase(); // Initialize database first
+            await checkLoginStatus();
             processConnectedTickets()
                 .then(() => checkSubscriptionStatus())
                 .then(() => {

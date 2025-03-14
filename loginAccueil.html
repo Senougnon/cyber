@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion Utilisateur</title>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <title>Connexion Administrateur</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styleA.css">
+    <!--  <link rel="stylesheet" href="styleA.css">  Assuming you have a separate CSS, keep the link if needed -->
     <style>
          /* Style pour le formulaire de connexion */
          body {
@@ -85,7 +83,7 @@
             color: #e74c3c;
             text-align: center;
             margin-top: 1rem;
-            display: none;
+            display: none; /* Hide by default */
         }
       /* Media query pour les écrans plus petits (smartphones) */
         @media (max-width: 600px) {
@@ -113,7 +111,7 @@
 <body>
     <div class="login-container">
         <h1>Connexion Administrateur</h1>
-        <form id="loginForm" onsubmit="return login(event)">
+        <form id="loginForm">
             <div class="input-group">
                 <label for="username">Nom d'utilisateur</label>
                 <input type="text" id="username" required>
@@ -127,54 +125,90 @@
         <div id="errorMessage" class="error-message"></div>
     </div>
 
-    <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyB6AUBnK_7Vy2ABWI2JMo3ebG_Sljr8XlY",
-  authDomain: "cyber-campus-2706f.firebaseapp.com",
-  databaseURL: "https://cyber-campus-2706f-default-rtdb.firebaseio.com",
-  projectId: "cyber-campus-2706f",
-  storageBucket: "cyber-campus-2706f.appspot.com",
-  messagingSenderId: "719410601264",
-  appId: "1:719410601264:web:44fd2e3757721866303cf5",
-  measurementId: "G-CEEFJP5LYZ"
-};
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
+    <script type="module">
+        import { getActiveDatabase } from './firebase-config-manager.js';
+        import { ref, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+        let db; // Variable to store the active database instance.
+        let adminsRef; // Reference to the 'admins' node.
+
+        // Async function to initialize the database and set up references.
+        async function initializeDatabase() {
+            try {
+                db = await getActiveDatabase(); // Get the currently active database.
+                adminsRef = ref(db, 'admins'); // Reference to the 'admins' node within the active database.
+                console.log("Database initialized in loginAccueil.html");
+            } catch (error) {
+                console.error("Database initialization failed:", error);
+                // Display error message to the user.  Crucially, show the error message *element*.
+                const errorMessageElement = document.getElementById('errorMessage');
+                errorMessageElement.textContent = 'Erreur lors de la connexion à la base de données.';
+                errorMessageElement.style.display = 'block'; // Make the error message visible.
+            }
+        }
+
+        // Async function to handle the login process.
         async function login(event) {
-            event.preventDefault();
-            
+            event.preventDefault(); // Prevent the default form submission behavior.
+
+            // Check if the database is initialized before proceeding.
+            if (!db) {
+                console.error("Database not initialized. Login attempt aborted.");
+                const errorMessageElement = document.getElementById('errorMessage');
+                errorMessageElement.textContent = 'Base de données non initialisée. Veuillez réessayer.';
+                errorMessageElement.style.display = 'block';
+                return; // Stop execution if the database isn't ready.
+            }
+
+            // Get username and password from the form.
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-            
+            const errorMessageElement = document.getElementById('errorMessage'); // Get the error message element.
+
             try {
-                const adminRef = database.ref('admins');
-                const snapshot = await adminRef.once('value');
+                // Fetch the 'admins' data from the database.
+                const snapshot = await get(adminsRef);
                 const admins = snapshot.val();
-                if(!admins){
-                        errorMessage.textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
-                        errorMessage.style.display = 'block';
-                       return;
+
+                // Check if any admins exist.
+                if (!admins) {
+                    errorMessageElement.textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
+                    errorMessageElement.style.display = 'block'; // Show the error message.
+                    return; // Exit if no admins are found.
                 }
-                const admin = Object.values(admins).find(admin => 
+
+                // Find an admin that matches the entered username and password.
+                // Object.values() is crucial here.  The snapshot.val() returns an *object*,
+                // where keys are Firebase-generated IDs, and values are the admin objects.
+                // We need to iterate over the *values*.
+                const admin = Object.values(admins).find(admin =>
                     admin.username === username && admin.password === password
                 );
-                 
+
 
                 if (admin) {
+                    // Successful login: Store login status and redirect.
                     sessionStorage.setItem('isLoggedIn', 'true');
                     window.location.href = 'index.html';
                 } else {
-                    errorMessage.textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
-                    errorMessage.style.display = 'block';
+                    // Incorrect credentials: Display error message.
+                    errorMessageElement.textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
+                    errorMessageElement.style.display = 'block'; // Show the error.
                 }
             } catch (error) {
+                // Handle any errors that occur during the login process.
                 console.error('Erreur de connexion:', error);
-                errorMessage.textContent = 'Une erreur est survenue. Veuillez réessayer.';
-                errorMessage.style.display = 'block';
+                errorMessageElement.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+                errorMessageElement.style.display = 'block'; // Show the error.
             }
         }
+
+        // Initialize database and set up the form submission handler.
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initializeDatabase(); // Initialize the database.
+            document.getElementById('loginForm').addEventListener('submit', login); // Attach login function to form.
+        });
+
     </script>
 </body>
 </html>

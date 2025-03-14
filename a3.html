@@ -57,7 +57,26 @@
         h1, h2 {
             color: var(--primary-color);
             margin-bottom: 20px;
+            display: flex; /* Added to align items */
+            justify-content: space-between; /* Added to space items apart */
+            align-items: center; /* Added to vertically align items */
         }
+
+        .logout-button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+
 
         .pin-icon {
             cursor: pointer;
@@ -245,10 +264,11 @@
             }
         }
         .logout-button {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
+        position: relative; /* Changed from fixed to relative */
+        top: auto; /* Reset top */
+        right: auto; /* Reset right */
+        margin-left: 10px; /* Add some space from the title */
+        z-index: auto;
         background-color: #e74c3c;
         color: white;
         padding: 10px 20px;
@@ -307,11 +327,12 @@
     </style>
 </head>
 <body>
-<button onclick="logout()" class="logout-button">
-    <i class="fas fa-sign-out-alt"></i> Déconnexion
-</button>
-    <div class="container">
-        <h1>Gestion des tickets</h1>
+    <div id="loadingIndicator" class="loading" style="display: none;"></div>
+    <div class="container" id="contentContainer" style="display:none;">
+        <h1>Gestion des tickets <button onclick="logout()" class="logout-button">
+            <i class="fas fa-sign-out-alt"></i> Déconnexion
+        </button></h1>
+
 
         <div class="database-selector">
             <label for="databaseSelect">Choisir la base de données : </label>
@@ -334,7 +355,6 @@
         <div id="ticketCategories"></div>
     </div>
 
-    <div id="loadingIndicator" class="loading" style="display: none;"></div>
 
     <!-- Modal pour les prix -->
     <div id="priceModal" class="modal">
@@ -435,6 +455,23 @@
             db = await initializationPromise; // Wait for initialization to complete
             console.log("Database initialized in a3.html");
         }
+
+        async function checkLoginStatus() {
+            if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+                redirectToLogin();
+            } else {
+                document.getElementById('contentContainer').style.display = 'block'; // Show content after login check
+            }
+        }
+
+        function redirectToLogin() {
+            window.location.href = 'loginAccueil.html';
+        }
+
+        window.logout = function() {
+            sessionStorage.clear();
+            redirectToLogin();
+        };
 
 
         function showLoading() {
@@ -1078,11 +1115,11 @@
                             hideLoading();
                             alert('Tous les tickets ont été supprimés avec succès!');
                         })
-                        .catch(error => {
+                        .catch((error) => { // Added curly braces here
                             console.error("Erreur lors de la suppression:", error);
                             hideLoading();
                             alert('Erreur lors de la suppression des tickets');
-                        });
+                        }); // Added closing curly brace here
                 } else {
                     set(ref(db, `${currentDatabase}/${category}`), {
                         motDePasse: [],
@@ -1495,6 +1532,7 @@
             }
         }
 
+
         // Make functions globally accessible
         window.editCategory = editCategory;
         window.showAddTicketModal = showAddTicketModal;
@@ -1525,14 +1563,11 @@
         // Appeler updateImportFileAccept au chargement initial pour définir l'attribut accept correctement
         window.onload = async () => {
             await initializeDatabase();
+            await checkLoginStatus();
             updateImportFileAccept();
             loadTickets();
         };
-        // Fonction de déconnexion améliorée
-        function logout() {
-            sessionStorage.clear(); // Nettoie toutes les données de session
-            window.location.replace('login.html');
-        }
+
 
         // Écouteur d'événement pour la recherche
         document.getElementById('searchBar').addEventListener('input', searchTickets);
@@ -1540,6 +1575,7 @@
         // Chargement initial des tickets
         window.onload = async () => {
             await initializeDatabase();
+            await checkLoginStatus();
             loadTickets();
         };
     </script>

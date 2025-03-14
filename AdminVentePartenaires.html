@@ -37,7 +37,30 @@
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 20px;
+            display: flex; /* Added to align items */
+            justify-content: space-between; /* Added to space items apart */
+            align-items: center; /* Added to vertically align items */
         }
+
+        .header h1 {
+            margin: 0; /* Reset margin for h1 inside header */
+        }
+
+        .logout-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+
 
         .stats-grid {
             display: grid;
@@ -334,9 +357,10 @@
     <div class="loader-wrapper" id="loaderWrapper">
         <div class="loader"></div>
     </div>
-    <div class="container">
+    <div class="container" id="contentContainer" style="display:none;">
         <div class="header">
             <h1>Dashboard Administrateur</h1>
+            <button onclick="logout()" class="logout-button">Déconnexion</button>
         </div>
 
         <div class="stats-grid">
@@ -474,6 +498,23 @@
             adminRef = ref(db, 'admin/subscription'); // Initialize adminRef after db is available
             console.log("Database initialized in AdminVentePartenaires.html");
         }
+
+        async function checkLoginStatus() {
+            if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+                redirectToLogin();
+            } else {
+                document.getElementById('contentContainer').style.display = 'block'; // Show content after login check
+            }
+        }
+
+        function redirectToLogin() {
+            window.location.href = 'loginAccueil.html';
+        }
+
+        window.logout = function() {
+            sessionStorage.clear();
+            redirectToLogin();
+        };
 
         let allSales = [];
         let vendors = new Set();
@@ -950,6 +991,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             showPageLoader();
             await initializeDatabase(); // Initialize database first
+            await checkLoginStatus();
             await checkSubscriptionStatus();
             await loadSalesData(); // Charger les données de vente et des vendeurs
             await loadPartners(); // Charger la liste des partenaires
