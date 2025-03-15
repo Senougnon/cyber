@@ -1032,7 +1032,7 @@ loginForm.addEventListener('submit', async (event) => {
                             prix: data.prix.slice(1)
                         }
                     };
-
+                    console.log("Ticket to sell prepared:", ticketToSell); // Log here in initTicketSale
                     showConfirmation(ticketToSell);
                     hideLoader();
                 }
@@ -1065,6 +1065,7 @@ loginForm.addEventListener('submit', async (event) => {
         // Fonction pour procéder à la vente après confirmation
         window.proceedWithSale = async function() {
             showLoader();
+            console.log("proceedWithSale called. ticketToSell:", ticketToSell); // Log at the start of proceedWithSale
             if (!ticketToSell) {
                 showNotification("Erreur", "Aucun ticket à vendre");
                 hideLoader();
@@ -1074,10 +1075,20 @@ loginForm.addEventListener('submit', async (event) => {
             try {
                 // Mettre à jour la base de données
                 const ticketsTotalRef = ref(db, `TicketsTotal/${ticketToSell.category}`);
+                console.log("Updating TicketsTotal:", ticketsTotalRef.toString(), "with data:", ticketToSell.updatedData); // Log before set
                 await set(ticketsTotalRef, ticketToSell.updatedData);
+                console.log("TicketsTotal updated successfully."); // Log after set
 
                 // Ajouter aux tickets vendus
                 const ticketsVendusRef = ref(db, 'TicketsVendus');
+                console.log("Pushing to TicketsVendus:", ticketsVendusRef.toString(), "with data:", {
+                    category: ticketToSell.category,
+                    user: ticketToSell.user,
+                    password: ticketToSell.password,
+                    price: ticketToSell.price,
+                    soldAt: Date.now(),
+                    vendorId: currentVendorId
+                }); // Log before push to TicketsVendus
                 await push(ticketsVendusRef, {
                     category: ticketToSell.category,
                     user: ticketToSell.user,
@@ -1086,9 +1097,17 @@ loginForm.addEventListener('submit', async (event) => {
                     soldAt: Date.now(),
                     vendorId: currentVendorId
                 });
+                console.log("TicketsVendus updated successfully."); // Log after push to TicketsVendus
 
                 // Ajouter à l'historique du vendeur
                 const vendorHistoryRef = ref(db, `VendorsHistory/${currentVendorId}`);
+                console.log("Pushing to VendorsHistory:", vendorHistoryRef.toString(), "with data:", {
+                    category: ticketToSell.category,
+                    user: ticketToSell.user,
+                    password: ticketToSell.password,
+                    price: ticketToSell.price,
+                    soldAt: Date.now()
+                }); // Log before push to VendorsHistory
                 await push(vendorHistoryRef, {
                     category: ticketToSell.category,
                     user: ticketToSell.user,
@@ -1096,15 +1115,23 @@ loginForm.addEventListener('submit', async (event) => {
                     price: ticketToSell.price,
                     soldAt: Date.now()
                 });
+                console.log("VendorsHistory updated successfully."); // Log after push to VendorsHistory
+
 
                 // Afficher les détails du ticket vendu
+                console.log("Calling showTicketDetails with ticket:", ticketToSell); // Log before showTicketDetails
                 showTicketDetails(ticketToSell);
                 await syncTickets();
                 hideLoader();
             } catch (error) {
-                console.error("Erreur lors de la vente:", error);
-                showNotification("Erreur", "Impossible de finaliser la vente");
                 hideLoader();
+                console.error("Erreur lors de la vente:", error); // Log error in catch block
+                showTicketDetails(ticketToSell);
+                await syncTickets();
+                
+                hideLoader();
+                showNotification("Erreur", "Impossible de finaliser la vente");
+                
             }
 
             ticketToSell = null;
@@ -1356,6 +1383,9 @@ loginForm.addEventListener('submit', async (event) => {
                     hideLoader();
                 }
             }catch (error){
+
+                hideLoader();
+                showTicketDetails(sale);
                 console.error("Erreur lors de la récupération du ticket:", error);
                 showNotification("Erreur", "Impossible de récupérer les détails du ticket");
                 hideLoader();
@@ -1563,7 +1593,8 @@ loginForm.addEventListener('submit', async (event) => {
                     } else {
                         // Abonnement actif
                         pageLoaderMessage.textContent = "Abonnement actif";
-                        
+                        hidePageLoader()
+
                     }
                 } else {
                     // Pas d'abonnement
@@ -1597,7 +1628,7 @@ loginForm.addEventListener('submit', async (event) => {
         });
         window.redirectToSubscription = redirectToSubscription;
         window.hideSubscriptionRequiredModal = redirectToSubscription;
-        
+
     </script>
 </body>
 </html>
