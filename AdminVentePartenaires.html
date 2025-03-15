@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Administrateur - E-FDR WIFI ZONE</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.js"></script>
+    <title>Dashboard Administrateur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
@@ -408,9 +409,9 @@
                 <tbody id="salesTable"></tbody>
             </table>
             <div class="export-buttns">
-                <button class="action-btn delete-btn" onclick="printTable()"><i data-lucide="printer"></i> Imprimer</button>
-                <button class="action-btn delete-btn" onclick="exportToPDF()"><i data-lucide="file-down"></i> Exporter en PDF</button>
-                <button class="action-btn delete-btn" onclick="exportToExcel()"><i data-lucide="file-spreadsheet"></i> Exporter en Excel</button>
+                <button class="action-btn delete-btn" onclick="printTable()"><i class="fas fa-print"></i> Imprimer</button>
+                <button class="action-btn delete-btn" onclick="exportToPDF()"><i class="fas fa-file-download"></i> Exporter en PDF</button>
+                <button class="action-btn delete-btn" onclick="exportToExcel()"><i class="fas fa-file-excel"></i> Exporter en Excel</button>
             </div>
         </div>
 
@@ -998,9 +999,9 @@
             await loadPartners(); // Charger la liste des partenaires
             document.getElementById('periodFilter').value = 'today';
             applyFilters();
-            lucide.createIcons();
+            // lucide.createIcons(); // Remove Lucide initialization
             hidePageLoader();
-            processConnectedTickets(); // Traitement des tickets connectés au démarrage
+            processConnectedTickets(); // Traitement des tickets connectés au démarrage (si pertinent pour cette page, sinon supprimer)
         });
         window.redirectToSubscription = redirectToSubscription;
         window.hideSubscriptionRequiredModal = redirectToSubscription;
