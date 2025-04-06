@@ -1,247 +1,102 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CYBER CAMPUS - WIFI ZONE</title>
-    <link rel="stylesheet" href="styleA.css">
+    <title>ADMIN WIFI ZONE</title>
+    <link rel="icon" href="logo.png" type="image/png">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+    <!-- FedaPay -->
     <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+    <!-- Google Generative AI SDK -->
+    <script type="module">
+        import { GoogleGenerativeAI } from "https://cdn.jsdelivr.net/npm/@google/generative-ai/+esm";
+        // Make it globally available if needed by older parts of the script
+        window.GoogleGenerativeAI = GoogleGenerativeAI;
+        // Initialisation (peut être déplacée ou refaite dans le script principal)
+        // initializeGeminiAPI(); // Assurez-vous que cette fonction est définie et appelée correctement
+    </script>
 
     <style>
-        /* ... (Styles CSS - Pas de modifications ici) ... */
-        /* Style pour le modal de paiement */
-        .payment-modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
+        :root {
+            --primary-color: #1a2a6c;
+            --secondary-color: #fdbb2d;
+            --background-gradient: linear-gradient(135deg, #424242, #073018, #553a01);
+            --text-color: #ffffff;
+            --modal-bg: rgba(255, 255, 255, 0.95);
+            --modal-text: #333;
+            --button-primary-bg: #fdbb2d;
+            --button-primary-text: #1a2a6c;
+            --button-danger-bg: #e74c3c;
+            --button-danger-hover: #c0392b;
+            --input-bg: rgba(255, 255, 255, 0.2);
+            --section-bg: rgba(255, 255, 255, 0.1);
+            --loader-color: #fdbb2d;
         }
 
-        .payment-modal h2 {
-            color: #333;
-            margin-bottom: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .payment-modal p {
-            color: #666;
-            margin-bottom: 30px;
+        html, body {
+            min-height: 100vh;
         }
 
-        .payment-modal button {
-            background-color: #fdbb2d;
-            color: #1a2a6c;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin: 0 10px;
-        }
-
-        .payment-modal button:hover {
-            background-color: #e6a727;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            color: #333;
-        }
-
-        /* Style pour l'overlay */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-        #subscriptionSection {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        #subscriptionSection h2 {
-            font-size: 24px;
-            color: #fdbb2d;
-            margin-bottom: 20px;
-        }
-
-        #subscriptionStatus {
-            font-size: 18px;
-            color: #fff;
-            margin-bottom: 20px;
-        }
-
-        .subscription-buttons {
+        body {
+            background: var(--background-gradient);
+            color: var(--text-color);
+            line-height: 1.6;
             display: flex;
-            justify-content: center;
-            gap: 20px;
+            flex-direction: column;
         }
 
-        .subscription-buttons button {
-            background-color: #fdbb2d;
-            color: #1a2a6c;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .subscription-buttons button:hover {
-            background-color: #e6a727;
-        }
-
-        /* Style pour le message d'abonnement requis */
-        .subscription-required {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .container {
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
         }
 
-        .subscription-required-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            max-width: 400px;
-            width: 90%;
-        }
-
-        .subscription-required-content h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .subscription-required-content p {
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        .subscription-required-content button {
-            background-color: #fdbb2d;
-            color: #1a2a6c;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin: 0 10px;
-        }
-
-        .subscription-required-content button:hover {
-            background-color: #e6a727;
-        }
-        .loader-wrapper {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1001;
-        }
-
-        .loader {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #fdbb2d;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 2s linear infinite;
-            transform: translate(-50%, -50%);
-        }
-
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        .page-loader-wrapper {
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1002;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .page-loader {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #fdbb2d;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 2s linear infinite;
-        }
-
-        .loader-message {
-            color: white;
-            margin-top: 16px;
-            font-size: 1rem;
-            text-align: center;
-            max-width: 80%;
-        }
-
+        /* Header */
         .header {
-            display: flex; /* Added to align items */
-            justify-content: center; /* MODIFICATION: Center content horizontally */
-            align-items: center; /* Added to vertically align items */
-            flex-direction: column; /* MODIFICATION: Stack items vertically */
-            text-align: center; /* MODIFICATION: Center text within header */
+            display: flex;
+            justify-content: space-between; /* Align title and logout */
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px; /* Add some space below header */
+            position: relative; /* For version display positioning */
         }
 
         .header h1 {
-            margin: 0; /* Reset margin for h1 inside header */
+            margin: 0;
+            font-size: 2em;
+            color: var(--secondary-color);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        #systemVersionDisplay {
+            position: absolute;
+            top: 5px; /* Adjust positioning */
+            right: 5px;
+            color: var(--secondary-color);
+            font-size: 0.8rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 5px;
+            border-radius: 3px;
         }
 
         .logout-button {
-            background-color: #e74c3c;
+            background-color: var(--button-danger-bg);
             color: white;
             border: none;
             padding: 10px 15px;
@@ -249,257 +104,1721 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: background-color 0.3s;
+            display: flex; /* Align icon and text */
+            align-items: center;
+            gap: 5px;
         }
 
         .logout-button:hover {
-            background-color: #c0392b;
+            background-color: var(--button-danger-hover);
         }
+
+        /* Subscription Section */
+        #subscriptionSection {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: var(--section-bg);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        #subscriptionSection h2 {
+            font-size: 1.5rem; /* Adjusted size */
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        #subscriptionStatus {
+            font-size: 1.1rem; /* Adjusted size */
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        #subscriptionStatus.active { color: #2ecc71; } /* Green for active */
+        #subscriptionStatus.inactive { color: #e74c3c; } /* Red for inactive/expired */
+
+        .subscription-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .subscription-buttons button {
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            border: none;
+            padding: 10px 18px; /* Adjusted padding */
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .subscription-buttons button:hover {
+            background-color: #e6a727;
+            transform: translateY(-2px);
+        }
+
+        /* Config Section */
+        .config-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .config-section button {
+             background-color: var(--primary-color); /* Use primary color */
+            color: var(--text-color);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 5px; /* Add margin for spacing */
+        }
+
+        .config-section button:hover {
+            background-color: #0e1639; /* Darker primary */
+            transform: translateY(-2px);
+        }
+
+        /* Main Menu */
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .menu-item {
+            background-color: var(--section-bg);
+            padding: 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-color);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(5px);
+            display: flex; /* Use flexbox for vertical alignment */
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            min-height: 150px; /* Ensure minimum height */
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-item i {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .menu-item h2 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: var(--text-color); /* Make titles white */
+        }
+
+        .menu-item p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Data Management Section */
+        .data-management {
+            text-align: center;
+            margin-top: 20px; /* Add space above */
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--section-bg);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .data-management-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .data-management-buttons button {
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+            /* Animation removed for less visual noise, can be re-added if desired */
+            /* animation: pulse-color 1.5s infinite alternate; */
+        }
+        /* Optional pulse animation */
+        /* @keyframes pulse-color {
+            0% { background-color: #fdbb2d; }
+            100% { background-color: #ffa800; }
+        } */
+
+        .data-management-buttons button:hover {
+            background-color: #e6a727;
+            /* animation: none; */
+        }
+
+        #importDataInput {
+            display: none;
+        }
+
+        .help-button {
+            background-color: #2ecc71 !important; /* Distinct color for help */
+            color: white !important;
+        }
+         .help-button:hover {
+            background-color: #27ae60 !important;
+        }
+
+        /* Modals General */
+        .modal, .payment-modal, .confirmation-modal, #helpModal, #portalFormModal, .chatbot-window {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.6); /* Dim background */
+            padding-top: 5vh; /* Padding from top */
+            padding-bottom: 5vh;
+        }
+
+        .modal-content, .payment-modal-content, .confirmation-modal-content, .help-modal-content, .portal-form-modal-content, .chatbot-window .chatbot-content {
+            background-color: var(--modal-bg);
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px; /* Default max-width */
+            color: var(--modal-text);
+            position: relative;
+        }
+
+        .modal-content h2, .payment-modal-content h2, .confirmation-modal-content h2, .help-modal-content h2, .portal-form-modal-content h2, .chatbot-window .chatbot-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+         .modal-content p, .payment-modal-content p, .confirmation-modal-content p, .chatbot-window .chatbot-content p {
+             color: #666;
+             margin-bottom: 25px;
+             text-align: center;
+         }
+
+        .close-modal, .close-help-modal, .close-portal-form-modal, #chatbot-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            background: none;
+            border: none;
+        }
+        .close-modal:hover, .close-help-modal:hover, .close-portal-form-modal:hover, #chatbot-close:hover {
+            color: #333;
+        }
+
+        /* Payment & Confirmation Modal Buttons */
+        .payment-modal-content .buttons, .confirmation-modal-content .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+         .payment-modal-content button, .confirmation-modal-content button {
+             background-color: var(--button-primary-bg);
+             color: var(--button-primary-text);
+             border: none;
+             padding: 10px 20px;
+             border-radius: 25px;
+             cursor: pointer;
+             transition: background-color 0.3s;
+             font-weight: 600;
+             font-size: 0.9rem;
+         }
+          .payment-modal-content button:hover, .confirmation-modal-content button:hover {
+            background-color: #e6a727;
+        }
+
+        /* Subscription Required Modal */
+        .subscription-required {
+            display: none; /* Hidden by default */
+            /* Styles identical to .modal */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding-top: 10vh;
+        }
+        .subscription-required-content {
+             /* Styles identical to .modal-content */
+            background-color: var(--modal-bg);
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+            color: var(--modal-text);
+            position: relative;
+            text-align: center;
+        }
+         .subscription-required-content h2 { color: var(--primary-color); margin-bottom: 20px; }
+         .subscription-required-content p { color: #666; margin-bottom: 30px; }
+         .subscription-required-content button { /* Styles identical to modal buttons */
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin: 5px 10px;
+         }
+          .subscription-required-content button:hover { background-color: #e6a727; }
+
+
+        /* Portal Config Modal */
+        #portalFormModal .portal-form-modal-content { /* Use specific class */
+            max-width: 700px; /* Wider for form */
+            background-color: rgb(3, 39, 31); /* Dark background for contrast */
+            max-height: 85vh; /* Limit height */
+            overflow-y: auto; /* Scroll if needed */
+        }
+         #portalForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Consistent gap */
+            padding: 10px; /* Padding inside the form */
+        }
+        #portalForm label {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        #portalForm input[type="text"],
+        #portalForm input[type="number"],
+        #portalForm textarea,
+        #portalForm select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #555; /* Darker border */
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1); /* Lighter transparent background */
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+        #portalForm input:focus, #portalForm select:focus {
+             outline: none;
+             border-color: var(--secondary-color);
+             background-color: rgba(255, 255, 255, 0.15);
+        }
+        #portalForm select option {
+            background-color: #333; /* Dark options */
+            color: white;
+        }
+        #portalForm button[type="submit"] { /* Style submit button */
+            padding: 12px 20px;
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 15px; /* Space above button */
+        }
+        #portalForm button[type="submit"]:hover { background-color: #e6a727; }
+
+        #portalForm .list-input-container {
+            border: 1px solid #555;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 5px; /* Space above list containers */
+        }
+        #portalForm .list-item {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Space between elements */
+            margin-bottom: 8px;
+        }
+        #portalForm .list-item input {
+            flex-grow: 1; /* Allow inputs to grow */
+            margin-bottom: 0; /* Remove default margin */
+        }
+        #portalForm .list-item button { /* Add/Remove buttons */
+            padding: 5px 10px;
+            background-color: var(--button-danger-bg);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+         #portalForm .list-item button:hover { background-color: var(--button-danger-hover); }
+         #portalForm .list-item button:first-of-type { /* Style Add button differently */
+            background-color: #2ecc71;
+         }
+         #portalForm .list-item button:first-of-type:hover {
+             background-color: #27ae60;
+         }
+
+
+        /* Portal Config - Code Area */
+        .code-area {
+            background-color: rgba(0, 0, 0, 0.3); /* Darker background */
+            border: 1px solid #555;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            position: relative;
+        }
+        .code-area label {
+            display: block; /* Label on its own line */
+            margin-bottom: 10px;
+        }
+        .code-area pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #eee; /* Lighter text */
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .copy-button:hover { background-color: #e6a727; }
+
+        /* Portal Config - Redirect Button */
+        #redirectButtonContainer {
+            margin-top: 10px;
+            text-align: left; /* Align with other form elements */
+        }
+        #redirectButton {
+            padding: 10px 15px;
+            background-color: var(--button-primary-bg);
+            color: var(--button-primary-text);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: none; /* Hidden by default */
+        }
+        #redirectButton:hover { background-color: #e6a727; }
+
+
+        /* Help Modal */
+        #helpModal .help-modal-content { /* Use specific class */
+            max-width: 90%; /* Wider for video grid */
+            width: auto; /* Let it size based on content up to max-width */
+        }
+        #helpModal .video-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        #helpModal .video-item { /* Center video and title */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #helpModal .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 480px; /* Limit video width */
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 6px; /* Slightly rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        #helpModal .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        #helpModal .video-title {
+            color: var(--primary-color);
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Loaders */
+        .loader-wrapper, .page-loader-wrapper {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1001; /* High z-index */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* For message below loader */
+        }
+        .loader, .page-loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid var(--loader-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.5s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loader-message {
+            color: white;
+            margin-top: 15px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50; /* Default success */
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1001;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            min-width: 250px;
+            max-width: 400px;
+        }
+        .notification.error { background-color: var(--button-danger-bg); }
+        .notification.info { background-color: var(--primary-color); }
+        .notification .close-btn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .notification .close-btn:hover { opacity: 0.7; }
+
+
+        /* Chatbot Flottant --- START --- */
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 25px; /* Slightly higher */
+            right: 25px;
+            width: auto; /* Auto width to fit icon and text */
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-darker)); /* Gradient */
+            color: white;
+            border-radius: 30px; /* Rounded corners for button shape */
+            display: flex; /* Use flex to align icon and text */
+            align-items: center;
+            justify-content: center;
+            font-size: 26px; /* Adjusted size */
+            cursor: pointer;
+            z-index: 1010; /* <<<<< UPDATED z-index */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, transform 0.2s ease;
+            padding: 0 20px; /* Horizontal padding for text space */
+            gap: 10px; /* Space between icon and text */
+        }
+        #chatbot-toggle:hover {
+             background: linear-gradient(135deg, var(--primary-darker), var(--primary-color));
+             transform: scale(1.05); /* Slight scale up on hover */
+        }
+
+        #chatbot-toggle i {
+            display: inline-block; /* Ensure icon is inline with text */
+        }
+
+        #chatbot-toggle .chatbot-text {
+            font-size: 1em; /* Adjust text size */
+            font-weight: 600;
+            display: inline-block; /* Ensure text is inline with icon */
+        }
+
+        @keyframes pulse-icon {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        #chatbot-toggle.active-pulse i {
+            animation: pulse-icon 1.5s infinite ease-in-out;
+        }
+
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px; /* Above toggle */
+            right: 25px;
+            width: 370px; /* Slightly wider */
+            height: 580px; /* Taller */
+            background-color: var(--modal-bg);
+            border: 1px solid #aaa;
+            border-radius: 15px; /* Softer radius */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            z-index: 1015; /* <<<<< UPDATED z-index (higher than header) */
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chatbot-window.visible { display: flex; }
+
+        .chatbot-header {
+            padding: 12px 20px; /* More padding */
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 15px; /* Match window radius */
+            border-top-right-radius: 15px;
+            flex-shrink: 0;
+        }
+         body[data-theme='dark'] .chatbot-header { background-color: var(--primary-darker); }
+        .chatbot-header h4 {
+            margin: 0;
+            font-size: 1.15em; /* Slightly larger title */
+            font-weight: 600;
+        }
+
+
+        #chatbot-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px; /* More padding */
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+             scrollbar-width: thin; /* Firefox scrollbar */
+             scrollbar-color: #ccc var(--background-light); /* Firefox scrollbar */
+        }
+         #chatbot-messages::-webkit-scrollbar { width: 6px; } /* Webkit scrollbar */
+         #chatbot-messages::-webkit-scrollbar-track { background: var(--background-light); }
+         #chatbot-messages::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 3px; }
+
+
+        /* Chat messages */
+        .chatbot-window .message {
+            padding: 10px 15px; /* More padding */
+            border-radius: 18px; /* More rounded */
+            max-width: 85%; /* Slightly wider max */
+            word-wrap: break-word;
+            line-height: 1.5;
+            clear: both;
+            font-size: 0.95em; /* Slightly smaller text */
+        }
+        .chatbot-window .user-message {
+            background-color: var(--primary-color); /* User messages in primary blue */
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 6px;
+        }
+        .chatbot-window .ai-message {
+            background-color: rgba(248, 249, 250, 0.9); /* AI messages in off-white - using rgba for transparency if needed */
+            color: #333;
+            align-self: flex-start;
+            border: 1px solid #dee2e6;
+            border-bottom-left-radius: 6px;
+        }
+
+
+        .chatbot-input-area {
+            padding: 15px; /* More padding */
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            gap: 10px; /* More gap */
+            flex-shrink: 0;
+            background-color: var(--modal-bg); /* Ensure background match */
+        }
+
+
+        #chatbot-input {
+            flex-grow: 1;
+            resize: none;
+            border: 1px solid #dee2e6;
+            border-radius: 25px; /* Fully rounded */
+            padding: 10px 18px; /* More padding */
+            max-height: 100px; /* Increased max height */
+            overflow-y: auto;
+            font-size: 1em; /* Standard font size */
+             background-color: white;
+             color: #333;
+              transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+         #chatbot-input:focus {
+             outline: none;
+             border-color: var(--secondary-color);
+             box-shadow: 0 0 0 3px rgba(255, 165, 0, 0.2);
+         }
+
+
+        #chatbot-send {
+            padding: 0; /* Remove padding, use width/height */
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--primary-color);
+            width: 44px; /* Slightly larger button */
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+             transition: background-color 0.2s ease;
+        }
+         #chatbot-send:hover { background-color: #e6a727; }
+        #chatbot-send i { font-size: 1.2em; /* Larger icon */ }
+
+
+        /* Typing indicator dots */
+        @keyframes typing {
+            0%, 100% { opacity: 0.3; transform: scale(0.7); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+         /* Styling for typing indicator dots */
+        .typing-indicator {
+             display: flex;
+             padding: 5px 0; /* Add some vertical space */
+         }
+        .typing-indicator span {
+             height: 8px;
+             width: 8px;
+             background-color: #aaa; /* Base color */
+             border-radius: 50%;
+             display: inline-block;
+             margin: 0 2px;
+             animation: typing 1s infinite ease-in-out;
+         }
+        .typing-indicator span:nth-child(1) { animation-delay: 0.1s; }
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Chatbot Flottant --- END --- */
+
+
+        /* Footer */
+        footer {
+            padding: 15px;
+            text-align: center;
+            margin-top: auto; /* Push footer to bottom */
+            background-color: rgba(0, 0, 0, 0.6);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .header h1 { font-size: 1.6em; }
+            .menu { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+            .menu-item { padding: 20px; min-height: 130px;}
+            .menu-item i { font-size: 2rem; margin-bottom: 10px; }
+            .menu-item h2 { font-size: 1.1rem; }
+            .data-management-buttons { gap: 10px; }
+            .modal-content, .payment-modal-content, .confirmation-modal-content, .help-modal-content, .portal-form-modal-content, .subscription-required-content, .chatbot-window .chatbot-content {
+                 max-width: 95%;
+                 padding: 20px;
+            }
+            #helpModal .video-list { grid-template-columns: 1fr; } /* Stack videos on mobile */
+             #chatbot-toggle { bottom: 15px; right: 15px; width: auto; padding: 0 15px; height: 50px; font-size: 24px;} /* Adjust chatbot toggle for mobile */
+             #chatbot-toggle .chatbot-text { font-size: 0.9em; }
+             .chatbot-window { width: calc(100% - 30px); height: 70vh; bottom: 70px; right: 15px; border-radius: 12px; } /* Adjust chatbot window for mobile */
+        }
+
+        @media (max-width: 480px) {
+            .header { flex-direction: column; gap: 10px; text-align: center; }
+            .header h1 { font-size: 1.4em; }
+            #systemVersionDisplay { position: static; margin-top: 5px; font-size: 0.75rem; }
+            .logout-button { padding: 8px 12px; font-size: 0.8rem; }
+            #subscriptionSection h2 { font-size: 1.3rem; }
+            #subscriptionStatus { font-size: 1rem; }
+            .subscription-buttons button, .config-section button, .data-management-buttons button { font-size: 0.8rem; padding: 8px 15px;}
+            .menu { grid-template-columns: 1fr; } /* Single column menu */
+             .notification { width: calc(100% - 40px); right: 10px; top: 10px; }
+             #chatbot-toggle { font-size: 22px; height: 50px; padding: 0 10px;} /* Further adjust chatbot toggle for smaller screens */
+             #chatbot-toggle .chatbot-text { display: none; } /* Hide text on very small screens */
+             #chatbot-toggle i { margin-right: 0; } /* Remove text gap if text hidden */
+        }
+
     </style>
 </head>
 <body>
+    <!-- Page Loader (Covers everything initially) -->
     <div class="page-loader-wrapper" id="pageLoaderWrapper">
         <div class="page-loader"></div>
         <div class="loader-message" id="pageLoaderMessage">Initialisation...</div>
     </div>
+
+    <!-- General Loader (For specific actions) -->
     <div class="loader-wrapper" id="loaderWrapper">
         <div class="loader"></div>
     </div>
+
+    <!-- Main Content Container (Hidden until initialized) -->
     <div class="container" id="contentContainer" style="display:none;">
         <header class="header">
-            <h1>CYBER CAMPUS - WIFI ZONE</h1>
-            <div class="wave"></div>
+            <h1 id="networkNameDisplay">ADMIN WIFI ZONE</h1>
+            <div id="systemVersionDisplay">Version: <span id="versionNumber">N/A</span></div>
+            <button onclick="logout()" class="logout-button">
+                <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </button>
         </header>
 
-
         <main>
+            <!-- Subscription Section -->
             <div id="subscriptionSection">
                 <h2>Statut de l'Abonnement</h2>
-                <div id="subscriptionStatus"></div>
-                <div class="subscription-button">
+                <div id="subscriptionStatus" class="inactive">Chargement...</div>
+                <div class="subscription-buttons">
                     <button id="subscribeMonthly">S'abonner (Mensuel - 1000 FCFA)</button>
                     <button id="subscribeYearly">S'abonner (Annuel - 10 000 FCFA)</button>
                 </div>
             </div>
+
+            <!-- Configuration Section -->
+            <div class="config-section">
+                <button onclick="togglePortalForm()" id="togglePortalFormBtn">
+                    <i class="fas fa-wifi"></i> Configurer le portail captif
+                </button>
+                <button onclick="downloadLoginFile()" id="downloadLoginBtn">
+                    <i class="fas fa-download"></i> Télécharger le portail
+                </button>
+            </div>
+
+            <!-- Main Menu -->
             <div class="menu">
                 <a href="PageVenteTicket.html" class="menu-item" id="vente">
-                    <i class="fas fa-ticket-alt"></i> <!-- Font Awesome Ticket Icon -->
+                    <i class="fas fa-ticket-alt"></i>
                     <h2>Vente de Tickets</h2>
                     <p>Procédez à la vente de nouveaux tickets Wifi.</p>
                 </a>
                 <a href="AdminVentePartenaires.html" class="menu-item" id="inventaire">
-                    <i class="fas fa-clipboard-list"></i> <!-- Font Awesome Clipboard List Icon -->
-                    <h2>Inventaire des Tickets</h2>
+                    <i class="fas fa-clipboard-list"></i>
+                    <h2>Inventaire Vendeurs</h2>
                     <p>Consultez l'état des ventes de vos partenaires.</p>
                 </a>
                 <a href="Stock.html" class="menu-item" id="stock">
-                    <i class="fas fa-boxes"></i> <!-- Font Awesome Boxes Icon -->
-                    <h2>Gestion des Stocks Partenaire</h2>
+                    <i class="fas fa-boxes"></i>
+                    <h2>Gestion Stocks Partenaire</h2>
                     <p>Suivez les stocks de tickets de vos partenaires.</p>
                 </a>
                 <a href="a3.html" class="menu-item" id="administration">
-                    <i class="fas fa-cog"></i> <!-- Font Awesome Settings Cog Icon -->
-                    <h2>Administration des Tickets</h2>
-                    <p>Gérez les tickets, activez ou désactivez-les.</p>
+                    <i class="fas fa-cogs"></i>
+                    <h2>Administration Tickets</h2>
+                    <p>Gérez les tickets (ajout, modification, suppression).</p>
                 </a>
-                <button onclick="logout()" class="logout-button">Déconnexion</button> <!-- MODIFICATION: Bouton de déconnexion remis ici -->
             </div>
 
+            <!-- Data Management Section -->
+            <div class="data-management">
+                <div class="data-management-buttons">
+                    <button onclick="exportData()">
+                        <i class="fas fa-file-export"></i> Exporter Données
+                    </button>
+                    <input type="file" id="importDataInput" accept=".json">
+                    <button onclick="document.getElementById('importDataInput').click()">
+                        <i class="fas fa-file-import"></i> Importer Données
+                    </button>
+                    <button onclick="showHelpModal()" class="help-button">
+                        <i class="fas fa-question-circle"></i> Besoin d'aide ?
+                    </button>
+                </div>
+            </div>
         </main>
+    </div> <!-- End container -->
 
+    <!-- Footer -->
+    <footer>
+        PROPULSÉ PAR EVISIONS
+    </footer>
+
+    <!-- Modals -->
+    <!-- Notification Modal -->
+    <div id="notification" class="notification">
+        <span id="notificationMessage"></span>
+        <span class="close-btn" onclick="closeNotification()">×</span>
     </div>
 
-
-    <div id="paymentModal" class="payment-modal" style="display: none;">
-        <span class="close-modal" onclick="closePaymentModal()">×</span>
-        <h2>Paiement de l'Abonnement</h2>
-        <p>Choisissez votre plan d'abonnement et procédez au paiement via FedaPay.</p>
-        <!-- Les boutons de paiement seront ajoutés ici par le script -->
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-modal-content">
+            <span class="close-modal" onclick="closePaymentModal()">×</span>
+            <h2>Paiement de l'Abonnement</h2>
+            <p>Choisissez votre plan et procédez au paiement sécurisé via FedaPay.</p>
+            <!-- Payment buttons added by JS -->
+            <div class="buttons" id="paymentButtonsContainer"></div>
+        </div>
     </div>
 
-    <div id="subscriptionRequiredModal" class="subscription-required" style="display: none;">
+    <!-- Subscription Required Modal -->
+    <div id="subscriptionRequiredModal" class="subscription-required">
         <div class="subscription-required-content">
             <h2>Abonnement Requis</h2>
             <p>Un abonnement actif est nécessaire pour accéder à cette fonctionnalité.</p>
             <button onclick="redirectToSubscription()">S'abonner</button>
-            <button onclick="hideSubscriptionRequiredModal()">Fermer</button>
+            <button onclick="hideSubscriptionRequiredModal()">Fermer</button> <!-- Utilise la fonction globale -->
         </div>
     </div>
 
-    <div class="overlay" id="overlay" style="display: none;" onclick="closePaymentModal()"></div>
+    <!-- Integration Fee Confirmation Modal -->
+    <div id="confirmationModal" class="confirmation-modal">
+        <div class="confirmation-modal-content">
+             <span class="close-modal" onclick="hideConfirmationModal()">×</span> <!-- Added close button -->
+            <h2>Frais d'intégration</h2>
+            <p>Pour votre premier abonnement, des frais uniques d'intégration de 10 000 FCFA s'appliquent en plus du coût mensuel/annuel.</p>
+            <div class="buttons">
+                <button id="confirmIntegration">Payer</button>
+                <button id="cancelIntegration" onclick="hideConfirmationModal()">Annuler</button> <!-- Simplified cancel -->
+            </div>
+        </div>
+    </div>
 
+    <!-- Portal Config Modal -->
+    <div id="portalFormModal" class="portal-form-modal">
+         <div class="portal-form-modal-content">
+            <span class="close-portal-form-modal" onclick="closePortalFormModal()">×</span>
+            <h2>Configuration du Portail Captif</h2>
+            <form id="portalForm">
+                <label for="networkName">Nom du réseau:</label>
+                <input type="text" id="networkName" name="networkName" required placeholder="Ex: MonWiFi Super Rapide">
+
+                <label for="contactNumber">Numéro à contacter:</label>
+                <input type="text" id="contactNumber" name="contactNumber" required placeholder="Ex: +229 90000000">
+
+                <label for="fedapayApiKey">Clé API Publique FedaPay Portail Captif:</label>
+                <input type="text" id="fedapayApiKey" name="fedapayApiKey" required placeholder="pk_live_...">
+
+                <label for="loginMode">Mode de connexion par défaut :</label>
+                <select id="loginMode" name="loginMode">
+                    <option value="separate">Login (Utilisateur & Mot de passe)</option>
+                    <option value="same">Log (Identifiant unique)</option>
+                    <option value="pay">Pay (Page de paiement)</option>
+                    <option value="hotspot1">Portail captif par défaut</option>
+                    <option value="hotspot2">Portail captif secondaire 1</option>
+                    <option value="hotspot3">Portail captif secondaire 2</option>
+                    <option value="hotspot4">Portail captif KODA SMART</option>
+                </select>
+                <div id="redirectButtonContainer">
+                    <button type="button" id="redirectButton">Télécharger le modèle sélectionné</button>
+                </div>
+
+                <div class="list-input-container">
+                    <label>Tarifs (pour page 'Pay' et affichage simple):</label>
+                    <div id="tariffsList">
+                        <!-- Dynamic list items added here -->
+                    </div>
+                     <button type="button" onclick="addListItem('tariffsList')">
+                        <i class="fas fa-plus"></i> Ajouter Tarif
+                    </button>
+                </div>
+
+                 <div class="list-input-container">
+                      <label>Adresses de connexion (points de vente):</label>
+                      <div id="connectionsList">
+                         <!-- Dynamic list items added here -->
+                      </div>
+                      <button type="button" onclick="addListItem('connectionsList')">
+                         <i class="fas fa-plus"></i> Ajouter Adresse
+                      </button>
+                  </div>
+
+                  <div class="list-input-container">
+                      <label>Services et produits proposés:</label>
+                      <div id="productsList">
+                         <!-- Dynamic list items added here -->
+                      </div>
+                      <button type="button" onclick="addListItem('productsList')">
+                         <i class="fas fa-plus"></i> Ajouter Service/Produit
+                      </button>
+                 </div>
+
+                <!-- MikroTik Code Area -->
+                <div class="code-area">
+                    <label>Configuration MikroTik Walled Garden (Copiez/Collez):</label>
+                    <pre id="mikrotikCode">
+/ip hotspot walled-garden add dst-host="*.fedapay.com" comment="FedaPay Access"
+/ip hotspot walled-garden add dst-host="*.firebaseio.com" comment="Firebase DB"
+/ip hotspot walled-garden add dst-host="*.googleapis.com" comment="Google APIs"
+/ip hotspot walled-garden add dst-host="*.cloudflare.com" comment="Cloudflare CDN"
+/ip hotspot walled-garden add dst-host="www.gstatic.com" comment="Google Static Content"
+/ip hotspot walled-garden add dst-host="ssl.gstatic.com" comment="Google Static Content SSL"
+/ip hotspot walled-garden add dst-host="fonts.gstatic.com" comment="Google Fonts"
+/ip hotspot walled-garden add dst-host="*.netlify.app" comment="Hosting Platform (if applicable)"
+/ip hotspot walled-garden add dst-host="firebasejs.com" comment="Firebase JS SDK"
+/ip hotspot walled-garden add dst-host="*.github.io" comment="GitHub Pages (if applicable)"
+                    </pre>
+                   <button type="button" class="copy-button" onclick="copyMikrotikCode()">
+                       <i class="fas fa-copy"></i> Copier
+                    </button>
+                </div>
+
+                 <button type="submit">
+                     <i class="fas fa-save"></i> Enregistrer la configuration
+                </button>
+             </form>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="help-modal">
+        <div class="help-modal-content">
+            <span class="close-help-modal" onclick="closeHelpModal()">×</span>
+            <h2><i class="fas fa-question-circle"></i> Centre d'Aide Vidéo</h2>
+            <div class="video-list">
+                <div class="video-item">
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/0Giz6mEAG80" allowfullscreen></iframe></div>
+                    <h3 class="video-title">Vente par Mobile Money</h3>
+                </div>
+                <div class="video-item">
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/oCHla_eCoy8" allowfullscreen></iframe></div>
+                    <h3 class="video-title">Vente Sans Impression Papier</h3>
+                </div>
+                <div class="video-item">
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/5VYuJf7o3Xo" allowfullscreen></iframe></div>
+                    <h3 class="video-title">Inventaire Automatique</h3>
+                </div>
+                <div class="video-item">
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/i4e9rrlL5Kg" allowfullscreen></iframe></div>
+                    <h3 class="video-title">Gestion des Stocks</h3>
+                </div>
+                <div class="video-item">
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/VpbamoAauTw" allowfullscreen></iframe></div>
+                    <h3 class="video-title">Administration des Tickets</h3>
+                </div>
+                <div class="video-item">
+                    <div class="video-container"><iframe src="https://www.youtube.com/embed/8yN1gXT8nSE" allowfullscreen></iframe></div>
+                    <h3 class="video-title">Créer un Portail Captif</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Chatbot Flottant -->
+     <div id="chatbot-toggle">
+         <i class="fas fa-comment-dots"></i>
+         <span class="chatbot-text">Assistant IA ?</span>
+     </div>
+     <div id="chatbot-window" class="chatbot-window">
+         <div class="chatbot-header">
+             <h4>Assistant IA</h4>
+             <button id="chatbot-close">×</button>
+         </div>
+         <div id="chatbot-messages">
+             <!-- Les messages du chat apparaîtront ici -->
+             <div class="message ai-message">Bonjour ! Comment puis-je vous aider aujourd'hui ?</div>
+         </div>
+         <div class="chatbot-input-area">
+             <textarea id="chatbot-input" placeholder="Posez votre question..." rows="1"></textarea>
+             <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
+         </div>
+     </div>
+
+
+    <!-- JavaScript Module -->
     <script type="module">
-        import { getActiveDatabase } from './firebase-config-manager.js'; // Import getActiveDatabase
-        import { ref, get, set, push, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+        import { getActiveDatabase } from './firebase-config-manager.js';
+        import { ref, get, set, push, remove, update, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        let db; // Database object will be initialized here
-        let adminRef; // Admin reference
-        let connectedTicketsRef; // Connected Tickets reference
+        // --- Global Variables ---
+        let db;
+        let adminRef;
+        let fedapayApiKeyGlobal = 'pk_live_xxxxxxxxxxxxx'; // Default global API key for subscriptions
+        let systemVersion = '1.0.0'; // Default version
+        let integrationFee = 10000;
+        let currentPlan = '';
+        let isFirstSubscription = true;
+        let currentUserId = null;
 
-        async function initializeDatabase() {
-            db = await getActiveDatabase(); // Get the active database from the module
-            adminRef = ref(db, 'admin/subscription'); // Initialize adminRef after db is available
-            connectedTicketsRef = ref(db, 'TicketConnecté'); // Initialize connectedTicketsRef after db is available
-            console.log("Database initialized in index.html");
-        }
+        // --- DOM Elements ---
+        const contentContainer = document.getElementById('contentContainer');
+        const pageLoaderWrapper = document.getElementById('pageLoaderWrapper');
+        const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+        const loaderWrapper = document.getElementById('loaderWrapper');
+        const networkNameDisplay = document.getElementById('networkNameDisplay');
+        const versionNumberDisplay = document.getElementById('versionNumber');
+        const subscriptionStatusEl = document.getElementById('subscriptionStatus');
+        const subscribeMonthlyButton = document.getElementById('subscribeMonthly');
+        const subscribeYearlyButton = document.getElementById('subscribeYearly');
+        const paymentModal = document.getElementById('paymentModal');
+        const paymentButtonsContainer = document.getElementById('paymentButtonsContainer');
+        const subscriptionRequiredModal = document.getElementById('subscriptionRequiredModal'); // Correct ID
+        const portalFormModal = document.getElementById('portalFormModal');
+        const confirmationModal = document.getElementById('confirmationModal');
+        const confirmIntegrationButton = document.getElementById('confirmIntegration');
+        const cancelIntegrationButton = document.getElementById('cancelIntegration');
+        const helpModal = document.getElementById('helpModal');
+        const notificationEl = document.getElementById('notification');
+        const notificationMessageEl = document.getElementById('notificationMessage');
 
-        async function checkLoginStatus() {
-            if (sessionStorage.getItem('isLoggedIn') !== 'true') {
-                redirectToLogin();
-            } else {
-                document.getElementById('contentContainer').style.display = 'block'; // Show content after login check
+        // --- Chatbot DOM Elements ---
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotWindow = document.getElementById('chatbot-window');
+        const chatbotClose = document.getElementById('chatbot-close');
+        const chatbotSend = document.getElementById('chatbot-send');
+        const chatbotInput = document.getElementById('chatbot-input');
+
+        // --- Gemini API ---
+        // ATTENTION: Mettre votre clé API Gemini ici. NON SÉCURISÉ EN PRODUCTION!
+        const GEMINI_API_KEY = 'AIzaSyDetgN_odqwqvU2AbaHzzijsi0yDRSveDM'; // <--- REMPLACEZ CECI !
+
+        // Définir l'instruction système pour le chatbot
+        const CHATBOT_SYSTEM_INSTRUCTION = `
+Tu es l'assistant virtuel officiel de WIFI ZONE, une plateforme de gestion de borne wifi en ligne. Ton rôle principal est d'aider les utilisateurs à naviguer sur le site, à comprendre ses fonctionnalités et à trouver les informations qu'ils recherchent concernant la gestion de borne wifi, la vente de ticket, la gestion des vendeurs partenaires et l'administration générale de la plateforme.
+
+**Ta mission est de:**
+1.  **Guider les utilisateurs:** Aide-les à utiliser efficacement le menu principal, à comprendre les différentes sections et à interpréter les informations affichées.
+2.  **Expliquer les fonctionnalités:** Clarifie le fonctionnement des différentes sections comme "Vente de Tickets", "Inventaire Vendeurs", "Gestion Stocks Partenaire", "Administration Tickets".
+3.  **Détailler les processus:** Explique comment configurer le portail captif, télécharger le portail, exporter et importer des données.
+4.  **Fournir des informations contextuelles:** Réponds aux questions sur les abonnements, les paiements via FedaPay, et les fonctionnalités disponibles selon le statut de l'abonnement.
+5.  **Orienter les utilisateurs:** Redirige les utilisateurs vers les sections appropriées du site (Abonnement, Configuration, Menu principal, Aide) ou les encourage à utiliser les boutons d'action disponibles.
+
+**Informations Clés sur WIFI ZONE que tu dois connaître et utiliser:**
+*   **Menu Principal:**
+    *   **Vente de Tickets:** Permet de vendre de nouveaux tickets Wifi.
+    *   **Inventaire Vendeurs:** Permet de consulter l'état des ventes des partenaires.
+    *   **Gestion Stocks Partenaire:** Permet de suivre les stocks de tickets des partenaires.
+    *   **Administration Tickets:** Permet de gérer les tickets (ajout, modification, suppression).
+*   **Abonnement:**
+    *   **Statut de l'Abonnement:** Indique si l'abonnement est actif ou inactif.
+    *   **S'abonner (Mensuel):** Bouton pour s'abonner mensuellement (1000 FCFA).
+    *   **S'abonner (Annuel):** Bouton pour s'abonner annuellement (10 000 FCFA).
+*   **Configuration:**
+    *   **Configurer le portail captif:** Ouvre un formulaire pour configurer le portail captif (Nom du réseau, Contact, Clé API FedaPay, Mode de connexion, Tarifs, Adresses de connexion, Services/Produits).
+    *   **Télécharger le portail:** Permet de télécharger le portail captif configuré.
+*   **Gestion des Données:**
+    *   **Exporter Données:** Permet d'exporter les données de la plateforme au format JSON.
+    *   **Importer Données:** Permet d'importer des données au format JSON (ATTENTION : Écrase les données actuelles).
+    *   **Besoin d'aide ?:** Ouvre le centre d'aide vidéo.
+*   **Modales:**
+    *   **Paiement de l'Abonnement:** Modal pour choisir le plan d'abonnement et procéder au paiement via FedaPay.
+    *   **Abonnement Requis:** Modal indiquant qu'un abonnement actif est nécessaire pour accéder à certaines fonctionnalités.
+    *   **Frais d'intégration:** Modal informant des frais d'intégration pour le premier abonnement.
+    *   **Configuration du Portail Captif:** Modal contenant le formulaire de configuration du portail captif.
+    *   **Centre d'Aide Vidéo:** Modal affichant des vidéos d'aide.
+*   **FedaPay:** Plateforme de paiement utilisée pour les abonnements. Les utilisateurs sont redirigés vers FedaPay lors du paiement de l'abonnement. Tu ne traites PAS les paiements toi-même.
+
+**Ton Style de Communication:**
+*   **Langue:** Français principalement. Sois prêt à comprendre d'autres langues mais réponds en français clair et simple.
+*   **Ton:** Professionnel, serviable, patient et amical.
+*   **Format:** Utilise des listes à puces si nécessaire pour clarifier les étapes ou les options. Garde les réponses relativement concises.
+*   **Devise:** Toujours utiliser FCFA pour parler des prix.
+*   **Contextualisation:** Base tes réponses sur les informations présentes et les fonctionnalités du site WIFI ZONE.
+
+**Tes Limites (Ce que tu NE PEUX PAS faire):**
+*   **Accéder aux données en temps réel:** Tu ne peux pas fournir d'informations en temps réel sur les ventes, les stocks, etc. Encourage l'utilisateur à consulter les sections appropriées de la plateforme.
+*   **Négocier les prix:** Tu ne peux pas modifier les prix des abonnements ou des tickets.
+*   **Organiser des actions manuelles:** Tu ne peux pas effectuer d'actions manuelles sur la plateforme (ex: créer un ticket, modifier un stock).
+*   **Traiter les paiements directement:** Tu ne fais qu'expliquer le processus via FedaPay.
+*   **Donner des conseils juridiques ou financiers:** Restreins-toi à l'information factuelle du site.
+*   **Accéder aux comptes utilisateurs ou à l'espace admin.**
+*   **Fournir des informations non présentes sur le site.** Dans ce cas, indique que l'information n'est pas disponible sur le site et suggère de contacter le support.
+
+**Exemple d'interaction:**
+*   *Utilisateur:* "Comment exporter mes données ?"
+*   *Toi (suggestion):* "Pour exporter vos données, vous pouvez cliquer sur le bouton 'Exporter Données' dans la section 'Gestion des Données' en bas de page. Cela téléchargera un fichier JSON contenant une sauvegarde de vos données."
+
+Sois précis, utile et concentre-toi sur l'aide à l'utilisation du site WIFI ZONE !
+`;
+
+        let chatbotGenAI;      // Instance de l'API Gemini pour le chatbot
+        let chatbotModel;      // Instance du modèle Gemini pour le chatbot
+        let currentChatbotConversation = []; // Historique pour ce chatbot
+        const MAX_CHATBOT_HISTORY = 6; // Garder les 3 derniers échanges
+
+        // Fonction d'initialisation spécifique pour le chatbot Gemini (MISE À JOUR)
+        function initializeChatbotGeminiAPI() {
+            // Vérifier si le SDK est chargé
+            if (typeof window.GoogleGenerativeAI === 'undefined') {
+                console.error("GoogleGenerativeAI SDK non chargé.");
+                showChatbotNotification("Erreur SDK.", "error");
+                return false; // Indiquer l'échec
+            }
+
+
+            try {
+                // Initialiser seulement si pas déjà fait ou si l'initialisation précédente a échoué
+                if (!chatbotGenAI || !chatbotModel) {
+                     chatbotGenAI = new window.GoogleGenerativeAI(GEMINI_API_KEY);
+                     // Utiliser le modèle flash recommandé ET AJOUTER L'INSTRUCTION SYSTEME
+                     chatbotModel = chatbotGenAI.getGenerativeModel({
+                         model: "gemini-1.5-flash-latest",
+                         systemInstruction: CHATBOT_SYSTEM_INSTRUCTION // <--- INSTRUCTION AJOUTÉE ICI
+                     });
+                     console.log("API Gemini initialisée pour le Chatbot avec instruction système.");
+                }
+                return true; // Succès
+            } catch (error) {
+                console.error("Échec initialisation API Gemini Chatbot:", error);
+                showChatbotNotification("Erreur init assistant.", "error");
+                // Réinitialiser pour permettre une nouvelle tentative plus tard
+                chatbotGenAI = null;
+                chatbotModel = null;
+                return false; // Indiquer l'échec
             }
         }
 
+        // --- Chatbot Functions ---
+        // (Keep initializeChatbotGeminiAPI, showChatbotTypingIndicator, animateChatbotText, sendChatbotMessage, showChatbotNotification as they were)
+
+        /**
+         * Displays a message in the chatbot window, formatting list items.
+         * Replaces "* **...:**" patterns with line breaks and bold tags.
+         * @param {string} sender - 'user' or 'ai'
+         * @param {string} text - The message text
+         */
+         function displayChatbotMessage(sender, text) {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            if (!messagesContainer) return;
+
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender === 'user' ? 'user-message' : 'ai-message');
+
+            // --- START: Text Formatting ---
+            let formattedText = text;
+
+            // Replace "* **...:**" with "<br><strong>...:</strong>" for list items
+            // This regex looks for "* **", captures the text until ":", and replaces it.
+            // It handles potential whitespace variations.
+             // Regex breakdown:
+             // (^|\n)     - Start of the string or a newline (ensures it's the start of a list item)
+             // [\s]*      - Optional whitespace before the asterisk
+             // \*         - Literal asterisk
+             // [\s]*      - Optional whitespace after the asterisk
+             // \*\*       - Two literal asterisks for bold
+             // (.*?)      - Capture group 1: Any character (non-greedy) - this is the item title
+             // :          - Literal colon
+             // ([\s]*\n?)? - Optional trailing whitespace or newline (to handle single/multi-line descriptions)
+             formattedText = formattedText.replace(/(^|\n)[\s]*\*[\s]*\*\*(.*?):([\s]*\n?)?/g, '$1<br><strong>$2:</strong>$3');
+
+             // Optional: If the AI *only* uses single asterisks for non-bold lists, you could add:
+             // formattedText = formattedText.replace(/(^|\n)[\s]*\* (.*?)([\s]*\n?)?/g, '$1<br>$2$3');
+
+            // Use innerHTML to render the <br> and <strong> tags
+            messageElement.innerHTML = formattedText;
+            // --- END: Text Formatting ---
+
+
+            messagesContainer.appendChild(messageElement); // Adds the message to the chat window
+            messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scrolls down
+        }
+
+        // (Keep the rest of the chatbot functions and other code the same)
+        
+        // Afficher l'indicateur "..." dans le chatbot
+        function showChatbotTypingIndicator() {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            if (!messagesContainer) return;
+
+            // Enlever l'ancien indicateur s'il existe
+            const existingIndicator = messagesContainer.querySelector('.typing-indicator-message');
+            if (existingIndicator) existingIndicator.remove();
+
+            const indicatorElement = document.createElement('div');
+            indicatorElement.classList.add('message', 'ai-message', 'typing-indicator-message');
+            indicatorElement.innerHTML = `
+                <div class="typing-indicator">
+                    <span></span><span></span><span></span>
+                </div>
+            `;
+            messagesContainer.appendChild(indicatorElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return indicatorElement;
+        }
+
+        // Animer la réponse du chatbot caractère par caractère
+        async function animateChatbotText(element, text) {
+            const contentDiv = document.createElement('div'); // Créer un conteneur pour le texte
+            element.innerHTML = ''; // Vider l'indicateur "..."
+            element.appendChild(contentDiv);
+            element.classList.remove('typing-indicator-message'); // Retirer la classe de l'indicateur
+
+            let currentText = '';
+            const delay = 10; // Délai rapide pour l'animation
+
+            try {
+                 for (let i = 0; i < text.length; i++) {
+                    currentText += text[i];
+                    contentDiv.textContent = currentText; // Mettre à jour le texte
+
+                    // Scroll auto
+                    const messagesContainer = document.getElementById('chatbot-messages');
+                    if(messagesContainer) messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                 }
+            } catch (error) {
+                 console.warn("Animation interrompue:", error);
+                 contentDiv.textContent = text; // Afficher le texte complet si l'animation échoue
+            } finally {
+                 // Optionnel : Ajouter des boutons d'action (copier...) ici si nécessaire
+            }
+        }
+
+        // Envoyer un message au chatbot et traiter la réponse
+        async function sendChatbotMessage() {
+            const inputElement = document.getElementById('chatbot-input');
+            const sendButton = document.getElementById('chatbot-send');
+            if (!inputElement || !sendButton) return;
+
+            const userInput = inputElement.value.trim();
+            if (!userInput) return;
+
+            // Initialiser l'API si ce n'est pas déjà fait (ou si ça a échoué avant)
+            if (!chatbotGenAI || !chatbotModel) {
+                if (!initializeChatbotGeminiAPI()) { // Tenter d'initialiser
+                     // Message d'erreur déjà affiché par initializeChatbotGeminiAPI
+                    return;
+                }
+            }
+
+            inputElement.value = '';
+            inputElement.style.height = 'auto';
+            sendButton.disabled = true;
+
+            // Afficher message user et ajouter à l'historique
+            displayChatbotMessage('user', userInput);
+            currentChatbotConversation.push({ role: "user", parts: [{ text: userInput }] });
+
+            const loadingIndicator = showChatbotTypingIndicator();
+
+            // Préparer l'historique pour l'API (limité)
+            const history = currentChatbotConversation.slice(0, -1) // Tout sauf le dernier message user
+                                             .slice(-MAX_CHATBOT_HISTORY); // Garder seulement les X derniers échanges
+
+            try {
+                // Démarrer une session de chat avec l'historique
+                const chat = chatbotModel.startChat({ history: history });
+                const result = await chat.sendMessage(userInput); // Envoyer le message actuel
+                const response = await result.response;
+                const aiResponseText = response.text();
+
+                // Animer la réponse à la place de l'indicateur
+                await animateChatbotText(loadingIndicator, aiResponseText);
+
+                // Ajouter la réponse AI à l'historique local
+                currentChatbotConversation.push({ role: "model", parts: [{ text: aiResponseText }] });
+
+                // Limiter la taille de l'historique local
+                if (currentChatbotConversation.length > MAX_CHATBOT_HISTORY + 2) {
+                    currentChatbotConversation = currentChatbotConversation.slice(-(MAX_CHATBOT_HISTORY + 2));
+                }
+
+            } catch (error) {
+                console.error("Erreur API Gemini Chatbot:", error);
+                if (loadingIndicator) loadingIndicator.remove();
+                let errorMessage = `Désolé, une erreur est survenue.`;
+                if (error.message.includes('Quota exceeded') || (error.details && error.details.includes('RATE_LIMIT_EXCEEDED')) || error.status === 429) {
+                    errorMessage = "J'ai reçu trop de questions récemment. Veuillez réessayer dans un petit moment.";
+                } else if (error.message.includes('API key not valid')) {
+                     errorMessage = "La clé d'accès à l'IA semble invalide. Veuillez contacter l'administrateur.";
+                }
+                displayChatbotMessage('ai', errorMessage);
+                // Ne pas retenter automatiquement dans cette version simple
+            } finally {
+                sendButton.disabled = false;
+                inputElement.focus();
+            }
+        }
+
+        // Fonction simple pour afficher des notifications DANS le chatbot
+        function showChatbotNotification(message, type = 'info') {
+            const messagesContainer = document.getElementById('chatbot-messages');
+            if (!messagesContainer) return;
+
+            const notifElement = document.createElement('div');
+            notifElement.style.textAlign = 'center';
+            notifElement.style.fontSize = '0.8em';
+            notifElement.style.padding = '5px';
+            notifElement.style.color = type === 'error' ? 'red' : '#888';
+            notifElement.textContent = message;
+            messagesContainer.appendChild(notifElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Auto-disparition après quelques secondes
+            setTimeout(() => {
+                if (notifElement.parentNode === messagesContainer) {
+                    messagesContainer.removeChild(notifElement);
+                }
+            }, 5000); // Disparaît après 5 secondes
+        }
+
+
+        // --- Initialization ---
+        async function initializeDatabase() {
+            pageLoaderMessage.textContent = "Connexion à la base de données...";
+            try {
+                db = await getActiveDatabase();
+                console.log("Database initialized in index.html");
+            } catch (error) {
+                 console.error("Database initialization failed:", error);
+                 pageLoaderMessage.textContent = "Erreur de connexion à la base de données.";
+                 showNotification("error", "Impossible de se connecter à la base de données.");
+                 throw error; // Re-throw to stop further execution
+            }
+        }
+
+        // --- Fetch Global Config (API Key, Version) ---
+         async function fetchGlobalConfig() {
+             pageLoaderMessage.textContent = "Chargement configuration globale...";
+             try {
+                 const apiRef = ref(db, `users/API`);
+                 const versionRef = ref(db, `users/Version du système`); // Ensure path is correct
+
+                 const [apiSnapshot, versionSnapshot] = await Promise.all([
+                     get(apiRef),
+                     get(versionRef)
+                 ]);
+
+                 if (apiSnapshot.exists()) {
+                     fedapayApiKeyGlobal = apiSnapshot.val();
+                     console.log("Global FedaPay API Key loaded:", fedapayApiKeyGlobal); // Log API Key
+                 } else {
+                     console.warn("Global FedaPay API key not found. Using default.");
+                 }
+
+                 if (versionSnapshot.exists()) {
+                     systemVersion = versionSnapshot.val();
+                     console.log("System Version loaded:", systemVersion);
+                 } else {
+                      console.warn("System Version not found. Using default:", systemVersion);
+                 }
+                 versionNumberDisplay.textContent = systemVersion;
+
+             } catch (error) {
+                  console.error("Erreur chargement config globale:", error);
+                  showNotification("warning", "Erreur chargement configuration globale.");
+                   versionNumberDisplay.textContent = systemVersion; // Show default on error
+             } finally {
+                 console.log("fetchGlobalConfig completed."); // Log completion
+             }
+         }
+
+
+        async function checkLoginStatus() {
+             pageLoaderMessage.textContent = "Vérification de l'authentification...";
+            if (sessionStorage.getItem('isLoggedIn') !== 'true') {
+                redirectToLogin();
+                return false; // Not logged in
+            }
+            currentUserId = sessionStorage.getItem('currentUserId');
+            if (!currentUserId) {
+                console.error("Current user ID is not found in sessionStorage.");
+                redirectToLogin();
+                return false; // User ID missing
+            }
+            adminRef = ref(db, `users-data/${currentUserId}/admin`); // Reference to admin node
+            contentContainer.style.display = 'block';
+            console.log("User logged in:", currentUserId);
+            return true; // Logged in
+        }
+
         function redirectToLogin() {
+            console.log("Redirecting to login page.");
             window.location.href = 'loginAccueil.html';
         }
 
         window.logout = function() {
             sessionStorage.clear();
+            currentUserId = null;
+            adminRef = null;
+            console.log("User logged out.");
             redirectToLogin();
-        };
-
-
-        const venteMenuItem = document.getElementById('vente');
-        const inventaireMenuItem = document.getElementById('inventaire');
-        const stockMenuItem = document.getElementById('stock');
-        const administrationMenuItem = document.getElementById('administration');
-        const subscriptionStatus = document.getElementById('subscriptionStatus');
-        const subscribeMonthlyButton = document.getElementById('subscribeMonthly');
-        const subscribeYearlyButton = document.getElementById('subscribeYearly');
-        const paymentModal = document.getElementById('paymentModal');
-        const overlay = document.getElementById('overlay');
-        const subscriptionRequiredModal = document.getElementById('subscriptionRequiredModal');
-
-        function showLoader() {
-            document.getElementById('loaderWrapper').style.display = 'block';
         }
 
-        function hideLoader() {
-            document.getElementById('loaderWrapper').style.display = 'none';
+        // --- UI Helpers ---
+        function showLoader() { loaderWrapper.style.display = 'flex'; }
+        function hideLoader() { loaderWrapper.style.display = 'none'; }
+        function showPageLoader() { pageLoaderWrapper.style.display = 'flex'; }
+        function hidePageLoader() { pageLoaderWrapper.style.display = 'none'; }
+
+        function showNotification(type, message) {
+            notificationMessageEl.textContent = message;
+            notificationEl.className = `notification ${type}`; // 'success', 'error', 'info'
+            notificationEl.style.display = 'block';
+            setTimeout(closeNotification, 5000); // Auto-hide
+        }
+        window.closeNotification = function() {
+            if (notificationEl) notificationEl.style.display = 'none';
         }
 
-        function showPageLoader() {
-            document.getElementById('pageLoaderWrapper').style.display = 'flex';
-        }
+        // --- Subscription Management ---
+        async function checkSubscriptionStatus() {
+            pageLoaderMessage.textContent = "Vérification de l'abonnement...";
+            if (!adminRef) {
+                 console.error("Admin reference not set. Cannot check subscription.");
+                 return; // Should not happen if checkLoginStatus passed
+            }
 
-        function hidePageLoader() {
-            document.getElementById('pageLoaderWrapper').style.display = 'none';
-        }
+             const subscriptionRef = ref(db, `users-data/${currentUserId}/admin/subscription`);
 
-        function showSubscriptionRequiredModal() {
-            subscriptionRequiredModal.style.display = 'flex';
-        }
-
-        function hideSubscriptionRequiredModal() {
-            subscriptionRequiredModal.style.display = 'none';
-        }
-
-        function redirectToSubscription() {
-            hideSubscriptionRequiredModal();
-            // Mettre l'accent sur la section d'abonnement
-        }
-
-        function checkSubscriptionStatus() {
-            get(adminRef).then((snapshot) => {
+            try {
+                const snapshot = await get(subscriptionRef);
                 const subscription = snapshot.val();
                 const now = new Date();
+
+                isFirstSubscription = !(subscription?.hasSubscribedBefore); // Update flag
 
                 if (subscription && subscription.status === 'active') {
                     const endDate = new Date(subscription.endDate);
                     if (endDate < now) {
-                        // L'abonnement a expiré
-                        subscriptionStatus.textContent = "Statut de l'abonnement: Expiré";
-                        subscriptionStatus.style.color = 'red';
+                        subscriptionStatusEl.textContent = "Expiré";
+                        subscriptionStatusEl.className = 'inactive';
                         subscribeMonthlyButton.style.display = 'inline-block';
                         subscribeYearlyButton.style.display = 'inline-block';
-
-                        // Mettre à jour l'état de l'abonnement dans la base de données comme 'expired'
-                        set(adminRef, { ...subscription, status: 'expired' });
+                        await update(subscriptionRef, { status: 'expired' });
+                        console.log("Subscription expired.");
                     } else {
-                        // L'abonnement est actif
-                        subscriptionStatus.textContent = `Statut de l'abonnement: Actif jusqu'au ${endDate.toLocaleDateString()}`;
-                        subscriptionStatus.style.color = 'green';
+                        subscriptionStatusEl.textContent = `Actif jusqu'au ${endDate.toLocaleDateString()}`;
+                        subscriptionStatusEl.className = 'active';
                         subscribeMonthlyButton.style.display = 'none';
                         subscribeYearlyButton.style.display = 'none';
+                         console.log("Subscription active.");
                     }
                 } else {
-                    // Pas d'abonnement actif
-                    subscriptionStatus.textContent = "Statut de l'abonnement: Inactif";
-                    subscriptionStatus.style.color = 'red';
+                    subscriptionStatusEl.textContent = "Inactif";
+                    subscriptionStatusEl.className = 'inactive';
                     subscribeMonthlyButton.style.display = 'inline-block';
                     subscribeYearlyButton.style.display = 'inline-block';
+                     console.log("Subscription inactive.");
                 }
-            });
+            } catch (error) {
+                console.error("Erreur lors de la vérification de l'abonnement:", error);
+                showNotification("error", "Erreur lors de la vérification de l'abonnement.");
+                subscriptionStatusEl.textContent = "Erreur";
+                subscriptionStatusEl.className = 'inactive';
+            }
         }
 
-        function checkUserAccess() {
-            get(adminRef).then((snapshot) => {
+        // --- START: MODIFIED SECTION FOR MENU ITEM CLICK HANDLING ---
+
+        // Fonction pour afficher le modal d'abonnement requis
+        function showSubscriptionRequiredModal() {
+            // Vérifier si l'élément existe avant de tenter de le manipuler
+            if (subscriptionRequiredModal) {
+                subscriptionRequiredModal.style.display = 'block';
+            } else {
+                console.error("L'élément modal 'subscriptionRequiredModal' n'a pas été trouvé dans le DOM.");
+                // Afficher une notification d'erreur à l'utilisateur si le modal est manquant
+                showNotification("error", "Erreur interne : Impossible d'afficher la fenêtre d'abonnement.");
+            }
+        }
+
+        // Fonction pour masquer le modal
+        function hideSubscriptionRequiredModal() {
+             if (subscriptionRequiredModal) {
+                subscriptionRequiredModal.style.display = 'none';
+             }
+        }
+         // Expose la fonction globalement pour le bouton "Fermer" du modal
+         window.hideSubscriptionRequiredModal = hideSubscriptionRequiredModal;
+
+
+        // Event listeners for menu items
+        document.getElementById('vente').addEventListener('click', (event) => handleMenuItemClick(event, 'PageVenteTicket.html'));
+        document.getElementById('inventaire').addEventListener('click', (event) => handleMenuItemClick(event, 'AdminVentePartenaires.html'));
+        document.getElementById('stock').addEventListener('click', (event) => handleMenuItemClick(event, 'Stock.html'));
+        document.getElementById('administration').addEventListener('click', (event) => handleMenuItemClick(event, 'a3.html'));
+
+        /**
+         * Gère le clic sur un élément du menu principal.
+         * Vérifie le statut de l'abonnement avant de rediriger ou d'afficher un modal.
+         * @param {Event} event L'événement de clic.
+         * @param {string} targetUrl L'URL de destination si l'abonnement est actif.
+         */
+        async function handleMenuItemClick(event, targetUrl) {
+            event.preventDefault(); // Empêche la navigation par défaut du lien <a>
+
+            pageLoaderMessage.textContent = "Vérification de l'abonnement...";
+            showPageLoader(); // Affiche le loader pendant la vérification asynchrone
+
+            // Vérification rapide de la connexion (devrait déjà être faite, mais sécurité supplémentaire)
+            if (!currentUserId || !db) {
+                hidePageLoader();
+                showNotification("error", "Utilisateur non connecté ou base de données non prête.");
+                redirectToLogin(); // Redirige vers la page de connexion si nécessaire
+                return;
+            }
+
+            const subscriptionRef = ref(db, `users-data/${currentUserId}/admin/subscription`);
+
+            try {
+                const snapshot = await get(subscriptionRef); // Attend la récupération des données d'abonnement
                 const subscription = snapshot.val();
-                if (!subscription || subscription.status !== 'active') {
-                    showSubscriptionRequiredModal();
+                const now = new Date();
+
+                // Détermine si l'abonnement est ACTIF
+                const isActive = subscription &&
+                                 subscription.status === 'active' &&
+                                 subscription.endDate && // Vérifie que endDate existe
+                                 new Date(subscription.endDate) >= now; // Compare les dates
+
+                hidePageLoader(); // Masque le loader APRÈS la fin de la vérification
+
+                if (isActive) {
+                    // Abonnement actif : Procéder à la navigation
+                    console.log(`Abonnement actif. Redirection vers ${targetUrl}`);
+
+                    // Logique spécifique pour ajouter adminId à PageVenteTicket.html
+                    if (targetUrl === 'PageVenteTicket.html') {
+                         window.location.href = `${targetUrl}?adminId=${currentUserId}`;
+                    } else {
+                         window.location.href = targetUrl; // Redirection standard
+                    }
+                } else {
+                    // Abonnement inactif, expiré ou inexistant : Afficher le modal
+                    console.log(`Abonnement inactif ou expiré. Accès à ${targetUrl} refusé. Affichage du modal.`);
+                    showSubscriptionRequiredModal(); // Affiche le modal demandant de s'abonner
                 }
-            });
+
+            } catch (error) {
+                // Gestion des erreurs lors de la récupération des données depuis Firebase
+                hidePageLoader(); // Assure que le loader est masqué en cas d'erreur
+                console.error("Erreur lors de la vérification de l'abonnement avant navigation:", error);
+                showNotification("error", "Erreur lors de la vérification de l'abonnement. Veuillez réessayer.");
+                // Important : Ne pas rediriger et ne pas montrer le modal d'abonnement ici,
+                // car l'erreur pourrait être autre chose (ex: problème réseau).
+            }
         }
 
-        venteMenuItem.addEventListener('click', (event) => {
-            event.preventDefault();
-            checkUserAccess();
-            window.location.href = 'PageVenteTicket.html';
+        // --- END: MODIFIED SECTION FOR MENU ITEM CLICK HANDLING ---
+
+
+        // Subscription Payment Logic
+        subscribeMonthlyButton.addEventListener('click', () => handleSubscriptionClick('monthly'));
+        subscribeYearlyButton.addEventListener('click', () => handleSubscriptionClick('yearly'));
+
+        function handleSubscriptionClick(plan) {
+            currentPlan = plan;
+            if (isFirstSubscription) {
+                showConfirmationModal();
+            } else {
+                initiatePayment(currentPlan, 0); // No integration fee for renewals
+            }
+        }
+
+        function showConfirmationModal() {
+            confirmationModal.style.display = 'block';
+        }
+        function hideConfirmationModal() {
+            confirmationModal.style.display = 'none';
+        }
+         window.hideConfirmationModal = hideConfirmationModal; // Expose for cancel button if needed
+
+        confirmIntegrationButton.addEventListener('click', () => {
+            hideConfirmationModal();
+            initiatePayment(currentPlan, integrationFee);
         });
-
-        inventaireMenuItem.addEventListener('click', (event) => {
-            event.preventDefault();
-            checkUserAccess();
-            window.location.href = 'AdminVentePartenaires.html';
-        });
-
-        stockMenuItem.addEventListener('click', (event) => {
-            event.preventDefault();
-            checkUserAccess();
-            window.location.href = 'Stock.html';
-        });
-
-        administrationMenuItem.addEventListener('click', (event) => {
-            event.preventDefault();
-            checkUserAccess();
-            window.location.href = 'a3.html';
-        });
-
-        subscribeMonthlyButton.addEventListener('click', () => {
-            initiatePayment('monthly');
-        });
-
-        subscribeYearlyButton.addEventListener('click', () => {
-            initiatePayment('yearly');
-        });
+        cancelIntegrationButton.addEventListener('click', hideConfirmationModal);
 
 
-
-        function initiatePayment(plan) {
-            const amount = plan === 'monthly' ? 1000 : 10000;
+        async function initiatePayment(plan, additionalFee) {
+            const baseAmount = plan === 'monthly' ? 1000 : 10000;
+            const totalAmount = baseAmount + additionalFee;
             const planDescription = plan === 'monthly' ? 'Abonnement mensuel' : 'Abonnement annuel';
+            const fullDescription = planDescription + (additionalFee > 0 ? ` + Frais d'intégration (${integrationFee} FCFA)` : '');
+
+            if (!currentUserId) {
+                showNotification("error", "Erreur: Utilisateur non identifié. Reconnexion nécessaire.");
+                return;
+            }
+
+             // Fetch user email if available (optional but good for FedaPay)
+            let userEmail = 'admin@example.com'; // Default
+            try {
+                 const emailRef = ref(db, `users/${currentUserId}/email`); // Assuming email is stored here
+                 const emailSnap = await get(emailRef);
+                 if (emailSnap.exists()) {
+                     userEmail = emailSnap.val();
+                 }
+            } catch (emailError) {
+                 console.warn("Could not fetch user email for payment:", emailError);
+            }
+
+            console.log(`Initiating FedaPay payment for ${currentUserId}: Plan=${plan}, Amount=${totalAmount}, Desc=${fullDescription}`);
 
             FedaPay.init({
-                public_key: 'pk_live_TfSz212W0xSMKK7oPEogkFmp',
+                public_key: fedapayApiKeyGlobal, // Use the global key fetched earlier
                 transaction: {
-                    amount: amount,
-                    description: planDescription,
+                    amount: totalAmount,
+                    description: fullDescription,
                 },
                 customer: {
-                    email: 'admin@example.com', // Email de l'administrateur
+                    email: userEmail,
+                    // lastname: 'Admin', // Add more customer details if available
+                    // firstname: 'User',
                 },
                 onComplete: async function(response) {
-                        if (response.reason === FedaPay.DIALOG_DISMISSED) {
-                            alert('Paiement échoué.');
-                        } else if (response.reason === FedaPay.CHECKOUT_COMPLETED) {
-                            handleSuccessfulPayment(plan, response);
-                        }
+                    console.log("FedaPay response:", response);
+                    if (response.reason === FedaPay.DIALOG_DISMISSED) {
+                        showNotification("info", "Paiement annulé.");
+                    } else if (response.reason === FedaPay.CHECKOUT_COMPLETED) {
+                        showNotification("success", "Paiement en cours de traitement..."); // Initial feedback
+                         await handleSuccessfulPayment(plan, response, additionalFee > 0);
+                    } else {
+                        // Handle other statuses like 'declined', 'pending', 'canceled'
+                        showNotification("error", `Paiement échoué ou annulé (${response.status}).`);
+                         console.error("FedaPay payment failed or was not approved:", response);
                     }
+                }
             }).open();
         }
 
-        async function handleSuccessfulPayment(plan, response) {
+
+        async function handleSuccessfulPayment(plan, response, isIntegration) {
+             console.log(`Processing successful payment: Plan=${plan}, TxID=${response.transaction.id}, Integration=${isIntegration}`);
+             showLoader(); // Show loader during DB update
+             pageLoaderMessage.textContent = "Mise à jour de l'abonnement...";
+
             const startDate = new Date();
             const endDate = new Date(startDate);
             if (plan === 'monthly') {
@@ -513,226 +1832,886 @@
                 startDate: startDate.toISOString(),
                 endDate: endDate.toISOString(),
                 transactionId: response.transaction.id,
-                plan: plan
+                plan: plan,
+                hasSubscribedBefore: true, // Mark as having subscribed
+                lastPaymentAmount: response.transaction.amount,
+                lastPaymentDate: new Date().toISOString(),
             };
 
+            if (isIntegration) {
+                subscriptionData.integrationFeePaid = true;
+            }
+
             try {
-                await set(adminRef, subscriptionData);
-                checkSubscriptionStatus();
-                alert(`Abonnement ${plan === 'monthly' ? 'mensuel' : 'annuel'} réussi!`);
+                const subscriptionRef = ref(db, `users-data/${currentUserId}/admin/subscription`);
+                await set(subscriptionRef, subscriptionData); // Overwrite with new active subscription
+                await checkSubscriptionStatus(); // Update UI immediately
+                 hideLoader();
+                showNotification("success", `Abonnement ${plan === 'monthly' ? 'mensuel' : 'annuel'} activé avec succès!`);
             } catch (error) {
-                console.error('Erreur lors de la mise à jour de l\'abonnement:', error);
-                console.error('Détails de la réponse de FedaPay:', response);
-                console.error('Données d\'abonnement tentées:', subscriptionData);
-                alert('Erreur lors de la mise à jour de l\'abonnement.');
+                hideLoader();
+                console.error('Erreur lors de la mise à jour de l\'abonnement après paiement:', error);
+                showNotification("error", "Erreur lors de la mise à jour de l'abonnement. Veuillez contacter le support.");
             }
         }
 
-        async function cancelSubscription() {
-            try {
-                await set(adminRef, { ... (await get(adminRef)).val(), status: 'cancelled' });
-                checkSubscriptionStatus();
-                alert('Abonnement annulé.');
-            } catch (error) {
-                console.error('Erreur lors de l\'annulation de l\'abonnement:', error);
-                alert('Erreur lors de l\'annulation de l\'abonnement.');
-            }
-        }
-
-
+        // --- Connected Ticket Processing ---
         async function processConnectedTickets() {
-            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
+            pageLoaderMessage.textContent = "Traitement des connexions en attente...";
+            if (!currentUserId) {
+                console.error("User ID missing, cannot process connected tickets.");
+                return;
+            }
+            const connectedTicketsRef = ref(db, `users-data/${currentUserId}/TicketConnecté`);
             try {
-                pageLoaderMessage.textContent = "Vérification des tickets connectés...";
                 const snapshot = await get(connectedTicketsRef);
                 let connectedTickets = snapshot.val() || {};
+                if (Object.keys(connectedTickets).length === 0) {
+                     console.log("Aucun ticket connecté à traiter.");
+                     return;
+                }
 
-                // Supprimer les doublons et récupérer les informations complètes des tickets
-                const uniqueTickets = {};
+                console.log(`Processing ${Object.keys(connectedTickets).length} connected ticket entries...`);
+
+                const uniqueUsernames = new Set();
+                const ticketsToProcess = [];
+
+                // Filtrer pour traiter chaque nom d'utilisateur unique une seule fois
                 for (const ticketId in connectedTickets) {
                     const user = connectedTickets[ticketId].username;
-                    if (!uniqueTickets[user]) {
-                        uniqueTickets[user] = connectedTickets[ticketId];
+                    if (user && !uniqueUsernames.has(user)) {
+                        uniqueUsernames.add(user);
+                        ticketsToProcess.push({ ...connectedTickets[ticketId], firebaseId: ticketId }); // Inclure l'ID Firebase
                     }
                 }
+                 console.log(`Found ${ticketsToProcess.length} unique users to process:`, Array.from(uniqueUsernames));
 
-                pageLoaderMessage.textContent = "Traitement des tickets uniques...";
-                for (const user in uniqueTickets) {
-                    await processTicket(uniqueTickets[user]);
-                }
+
+                // Fetch all necessary data upfront
+                pageLoaderMessage.textContent = "Chargement des données de vente...";
+                 const [vendorsHistorySnapshot, ticketsVendusSnapshot, totalSnapshot, transitSnapshot] = await Promise.all([
+                    get(ref(db, `users-data/${currentUserId}/VendorsHistory`)),
+                    get(ref(db, `users-data/${currentUserId}/TicketsVendus`)),
+                    get(ref(db, `users-data/${currentUserId}/TicketsTotal`)),
+                    get(ref(db, `users-data/${currentUserId}/TicketsTransit`))
+                ]);
+
+                const vendorsHistory = vendorsHistorySnapshot.val() || {};
+                const ticketsVendus = ticketsVendusSnapshot.val() || {};
+                const totalTickets = totalSnapshot.val() || {};
+                const transitTickets = transitSnapshot.val() || {};
+
+                 pageLoaderMessage.textContent = `Traitement de ${ticketsToProcess.length} tickets uniques...`;
+                 let processedCount = 0;
+                 const promises = ticketsToProcess.map(async (ticket) => {
+                    try {
+                        await processSingleTicket(ticket, vendorsHistory, ticketsVendus, totalTickets, transitTickets);
+                        processedCount++;
+                         pageLoaderMessage.textContent = `Traitement... (${processedCount}/${ticketsToProcess.length})`;
+                    } catch (error) {
+                        console.error(`Failed to process ticket for user ${ticket.username}:`, error);
+                         showNotification("error", `Erreur lors du traitement du ticket ${ticket.username}.`);
+                    }
+                 });
+
+                 await Promise.all(promises); // Attendre que tous les traitements soient terminés
 
                 pageLoaderMessage.textContent = "Nettoyage des tickets traités...";
-
-                // Nettoyer tous les tickets de TicketConnecté
-                await remove(connectedTicketsRef);
+                console.log("Removing processed entries from TicketConnecté...");
+                await remove(connectedTicketsRef); // Clear the node after processing all unique users
+                console.log("TicketConnecté node cleared.");
 
             } catch (error) {
-                console.error("Erreur lors du traitement des tickets connectés :", error);
-                showNotification("Erreur", "Une erreur est survenue lors du traitement des tickets.");
+                console.error("Erreur majeure lors du traitement des tickets connectés :", error);
+                showNotification("error", "Une erreur majeure est survenue lors du traitement des tickets.");
+            } finally {
+                 pageLoaderMessage.textContent = "Initialisation terminée."; // Reset message
             }
         }
 
-        async function processTicket(ticket) {
-            const pageLoaderMessage = document.getElementById('pageLoaderMessage');
-            try {
-                pageLoaderMessage.textContent = `Vérification du ticket pour ${ticket.username}...`;
+        async function processSingleTicket(ticket, vendorsHistory, ticketsVendus, totalTickets, transitTickets) {
+            const username = ticket.username;
+             console.log(`Processing user: ${username}`);
 
-                // Vérifier dans VendorsHistory
-                const vendorsHistoryRef = ref(db, 'VendorsHistory');
-                const vendorsHistorySnapshot = await get(vendorsHistoryRef);
-                const vendorsHistory = vendorsHistorySnapshot.val() || {};
-
-                let foundInHistory = false;
-                for (const vendorId in vendorsHistory) {
-                    const vendorHistory = vendorsHistory[vendorId];
-                    for (const saleId in vendorHistory) {
-                        if (vendorHistory[saleId].user === ticket.username) {
-                            foundInHistory = true;
-                            break;
-                        }
+            // 1. Check if already processed (in VendorsHistory)
+             console.log(` -> Checking VendorsHistory for ${username}...`);
+            let alreadyProcessed = false;
+            for (const vendorId in vendorsHistory) {
+                for (const saleId in vendorsHistory[vendorId]) {
+                    if (vendorsHistory[vendorId][saleId].user === username) {
+                        alreadyProcessed = true;
+                        console.log(` -> User ${username} already processed (found in history of ${vendorId}). Skipping.`);
+                        break;
                     }
-                    if (foundInHistory) break;
                 }
+                if (alreadyProcessed) break;
+            }
+            if (alreadyProcessed) return;
 
-                if (!foundInHistory) {
-                    pageLoaderMessage.textContent = `Traitement du ticket ${ticket.username}...`;
+            // 2. Check Mobile Money Sales (TicketsVendus)
+             console.log(` -> Checking TicketsVendus (Mobile Money) for ${username}...`);
+            let mobileMoneySale = null;
+            let mobileMoneySaleId = null;
+            for (const saleId in ticketsVendus) {
+                const sale = ticketsVendus[saleId];
+                if (sale.user === username && sale.nature === "Ticket vendu Mobile Money") {
+                    mobileMoneySale = sale;
+                    mobileMoneySaleId = saleId;
+                    console.log(` -> User ${username} found in TicketsVendus (Mobile Money). Sale ID: ${saleId}`);
+                    break;
+                }
+            }
 
-                    // Vérifier dans TicketsTotal et TicketsTransit
-                    const ticketsTotalRef = ref(db, 'TicketsTotal');
-                    const ticketsTransitRef = ref(db, 'TicketsTransit');
-                    const totalSnapshot = await get(ticketsTotalRef);
-                    const transitSnapshot = await get(ticketsTransitRef);
-                    const totalTickets = totalSnapshot.val() || {};
-                    const transitTickets = transitSnapshot.val() || {};
+            if (mobileMoneySale) {
+                // Found as Mobile Money sale, remove original ticket if exists and record sale
+                 console.log(` -> Handling Mobile Money sale for ${username}...`);
+                await handleTicketRemovalAndSale(
+                    mobileMoneySale, totalTickets, transitTickets,
+                    "Vendeur Mobile Money", "Ticket vendu Mobile Money", // Specific vendor/nature
+                     mobileMoneySaleId // Pass the ID to potentially remove from TicketsVendus if needed (optional)
+                );
+                return; // Processed
+            }
 
-                    let foundTicket = null;
-                    let foundTicketRef = null;
-                    let foundInCategory = null;
+            // 3. Partner Sales are implicitly handled by step 1.
 
-                    // Chercher dans TicketsTotal
-                    for (const category in totalTickets) {
-                        const ticketIndex = (totalTickets[category].utilisateur || []).indexOf(ticket.username);
+            // 4. If not found elsewhere, treat as "Vendeur automatique"
+             console.log(` -> User ${username} not found in history or Mobile Money sales. Treating as 'Vendeur automatique'.`);
+             console.log(` -> Searching for ${username} in TicketsTotal and TicketsTransit...`);
+            let foundTicketDetails = null;
+            let sourcePath = null; // Store the full path for update/removal
+            let originalNature = "Ticket non vendu"; // Default nature
+            let sourceIndex = -1; // Need index for TicketsTotal
 
-                        if (ticketIndex > -1) {
-                            foundTicket = {
-                                category: category,
-                                user: totalTickets[category].utilisateur[ticketIndex],
-                                password: totalTickets[category].motDePasse[ticketIndex],
-                                price: totalTickets[category].prix[ticketIndex],
-                                updatedData: {
-                                    ...totalTickets[category],
-                                    utilisateur: totalTickets[category].utilisateur.filter((_, index) => index !== ticketIndex),
-                                    motDePasse: totalTickets[category].motDePasse.filter((_, index) => index !== ticketIndex),
-                                    prix: totalTickets[category].prix.filter((_, index) => index !== ticketIndex)
-                                }
-                            };
-                            foundTicketRef = ref(db, `TicketsTotal/${category}`);
-                            foundInCategory = "TicketsTotal";
-                            break;
-                        }
+            // Check TicketsTotal
+            for (const category in totalTickets) {
+                const users = totalTickets[category]?.utilisateur || [];
+                const ticketIndex = users.indexOf(username); // Correct variable name
+                if (ticketIndex > -1) { // Correct condition
+                    sourceIndex = ticketIndex; // Store the index
+                    originalNature = totalTickets[category].nature?.[ticketIndex] || "Ticket non vendu";
+                    foundTicketDetails = {
+                        category: category,
+                        user: username,
+                        password: totalTickets[category].motDePasse?.[ticketIndex] ?? '',
+                        price: totalTickets[category].prix?.[ticketIndex] ?? 0
+                    };
+                    sourcePath = `users-data/${currentUserId}/TicketsTotal/${category}`;
+                    console.log(` -> Found ${username} in TicketsTotal, category ${category}.`);
+                    break;
+                }
+            }
+
+            // Check TicketsTransit if not found in Total
+            if (!foundTicketDetails) {
+                for (const transitId in transitTickets) {
+                    if (transitTickets[transitId]?.user === username) {
+                        originalNature = transitTickets[transitId].nature || "Ticket non vendu";
+                        foundTicketDetails = {
+                            category: transitTickets[transitId].category ?? 'Unknown',
+                            user: username,
+                            password: transitTickets[transitId].password ?? '',
+                            price: transitTickets[transitId].price ?? 0
+                        };
+                        sourcePath = `users-data/${currentUserId}/TicketsTransit/${transitId}`;
+                         sourceIndex = -1; // Indicates it's not from TicketsTotal
+                        console.log(` -> Found ${username} in TicketsTransit, ID ${transitId}.`);
+                        break;
                     }
+                }
+            }
 
-                    // Si non trouvé dans TicketsTotal, chercher dans TicketsTransit
-                    if (!foundTicket) {
-                        for (const transitId in transitTickets) {
-                            if (transitTickets[transitId].user === ticket.username) {
-                                foundTicket = {
-                                    category: transitTickets[transitId].category,
-                                    user: transitTickets[transitId].user,
-                                    password: transitTickets[transitId].password,
-                                    price: transitTickets[transitId].price
+            if (foundTicketDetails && sourcePath) {
+                 console.log(` -> Handling 'Vendeur automatique' sale for ${username}...`);
+                await handleTicketRemovalAndSale(
+                    foundTicketDetails, totalTickets, transitTickets,
+                    "Vendeur automatique", originalNature, // Use 'Vendeur automatique' and original nature
+                     null, // No ID from TicketsVendus to remove
+                     sourcePath, // Pass the determined source path
+                     sourceIndex // Pass the index (or -1 if from Transit)
+                );
+            } else {
+                console.warn(` -> User ${username} from TicketConnecté not found in TicketsTotal or TicketsTransit. Cannot process as automatic sale.`);
+            }
+        }
+
+
+        async function handleTicketRemovalAndSale(ticketDetails, totalTickets, transitTickets, vendorId, saleNature, ticketsVendusIdToRemove = null, sourcePath = null, sourceIndex = -1) {
+            const username = ticketDetails.user;
+            let updateOperations = {}; // Use a single object for batch update
+
+            // --- Prepare Source Ticket Removal/Update ---
+            console.log(`   -> Preparing source update/removal for user ${username} at path: ${sourcePath}, index: ${sourceIndex}`);
+            if (sourcePath) {
+                if (sourcePath.includes('/TicketsTransit/')) {
+                    // For transit tickets, simply remove the node
+                    updateOperations[sourcePath] = null; // Mark for removal
+                    console.log(`   -> Marked for removal: ${sourcePath}`);
+                } else if (sourcePath.includes('/TicketsTotal/')) {
+                    // For TicketsTotal, remove the specific user entry from arrays
+                    if (sourceIndex > -1) {
+                        // Fetch current category data to perform the splice correctly
+                        const categoryRef = ref(db, sourcePath);
+                        const categorySnapshot = await get(categoryRef); // Get fresh data
+                        if (categorySnapshot.exists()) {
+                            const currentCategoryData = snapshot.val();
+                            // Create copies and remove the element at sourceIndex
+                            const updatedUtilisateur = [...(currentCategoryData.utilisateur || [])];
+                            const updatedMotDePasse = [...(currentCategoryData.motDePasse || [])];
+                            const updatedPrix = [...(currentCategoryData.prix || [])];
+                            const updatedNature = [...(currentCategoryData.nature || [])];
+
+                            if (sourceIndex < updatedUtilisateur.length) { // Check bounds again
+                                updatedUtilisateur.splice(sourceIndex, 1);
+                                updatedMotDePasse.splice(sourceIndex, 1);
+                                updatedPrix.splice(sourceIndex, 1);
+                                updatedNature.splice(sourceIndex, 1);
+
+                                updateOperations[sourcePath] = { // Update the whole category node
+                                    utilisateur: updatedUtilisateur,
+                                    motDePasse: updatedMotDePasse,
+                                    prix: updatedPrix,
+                                    nature: updatedNature
                                 };
-                                foundTicketRef = ref(db, `TicketsTransit/${transitId}`);
-                                foundInCategory = "TicketsTransit";
-                                break;
+                                console.log(`   -> Prepared update for ${sourcePath} after removing index ${sourceIndex}`);
+                            } else {
+                                console.warn(`   -> Invalid index ${sourceIndex} for category ${sourcePath}. Skipping update.`);
                             }
+                        } else {
+                            console.warn(`   -> Category data at ${sourcePath} not found. Skipping update.`);
                         }
-                    }
-
-                    if (foundTicket) {
-                        pageLoaderMessage.textContent = `Vente du ticket ${ticket.username}...`;
-                        await sellTicketAutomatically(foundTicket, foundTicketRef, foundInCategory);
+                    } else {
+                         console.warn(`   -> Invalid source index (-1) provided for TicketsTotal path: ${sourcePath}. Skipping removal.`);
                     }
                 }
-            } catch (error) {
-                console.error("Erreur lors du traitement du ticket :", error);
-                showNotification("Erreur", `Erreur lors du traitement du ticket ${ticket.username}.`);
+            } else {
+                 console.warn(`   -> Source ticket path for user ${username} was not provided or found. Cannot remove source.`);
+            }
+
+            // --- Prepare Vendor History Update ---
+            console.log(`   -> Preparing history update for vendor ${vendorId}`);
+            const newHistoryKey = push(ref(db, `users-data/${currentUserId}/VendorsHistory/${vendorId}`)).key;
+            const historyPath = `users-data/${currentUserId}/VendorsHistory/${vendorId}/${newHistoryKey}`;
+            updateOperations[historyPath] = {
+                category: ticketDetails.category,
+                user: username,
+                password: ticketDetails.password,
+                price: ticketDetails.price,
+                soldAt: Date.now(),
+                nature: saleNature
+            };
+
+            // --- (Optional) Prepare TicketsVendus Removal if Mobile Money ---
+            if (ticketsVendusIdToRemove && saleNature === "Ticket vendu Mobile Money") {
+                const vendusPath = `users-data/${currentUserId}/TicketsVendus/${ticketsVendusIdToRemove}`;
+                updateOperations[vendusPath] = null; // Mark for removal
+                console.log(`   -> Preparing removal from TicketsVendus/${ticketsVendusIdToRemove}`);
+            }
+
+
+            // --- Execute Batch Update ---
+            if (Object.keys(updateOperations).length > 0) {
+                 try {
+                     console.log(`   -> Executing batch update for user ${username}...`, updateOperations);
+                    await update(ref(db), updateOperations);
+                     console.log(`   -> Successfully processed sale and removal/update for user ${username}.`);
+                } catch (error) {
+                    console.error(`   -> Error executing batch update for user ${username}:`, error);
+                    showNotification("error", `Erreur technique lors de la finalisation de la vente pour ${username}.`);
+                }
+            } else {
+                console.log(`   -> No update operations prepared for user ${username}. Skipping batch update.`);
             }
         }
 
-        async function sellTicketAutomatically(ticket, ticketRef, foundInCategory) {
+        // --- Portal Configuration ---
+        window.togglePortalForm = function() {
+            portalFormModal.style.display = 'block';
+        }
+        window.closePortalFormModal = function() {
+            portalFormModal.style.display = 'none';
+        }
+
+        window.addListItem = function(listId) {
+            const listContainer = document.getElementById(listId);
+            const newItem = document.createElement('div');
+            newItem.className = 'list-item';
+
+            if (listId === 'tariffsList') {
+                newItem.innerHTML = `
+                    <input type="text" placeholder="Nom du tarif (ex: 1 Heure)" data-type="tariffName">
+                    <input type="number" placeholder="Prix (FCFA)" data-type="tariffPrice">
+                    <button type="button" onclick="removeListItem(this)"><i class="fas fa-trash"></i></button>`;
+            } else {
+                let placeholder = listId === 'connectionsList' ? "Adresse/Lieu" : "Service/Produit";
+                let dataType = listId.replace('List', '').slice(0, -1); // e.g., 'connection', 'product'
+                newItem.innerHTML = `
+                    <input type="text" placeholder="${placeholder}" data-type="${dataType}">
+                    <button type="button" onclick="removeListItem(this)"><i class="fas fa-trash"></i></button>`;
+            }
+             listContainer.appendChild(newItem); // Append to the end of the list div
+        }
+
+
+        window.removeListItem = function(button) {
+            button.closest('.list-item').remove(); // Use closest to be safer
+        }
+
+        document.getElementById('portalForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            showLoader();
+
+            if (!currentUserId) {
+                hideLoader();
+                showNotification("error", "Utilisateur non identifié. Reconnexion nécessaire.");
+                return;
+            }
+
+            const portalConfig = {
+                networkName: document.getElementById('networkName').value.trim(),
+                contactNumber: document.getElementById('contactNumber').value.trim(),
+                fedapayApiKey: document.getElementById('fedapayApiKey').value.trim(),
+                loginMode: document.getElementById('loginMode').value,
+                tariffs: [],
+                connections: [],
+                products: []
+            };
+
+            // Collect Tariffs
+            document.querySelectorAll('#tariffsList .list-item').forEach(item => {
+                const nameInput = item.querySelector('[data-type="tariffName"]');
+                const priceInput = item.querySelector('[data-type="tariffPrice"]');
+                const name = nameInput?.value.trim();
+                const price = parseFloat(priceInput?.value);
+                if (name && !isNaN(price) && price >= 0) {
+                    portalConfig.tariffs.push({ name, price });
+                }
+            });
+
+            // Collect Connections
+            document.querySelectorAll('#connectionsList .list-item input').forEach(input => {
+                const value = input.value.trim();
+                if (value) portalConfig.connections.push(value);
+            });
+
+             // Collect Products
+            document.querySelectorAll('#productsList .list-item input').forEach(input => {
+                const value = input.value.trim();
+                if (value) portalConfig.products.push(value);
+            });
+
+             // Basic Validation
+             if (!portalConfig.networkName || !portalConfig.contactNumber || !portalConfig.fedapayApiKey) {
+                 hideLoader();
+                 showNotification("error", "Veuillez remplir les champs Nom, Contact et Clé API FedaPay.");
+                 return;
+             }
+
+
             try {
-                const automaticVendorId = "Vendeur automatique";
-
-                // Enregistrement de la vente dans VendorsHistory
-                const vendorHistoryRef = ref(db, `VendorsHistory/${automaticVendorId}`);
-                await push(vendorHistoryRef, {
-                    category: ticket.category,
-                    user: ticket.user,
-                    password: ticket.password,
-                    price: ticket.price,
-                    soldAt: Date.now()
-                });
-
-                // Enregistrement de la vente dans TicketsVendus
-                const ticketsVendusRef = ref(db, 'TicketsVendus');
-                await push(ticketsVendusRef, {
-                    category: ticket.category,
-                    user: ticket.user,
-                    password: ticket.password,
-                    price: ticket.price,
-                    soldAt: Date.now(),
-                    vendorId: automaticVendorId
-                });
-
-                // Suppression du ticket de la source (TicketsTotal ou TicketsTransit)
-                if(foundInCategory === "TicketsTotal"){
-                    await set(ticketRef, ticket.updatedData);
-                } else {
-                    await remove(ticketRef);
-                }
-
-                console.log(`Ticket ${ticket.user} vendu automatiquement.`);
+                const configRef = ref(db, `users-data/${currentUserId}/portalConfig`);
+                await set(configRef, portalConfig);
+                networkNameDisplay.textContent = portalConfig.networkName; // Update display
+                hideLoader();
+                showNotification("success", 'Configuration du portail enregistrée !');
+                closePortalFormModal();
             } catch (error) {
-                console.error("Erreur lors de la vente automatique du ticket :", error);
-                showNotification("Erreur", "Erreur lors de la vente automatique du ticket.");
+                hideLoader();
+                console.error("Erreur sauvegarde config portail:", error);
+                showNotification("error", "Erreur lors de l'enregistrement.");
+            }
+        });
+
+        async function loadPortalConfig() {
+             pageLoaderMessage.textContent = "Chargement de la configuration...";
+             if (!currentUserId) return; // Wait for user ID
+
+            try {
+                const configRef = ref(db, `users-data/${currentUserId}/portalConfig`);
+                const snapshot = await get(configRef);
+
+                if (snapshot.exists()) {
+                    const config = snapshot.val();
+                    networkNameDisplay.textContent = config.networkName || 'ADMIN WIFI ZONE';
+                    document.getElementById('networkName').value = config.networkName || '';
+                    document.getElementById('contactNumber').value = config.contactNumber || '';
+                    document.getElementById('fedapayApiKey').value = config.fedapayApiKey || '';
+                    document.getElementById('loginMode').value = config.loginMode || 'separate';
+
+                    // Clear and fill lists
+                    document.getElementById('tariffsList').innerHTML = '';
+                    document.getElementById('connectionsList').innerHTML = '';
+                    document.getElementById('productsList').innerHTML = '';
+
+                    (config.tariffs || []).forEach(item => addListItemWithValue('tariffsList', item));
+                    (config.connections || []).forEach(item => addListItemWithValue('connectionsList', item));
+                    (config.products || []).forEach(item => addListItemWithValue('productsList', item));
+
+                    // Trigger change event to show/hide redirect button correctly
+                    document.getElementById('loginMode').dispatchEvent(new Event('change'));
+
+                     console.log("Portal config loaded:", config);
+
+                } else {
+                    console.log("Aucune configuration de portail trouvée pour cet utilisateur.");
+                    networkNameDisplay.textContent = 'ADMIN WIFI ZONE'; // Default
+                    // Optionally clear lists if no config exists
+                    document.getElementById('tariffsList').innerHTML = '';
+                    document.getElementById('connectionsList').innerHTML = '';
+                    document.getElementById('productsList').innerHTML = '';
+                }
+            } catch (error) {
+                console.error("Erreur chargement config portail:", error);
+                showNotification("error", "Erreur chargement configuration portail.");
             }
         }
 
+         // Helper to add list items with pre-filled values during load
+         function addListItemWithValue(listId, itemValue) {
+             const listContainer = document.getElementById(listId);
+             const newItem = document.createElement('div');
+             newItem.className = 'list-item';
 
-        // Fonction de déconnexion améliorée
-        window.logout = function() {
-            sessionStorage.clear(); // Nettoie toutes les données de session
-            window.location.replace('loginAccueil.html');
+             if (listId === 'tariffsList' && typeof itemValue === 'object') {
+                 newItem.innerHTML = `
+                     <input type="text" placeholder="Nom du tarif" data-type="tariffName" value="${itemValue.name || ''}">
+                     <input type="number" placeholder="Prix (FCFA)" data-type="tariffPrice" value="${itemValue.price || ''}">
+                     <button type="button" onclick="removeListItem(this)"><i class="fas fa-trash"></i></button>`;
+             } else if (typeof itemValue === 'string') {
+                 let placeholder = listId === 'connectionsList' ? "Adresse/Lieu" : "Service/Produit";
+                 let dataType = listId.replace('List', '').slice(0, -1);
+                 newItem.innerHTML = `
+                     <input type="text" placeholder="${placeholder}" data-type="${dataType}" value="${itemValue}">
+                     <button type="button" onclick="removeListItem(this)"><i class="fas fa-trash"></i></button>`;
+             }
+             listContainer.appendChild(newItem);
+         }
+
+        // --- Portal Download Logic ---
+        // --- Portal Download Logic ---
+        window.downloadLoginFile = async function() {
+            showLoader();
+            if (!currentUserId) {
+                hideLoader();
+                showNotification("error", "Vous devez être connecté pour télécharger.");
+                return;
+            }
+
+            try {
+                // 1. Fetch Current Portal Configuration
+                const configRef = ref(db, `users-data/${currentUserId}/portalConfig`);
+                const snapshot = await get(configRef);
+                if (!snapshot.exists()) {
+                    hideLoader();
+                    showNotification("error", "Veuillez d'abord configurer le portail via le bouton 'Configurer le portail captif'.");
+                    return;
+                }
+                const config = snapshot.val();
+                const selectedMode = config.loginMode || 'separate'; // Default to 'separate' if not set
+
+                // 2. Determine Base HTML File and Target Filename
+                let baseFileName = "";
+                let targetFileName = "";
+                const validModes = {
+                    'separate': { base: 'login.html', target: 'login.html' },
+                    'same':     { base: 'log.html', target: 'log.html' },
+                    'pay':      { base: 'pay.html', target: 'pay.html' }
+                };
+
+                if (validModes[selectedMode]) {
+                    baseFileName = validModes[selectedMode].base;
+                    targetFileName = validModes[selectedMode].target;
+                    console.log(`Selected mode: ${selectedMode}. Using base file: ${baseFileName}, target: ${targetFileName}`);
+                } else if (selectedMode.startsWith('hotspot')) {
+                    // Handle hotspot modes requiring external download
+                    hideLoader();
+                    showNotification("info", `Le mode '${selectedMode}' nécessite un téléchargement externe via le bouton 'Télécharger le modèle sélectionné'.`);
+                    const redirectButton = document.getElementById('redirectButton');
+                    if(redirectButton.style.display !== 'none') {
+                        redirectButton.click(); // Simulate click if visible
+                    } else {
+                        console.warn("Redirect button not visible for hotspot mode download.");
+                    }
+                    return; // Stop execution for hotspot modes
+                } else {
+                    hideLoader();
+                    showNotification("error", "Mode de connexion invalide sélectionné dans la configuration.");
+                    return;
+                }
+
+                // 3. Fetch the Base HTML Content
+                console.log(`Fetching content of ${baseFileName}...`);
+                const response = await fetch(baseFileName); // Fetch the correct base file
+                if (!response.ok) {
+                    throw new Error(`Impossible de charger le fichier de base: ${baseFileName} (Status: ${response.status})`);
+                }
+                let htmlContent = await response.text();
+                console.log(`Successfully fetched content of ${baseFileName}.`);
+
+                // Fetch status.html content
+                console.log(`Fetching content of status.html...`);
+                const statusResponse = await fetch('status.html');
+                if (!statusResponse.ok) {
+                    throw new Error(`Impossible de charger le fichier status.html (Status: ${statusResponse.status})`);
+                }
+                let statusHtmlContent = await statusResponse.text();
+                 if (typeof statusHtmlContent !== 'string') { // Check if statusHtmlContent is a string
+                    throw new Error("Erreur: Le contenu de status.html n'est pas une chaîne de caractères.");
+                 }
+                console.log(`Successfully fetched content of status.html.`);
+
+
+                // 4. Inject Configuration Data into Placeholders
+
+                // Admin User ID (Crucial for Firebase connection in portal)
+                htmlContent = htmlContent.replaceAll('<!-- ADMIN_USER_ID -->', currentUserId);
+                statusHtmlContent = statusHtmlContent.replaceAll('<!-- ADMIN_USER_ID -->', currentUserId);
+
+
+                // Network Name (Displayed in header)
+                htmlContent = htmlContent.replaceAll('<!-- NETWORK_NAME -->', config.networkName || 'CYBER CAMPUS WIFI ZONE');
+                statusHtmlContent = statusHtmlContent.replaceAll('<!-- NETWORK_NAME -->', config.networkName || 'CYBER CAMPUS WIFI ZONE');
+
+                // Contact Number (Displayed in header/info sections)
+                htmlContent = htmlContent.replaceAll('<!-- CONTACT_NUMBER -->', config.contactNumber || '+229 XXXXXXXX');
+                statusHtmlContent = statusHtmlContent.replaceAll('<!-- CONTACT_NUMBER -->', config.contactNumber || '+229 XXXXXXXX');
+
+
+                 // FedaPay Public API Key (Used in login.html, log.html, pay.html for payments)
+                 htmlContent = htmlContent.replaceAll('<!-- FEDAPAY_API_KEY -->', config.fedapayApiKey || '');
+
+                // --- Generate HTML Snippets for Lists ---
+
+                // Generates a simple table for display purposes (e.g., "Nos Tarifs" section)
+                function generateSimpleTariffsTableHTML(tariffs) {
+                     if (!tariffs || tariffs.length === 0) return '<p>Aucun tarif configuré.</p>';
+                    let table = '<table style="width:100%; border-collapse:collapse; color: inherit; background: rgba(255,255,255,0.05); border-radius: 5px;"><thead><tr style="border-bottom: 1px solid rgba(255,255,255,0.2);"><th style="padding: 10px; text-align: left;">Catégorie</th><th style="padding: 10px; text-align: left;">Prix (FCFA)</th></tr></thead><tbody>';
+                    tariffs.forEach(t => {
+                        const escapedName = t.name.replace(/</g, "<").replace(/>/g, ">");
+                        table += `<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"><td style="padding: 8px 10px;">${escapedName}</td><td style="padding: 8px 10px;">${t.price}</td></tr>`;
+                    });
+                    return table + '</tbody></table>';
+                }
+
+                // Generates a simple <ul> list (for Connection Locations, Products)
+                function generateListHTML(items) {
+                     if (!items || items.length === 0) return '<p>Non spécifié.</p>';
+                     return '<ul>' + items.map(item => `<li>${item.replace(/</g, "<").replace(/>/g, ">")}</li>`).join('') + '</ul>';
+                }
+
+                // --- Replace Placeholders in HTML Content ---
+                console.log("Injecting configuration into HTML content...");
+
+                 // Placeholder for the *simple display* rates table
+                htmlContent = htmlContent.replace('<!-- TARIFFS_TABLE_SIMPLE -->', generateSimpleTariffsTableHTML(config.tariffs || []));
+                statusHtmlContent = statusHtmlContent.replace('<!-- TARIFFS_TABLE_SIMPLE -->', generateSimpleTariffsTableHTML(config.tariffs || []));
+
+
+                // Placeholder for connection locations list
+                htmlContent = htmlContent.replace('<!-- CONNECTION_LOCATIONS -->', generateListHTML(config.connections || []));
+                statusHtmlContent = statusHtmlContent.replace('<!-- CONNECTION_LOCATIONS -->', generateListHTML(config.connections || []));
+
+
+                // Placeholder for products/services list
+                htmlContent = htmlContent.replace('<!-- PRODUCTS_LIST -->', generateListHTML(config.products || []));
+                statusHtmlContent = statusHtmlContent.replace('<!-- PRODUCTS_LIST -->', generateListHTML(config.products || []));
+
+
+                // Note: <!-- TARIFFS_TABLE --> with payment button is generated dynamically by JS within the portal files.
+
+                console.log("Configuration injection complete.");
+
+                // 5. Create Blob and Initiate Download for the HTML File
+                const blob = new Blob([htmlContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = targetFileName; // Use the target filename (login.html, log.html, pay.html)
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                console.log(`Download initiated for ${targetFileName}`);
+
+                // 5.1. Create Blob and Initiate Download for status.html
+                const statusBlob = new Blob([statusHtmlContent], { type: 'text/html' });
+                const statusUrl = URL.createObjectURL(statusBlob);
+                const statusA = document.createElement('a');
+                statusA.href = statusUrl;
+                statusA.download = 'status.html';
+                document.body.appendChild(statusA);
+                statusA.click();
+                document.body.removeChild(statusA);
+                URL.revokeObjectURL(statusUrl);
+                console.log(`Download initiated for status.html`);
+
+
+                // 6. Automatically Download firebase-config-manager.js
+                 try {
+                     const managerResponse = await fetch('firebase-config-manager.js');
+                     if (!managerResponse.ok) {
+                         throw new Error('firebase-config-manager.js not found or accessible.');
+                     }
+                     const managerLink = document.createElement('a');
+                     managerLink.href = 'firebase-config-manager.js'; // Relative path
+                     managerLink.download = 'firebase-config-manager.js';
+                     document.body.appendChild(managerLink);
+                     managerLink.click();
+                     document.body.removeChild(managerLink);
+                     console.log("Download initiated for firebase-config-manager.js");
+                 } catch (managerError) {
+                     console.error("Could not download firebase-config-manager.js:", managerError);
+                     showNotification("warning", "Le fichier firebase-config-manager.js n'a pas pu être téléchargé automatiquement. Assurez-vous de l'avoir.");
+                 }
+
+                hideLoader();
+                 showNotification("success", `Téléchargement de ${targetFileName}, status.html et du gestionnaire terminé.`);
+
+            } catch (error) {
+                hideLoader();
+                console.error("Erreur lors du téléchargement du portail:", error);
+                showNotification("error", `Erreur téléchargement: ${error.message}`);
+            }
+        }
+         // Show/Hide Redirect Button based on Login Mode
+         document.getElementById('loginMode').addEventListener('change', function() {
+    const selectedMode = this.value;
+    const redirectButton = document.getElementById('redirectButton');
+    // Show button for separate, same, pay AND hotspot modes
+    if (['separate', 'same', 'pay', 'hotspot1', 'hotspot2', 'hotspot3', 'hotspot4'].includes(selectedMode)) {
+        redirectButton.style.display = 'inline-block';
+    } else {
+        redirectButton.style.display = 'none';
+    }
+});
+
+// Redirect Button Logic - Modified to include download and redirect for all modes
+document.getElementById('redirectButton').addEventListener('click', async function() {
+    const loginMode = document.getElementById('loginMode').value;
+    let redirectUrl = '';
+    // Map modes to their download URLs - ADD URLS FOR separate, same, pay
+    const urls = {
+        'separate': 'https://firebasestorage.googleapis.com/v0/b/eduque-moi-bada8.appspot.com/o/Template.zip?alt=media&token=3cdeab1f-4ccf-4eb7-9079-79702938b2dd', // Placeholder URL - REPLACE WITH YOUR DEMO URL
+        'same': 'https://firebasestorage.googleapis.com/v0/b/eduque-moi-bada8.appspot.com/o/Template.zip?alt=media&token=3cdeab1f-4ccf-4eb7-9079-79702938b2dd',     // Placeholder URL - REPLACE WITH YOUR DEMO URL
+        'pay': 'https://firebasestorage.googleapis.com/v0/b/eduque-moi-bada8.appspot.com/o/Template.zip?alt=media&token=3cdeab1f-4ccf-4eb7-9079-79702938b2dd',       // Placeholder URL - REPLACE WITH YOUR DEMO URL
+        'hotspot1': 'https://firebasestorage.googleapis.com/v0/b/eduque-moi-bada8.appspot.com/o/Portail%20par%20d%C3%A9faut.zip?alt=media&token=9f200c87-a577-4d51-ae08-8324c17b58e9',
+        'hotspot2': 'https://firebasestorage.googleapis.com/v0/b/eduque-moi-bada8.appspot.com/o/hotspot1.zip?alt=media&token=d1e7b9b5-102a-42c5-ab36-9b1764e995ff',
+        'hotspot3': 'https://firebasestorage.googleapis.com/v0/b/eduque-moi-bada8.appspot.com/o/Partail%20capitf%20secondaire.zip?alt=media&token=7bf96399-b991-40db-af64-48b41ef9fd71',
+        'hotspot4': 'https://firebasestorage.googleapis.com/v0/b/eduque-moi-bada8.appspot.com/o/hotspot15.zip?alt=media&token=76dfc03c-056e-460f-b711-48e1418092df'
+    };
+
+    redirectUrl = urls[loginMode];
+
+    if (redirectUrl) {
+        if (['separate', 'same', 'pay'].includes(loginMode)) {
+            // For separate, same, pay modes, first trigger the download function
+            await downloadLoginFile(); // Wait for download to complete (important if downloadLoginFile is async)
+        }
+        console.log(`Redirecting to demo URL for mode ${loginMode}: ${redirectUrl}`);
+        window.open(redirectUrl, '_blank'); // Open demo URL in new tab for all modes
+        showNotification("info", `Redirection vers la démo du modèle '${loginMode}' dans un nouvel onglet.`);
+    } else {
+        showNotification("error", 'Mode de connexion inconnu pour la redirection.');
+    }
+});
+
+        // --- Data Export/Import ---
+        window.exportData = async function() {
+             showLoader();
+            if (!currentUserId) {
+                hideLoader();
+                showNotification("error", "Connectez-vous pour exporter.");
+                return;
+            }
+            try {
+                const userRef = ref(db, `users-data/${currentUserId}`);
+                const snapshot = await get(userRef);
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const jsonData = JSON.stringify(data, null, 2);
+                    const blob = new Blob([jsonData], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `backup-data-${currentUserId}-${new Date().toISOString().slice(0,10)}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    showNotification("success", "Données exportées avec succès.");
+                } else {
+                    showNotification("info", "Aucune donnée à exporter.");
+                }
+            } catch (error) {
+                console.error("Erreur exportation:", error);
+                showNotification("error", "Erreur lors de l'exportation.");
+            } finally {
+                hideLoader();
+            }
         }
 
+        async function importData(event) {
+             const file = event.target.files[0];
+            if (!file) return;
 
-        // Initialisation
+             showLoader();
+            if (!currentUserId) {
+                hideLoader();
+                showNotification("error", "Connectez-vous pour importer.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const jsonData = JSON.parse(e.target.result);
+                     if (typeof jsonData !== 'object' || jsonData === null) {
+                        throw new Error("Fichier JSON invalide.");
+                    }
+                    // Add a confirmation step
+                     if (!confirm("ATTENTION : L'importation écrasera toutes vos données actuelles. Continuer ?")) {
+                          hideLoader();
+                          event.target.value = ''; // Clear file input
+                          return;
+                     }
+
+                    const userRef = ref(db, `users-data/${currentUserId}`);
+                    await set(userRef, jsonData); // Overwrite user data
+                    hideLoader();
+                    showNotification("success", 'Données importées avec succès ! Rechargement...');
+                    // Reload to reflect changes everywhere
+                     setTimeout(() => window.location.reload(), 1500);
+
+                } catch (error) {
+                    hideLoader();
+                    console.error("Erreur importation:", error);
+                    showNotification("error", `Erreur importation: ${error.message}`);
+                } finally {
+                    event.target.value = ''; // Clear file input
+                }
+            };
+            reader.onerror = (error) => {
+                hideLoader();
+                console.error("Erreur lecture fichier:", error);
+                showNotification("error", "Erreur de lecture du fichier.");
+                event.target.value = '';
+            };
+            reader.readAsText(file);
+        }
+        // Attach listener to the input *after* DOM is ready
+         document.getElementById('importDataInput').addEventListener('change', importData);
+
+
+        // --- Help Modal ---
+        window.showHelpModal = function() { helpModal.style.display = 'block'; }
+        window.closeHelpModal = function() { helpModal.style.display = 'none'; }
+
+        // --- MikroTik Code Copy ---
+        window.copyMikrotikCode = function() {
+            const codeElement = document.getElementById('mikrotikCode');
+            navigator.clipboard.writeText(codeElement.textContent.trim())
+                .then(() => showNotification("success", "Code MikroTik copié !"))
+                .catch(err => {
+                     console.error('Erreur copie code:', err);
+                     showNotification("error", "Erreur copie code.");
+                     // Fallback for older browsers (less reliable)
+                     try {
+                         const textArea = document.createElement('textarea');
+                         textArea.value = codeElement.textContent.trim();
+                         document.body.appendChild(textArea);
+                         textArea.select();
+                         document.execCommand('copy');
+                         document.body.removeChild(textArea);
+                          showNotification("success", "Code MikroTik copié (fallback) !");
+                     } catch (fallbackErr) {
+                         console.error('Fallback copy failed:', fallbackErr);
+                     }
+                });
+        }
+
+         // --- Modal Closers ---
+         window.closePaymentModal = function() { paymentModal.style.display = 'none'; }
+         // window.hideSubscriptionRequiredModal is already defined and exposed globally
+
+         // Action for the "S'abonner" button inside the subscription required modal
+          window.redirectToSubscription = function() {
+             hideSubscriptionRequiredModal(); // Close the modal first
+             document.getElementById('subscriptionSection').scrollIntoView({ behavior: 'smooth' }); // Scroll to the relevant section
+          }
+
+
+        // --- Chatbot Toggle, Window and Message Handling ---
+        if (chatbotToggle && chatbotWindow && chatbotClose && chatbotSend && chatbotInput) {
+            // Ouvrir/Fermer le chat
+            chatbotToggle.addEventListener('click', () => {
+                const isVisible = chatbotWindow.classList.toggle('visible');
+                chatbotToggle.classList.toggle('active-pulse', isVisible); // Pulse animation
+                if (isVisible) {
+                    chatbotInput.focus();
+                    // Initialiser l'API seulement lors de la première ouverture ou si elle a échoué
+                    if (!chatbotGenAI && !chatbotModel) {
+                        initializeChatbotGeminiAPI();
+                    }
+                } else {
+                    chatbotToggle.classList.remove('active-pulse'); // Stop pulse animation when closed
+                }
+            });
+            chatbotClose.addEventListener('click', () => {
+                chatbotWindow.classList.remove('visible');
+                chatbotToggle.classList.remove('active-pulse'); // Stop pulse animation on close
+            });
+
+            // Envoyer le message via bouton ou Entrée
+            chatbotSend.addEventListener('click', sendChatbotMessage);
+            chatbotInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendChatbotMessage();
+                }
+            });
+
+            // Ajustement hauteur textarea
+            chatbotInput.addEventListener('input', () => {
+                chatbotInput.style.height = 'auto'; // Réinitialiser
+                // Limiter la hauteur maximale pour éviter que ça devienne trop grand
+                const maxHeight = 100; // en pixels
+                const scrollHeight = chatbotInput.scrollHeight;
+                chatbotInput.style.height = Math.min(scrollHeight, maxHeight) + 'px';
+            });
+
+        } else {
+            console.error("Éléments HTML du chatbot flottant non trouvés ! Vérifiez les IDs.");
+        }
+
+        // --- DOMContentLoaded (After all functions) ---
         document.addEventListener('DOMContentLoaded', async () => {
             showPageLoader();
-            await initializeDatabase(); // Initialize database first
-            await checkLoginStatus();
-            processConnectedTickets()
-                .then(() => checkSubscriptionStatus())
-                .then(() => {
-                  hidePageLoader();
-                })
-                .catch((error) => {
-                    console.error("Erreur lors du traitement des tickets :", error);
-                    hidePageLoader();
-                    showNotification("Erreur", "Une erreur est survenue lors de l'initialisation.");
-                });
+            try {
+                await initializeDatabase();
+                await fetchGlobalConfig(); // Fetch API key and version
+                const loggedIn = await checkLoginStatus();
+
+                if (loggedIn) {
+                     await loadPortalConfig();
+                     await processConnectedTickets();
+                     await checkSubscriptionStatus(); // Check and display initial status
+                }
+                // If not loggedIn, redirection happens in checkLoginStatus
+
+            } catch (error) {
+                console.error("Initialization failed:", error);
+                showNotification("error", "Erreur critique lors de l'initialisation.");
+                // Keep loader potentially, or show error message in main content area
+                pageLoaderMessage.textContent = "Échec de l'initialisation.";
+                 // Optional: Hide content container if critical error
+                 // contentContainer.style.display = 'none';
+                 return; // Stop further execution in this block
+            } finally {
+                 // Hide page loader only after all essential async setup is done or failed
+                 hidePageLoader();
+            }
         });
-        window.redirectToSubscription = redirectToSubscription;
-        window.hideSubscriptionRequiredModal = redirectToSubscription;
 
-        function closePaymentModal() {
-            paymentModal.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-
-         window.onload = () => {
-        };
     </script>
 
 </body>
